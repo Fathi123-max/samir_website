@@ -1,23 +1,27 @@
 @import "tailwindcss";
 
+@theme {
+  --font-display: var(--font-syne), -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --font-mono: var(--font-jetbrains-mono), "SF Mono", monospace;
+  --font-sans: var(--font-sans), system-ui, -apple-system, sans-serif;
+}
+
 @layer base {
   :root {
     --bg-main: #07090e;
     --bg-surface: #0d121c;
     --bg-surface-elevated: #131b28;
-    --bg-surface-glass: rgba(13, 18, 28, 0.75);
+    --bg-surface-glass: rgba(13, 18, 28, 0.85);
     --border-subtle: #1c2638;
     --border-strong: #2a3952;
-    --text-primary: #f1f5f9;
-    --text-secondary: #94a3b8;
-    --text-muted: #64748b;
+    --text-primary: #f8fafc;
+    --text-secondary: #cbd5e1;
+    --text-muted: #94a3b8;
     --tally-live: #ef4444;
     --tally-preview: #10b981;
     --tally-amber: #f59e0b;
     --tally-teal: #06b6d4;
     --tally-purple: #a855f7;
-    --font-display: var(--font-syne), -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-    --font-mono-tech: var(--font-jetbrains-mono), "SF Mono", monospace;
   }
 
   .light-theme {
@@ -28,7 +32,7 @@
     --border-subtle: #e2e8f0;
     --border-strong: #cbd5e1;
     --text-primary: #0f172a;
-    --text-secondary: #475569;
+    --text-secondary: #334155;
     --text-muted: #64748b;
     --tally-live: #dc2626;
     --tally-preview: #059669;
@@ -168,4 +172,13 @@ body {
 .fluid-body {
   font-size: clamp(1rem, 0.5vw + 0.875rem, 1.125rem);
   line-height: 1.65;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, ::before, ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }

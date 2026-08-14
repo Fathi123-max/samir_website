@@ -4,6 +4,7 @@
 class SoundFX {
   private ctx: AudioContext | null = null;
   private isMuted: boolean = true; // Default muted for accessibility
+  private listeners: Set<() => void> = new Set();
 
   constructor() {
     if (typeof window !== "undefined") {
@@ -11,6 +12,17 @@ class SoundFX {
       const saved = localStorage.getItem("broadcast_sound_enabled");
       this.isMuted = saved !== "true";
     }
+  }
+
+  public subscribe(listener: () => void): () => void {
+    this.listeners.add(listener);
+    return () => {
+      this.listeners.delete(listener);
+    };
+  }
+
+  private notify() {
+    this.listeners.forEach((listener) => listener());
   }
 
   private initContext() {
@@ -31,6 +43,7 @@ class SoundFX {
     if (typeof window !== "undefined") {
       localStorage.setItem("broadcast_sound_enabled", (!this.isMuted).toString());
     }
+    this.notify();
     if (!this.isMuted) {
       this.initContext();
       this.playTallyClick();
@@ -47,6 +60,7 @@ class SoundFX {
     if (typeof window !== "undefined") {
       localStorage.setItem("broadcast_sound_enabled", enabled.toString());
     }
+    this.notify();
   }
 
   // Tactile button click (like an illuminated broadcast pushbutton)

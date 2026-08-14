@@ -100,7 +100,7 @@ export function EventModal({ event, onClose }: EventModalProps) {
         </button>
 
         {/* Top Header */}
-        <div className="mb-6">
+        <div className="mb-6 pr-12 sm:pr-14">
           <div className="flex flex-wrap items-center gap-2 mb-3">
             <span className="px-3 py-1 rounded-full bg-amber-500/15 border border-amber-500/40 text-amber-300 font-mono text-xs font-bold uppercase tracking-wider">
               {event.category}
@@ -270,9 +270,14 @@ export function EventModal({ event, onClose }: EventModalProps) {
 
           <a
             href="#contact"
-            onClick={() => {
+            onClick={(e) => {
+              e.preventDefault();
               sound.playButtonClick();
               onClose();
+              setTimeout(() => {
+                const el = document.getElementById("contact");
+                if (el) el.scrollIntoView({ behavior: "smooth" });
+              }, 120);
             }}
             className="px-6 py-3 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-mono text-xs font-bold transition-all focus-visible:ring-2 focus-visible:ring-amber-400 focus-visible:outline-none min-h-[44px] flex items-center"
           >
