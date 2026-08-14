@@ -9,14 +9,10 @@ import {
   PhoneCall,
   Mail,
   MapPin,
-  Calendar,
   Send,
   CheckCircle2,
   Download,
   FileText,
-  Clock,
-  Sparkles,
-  ShieldCheck,
 } from "lucide-react";
 
 export function ContactBooking() {
@@ -27,12 +23,13 @@ export function ContactBooking() {
     company: "",
     productionType: "Live Sports Championship",
     dates: "",
-    location: "UAE",
-    selectedRoles: ["OB Systems Engineer", "CCU Operator"],
+    location: "Dubai / UAE",
+    selectedRoles: ["OB Systems Lead", "CCU Camera Shader"],
     message: "",
   });
 
   const [submitted, setSubmitted] = useState(false);
+  const [errors, setErrors] = useState<Record<string, string>>({});
 
   const availableRoles = [
     "OB Systems Lead",
@@ -58,8 +55,20 @@ export function ContactBooking() {
     }
   };
 
+  const validateForm = () => {
+    const newErrors: Record<string, string> = {};
+    if (!formData.name.trim()) newErrors.name = "Please enter your name";
+    if (!formData.email.trim() || !formData.email.includes("@"))
+      newErrors.email = "Please enter a valid email address";
+    if (!formData.company.trim()) newErrors.company = "Please enter your company or channel name";
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    if (!validateForm()) return;
+
     sound.playTallyClick();
 
     // Trigger celebratory confetti
@@ -84,17 +93,18 @@ export function ContactBooking() {
   return (
     <section
       id="contact"
+      aria-label="Contact and Production Booking"
       className="py-20 lg:py-28 bg-[#06090f] relative overflow-hidden"
     >
       {/* Background ambient lighting */}
-      <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[700px] h-[300px] bg-amber-500/5 rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[700px] h-[300px] bg-amber-500/5 rounded-full blur-3xl pointer-events-none" aria-hidden="true" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {/* Section Header */}
         <div className="max-w-3xl mb-16">
           <Reveal direction="down">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-500/10 border border-amber-500/30 text-amber-400 text-xs font-mono mb-3">
-              <PhoneCall className="w-3.5 h-3.5" />
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-500/10 border border-amber-500/30 text-amber-300 text-xs font-mono mb-3">
+              <PhoneCall className="w-3.5 h-3.5" aria-hidden="true" />
               <span>DIRECT PRODUCTION BOOKING & DISPATCH</span>
             </div>
           </Reveal>
@@ -106,7 +116,7 @@ export function ContactBooking() {
           </Reveal>
 
           <Reveal direction="up" delay={0.15}>
-            <p className="text-slate-300 fluid-body mt-3">
+            <p className="text-slate-200 fluid-body mt-3 font-normal">
               Available for tier-1 OB truck deployments, sports championships, studio playout setups, and international flyaways across Dubai, Abu Dhabi, Saudi Arabia, and the GCC.
             </p>
           </Reveal>
@@ -117,9 +127,9 @@ export function ContactBooking() {
           <div className="lg:col-span-5 space-y-6">
             {/* Status Card */}
             <Reveal direction="left" delay={0.2}>
-              <div className="p-6 rounded-3xl bg-[#0c121e] border border-[#1f2d44] shadow-xl bevel-panel">
+              <div className="p-6 sm:p-7 rounded-3xl bg-[#0c121e] border border-[#1f2d44] shadow-xl bevel-panel">
                 <div className="flex items-center gap-2 mb-4">
-                  <span className="relative flex h-3 w-3">
+                  <span className="relative flex h-3 w-3" aria-hidden="true">
                     <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
                     <span className="relative inline-flex rounded-full h-3 w-3 bg-emerald-500" />
                   </span>
@@ -141,39 +151,41 @@ export function ContactBooking() {
                     target="_blank"
                     rel="noopener noreferrer"
                     onClick={() => sound.playTallyClick()}
-                    className="flex items-center justify-between p-3 rounded-xl bg-emerald-950/40 border border-emerald-800/60 text-emerald-300 hover:bg-emerald-900/60 transition-all"
+                    aria-label="Chat directly on WhatsApp with Samir"
+                    className="flex items-center justify-between p-3.5 rounded-2xl bg-emerald-950/50 border border-emerald-700/80 text-emerald-300 hover:bg-emerald-900/60 transition-all focus-visible:ring-2 focus-visible:ring-emerald-400 focus-visible:outline-none min-h-[50px]"
                   >
                     <div className="flex items-center gap-3">
-                      <PhoneCall className="w-4 h-4 text-emerald-400" />
+                      <PhoneCall className="w-5 h-5 text-emerald-400" aria-hidden="true" />
                       <div>
-                        <span className="text-[10px] text-slate-400 block">PHONE & WHATSAPP</span>
-                        <span className="font-bold text-white">{PERSONAL_INFO.phone}</span>
+                        <span className="text-[10px] text-slate-300 block">PHONE & WHATSAPP</span>
+                        <span className="font-bold text-white text-sm">{PERSONAL_INFO.phone}</span>
                       </div>
                     </div>
-                    <span className="text-[10px] px-2 py-0.5 rounded bg-emerald-800 text-white font-bold">
-                      CHAT NOW &rarr;
+                    <span className="text-[11px] px-2.5 py-1 rounded bg-emerald-800 text-white font-bold">
+                      CHAT &rarr;
                     </span>
                   </a>
 
                   <a
                     href={`mailto:${PERSONAL_INFO.email}`}
                     onClick={() => sound.playButtonClick()}
-                    className="flex items-center justify-between p-3 rounded-xl bg-[#090e17] border border-[#1d2a3f] text-slate-300 hover:text-white hover:bg-[#121c2d] transition-all"
+                    aria-label="Send email to Samir"
+                    className="flex items-center justify-between p-3.5 rounded-2xl bg-[#090e17] border border-[#1d2a3f] text-slate-200 hover:text-white hover:bg-[#121c2d] transition-all focus-visible:ring-2 focus-visible:ring-cyan-400 focus-visible:outline-none min-h-[50px]"
                   >
                     <div className="flex items-center gap-3">
-                      <Mail className="w-4 h-4 text-cyan-400" />
+                      <Mail className="w-5 h-5 text-cyan-400" aria-hidden="true" />
                       <div>
-                        <span className="text-[10px] text-slate-500 block">DIRECT EMAIL</span>
-                        <span className="font-bold text-slate-200">{PERSONAL_INFO.email}</span>
+                        <span className="text-[10px] text-slate-400 block">DIRECT EMAIL</span>
+                        <span className="font-bold text-slate-100">{PERSONAL_INFO.email}</span>
                       </div>
                     </div>
                   </a>
 
-                  <div className="flex items-center gap-3 p-3 rounded-xl bg-[#090e17] border border-[#1d2a3f] text-slate-300">
-                    <MapPin className="w-4 h-4 text-amber-400" />
+                  <div className="flex items-center gap-3 p-3.5 rounded-2xl bg-[#090e17] border border-[#1d2a3f] text-slate-200 min-h-[50px]">
+                    <MapPin className="w-5 h-5 text-amber-400" aria-hidden="true" />
                     <div>
-                      <span className="text-[10px] text-slate-500 block">OPERATIONAL BASE</span>
-                      <span className="font-bold text-slate-200">{PERSONAL_INFO.location}</span>
+                      <span className="text-[10px] text-slate-400 block">OPERATIONAL BASE</span>
+                      <span className="font-bold text-slate-100">{PERSONAL_INFO.location}</span>
                     </div>
                   </div>
                 </div>
@@ -182,15 +194,15 @@ export function ContactBooking() {
 
             {/* ATS CV & Spec Sheet Download Tile */}
             <Reveal direction="left" delay={0.25}>
-              <div className="p-6 rounded-3xl bg-[#0c121e] border border-[#1f2d44] shadow-xl">
-                <div className="flex items-center gap-3 text-amber-400 font-mono text-xs mb-3">
-                  <FileText className="w-4 h-4" />
+              <div className="p-6 sm:p-7 rounded-3xl bg-[#0c121e] border border-[#1f2d44] shadow-xl">
+                <div className="flex items-center gap-3 text-amber-300 font-mono text-xs mb-3">
+                  <FileText className="w-4 h-4" aria-hidden="true" />
                   <span className="font-bold tracking-wider">OFFICIAL ENGINEERING PROFILE</span>
                 </div>
-                <h4 className="text-base font-bold text-white font-display mb-2">
+                <h3 className="text-base font-bold text-white font-display mb-2">
                   ATS-Optimized CV & Technical Dossier
-                </h4>
-                <p className="text-xs text-slate-400 font-sans mb-4">
+                </h3>
+                <p className="text-xs text-slate-300 font-sans mb-4 leading-relaxed">
                   Download Samir’s full engineering curriculum vitae detailing 18+ years of vision mixer, CCU, and EVS event assignments.
                 </p>
 
@@ -199,9 +211,10 @@ export function ContactBooking() {
                   target="_blank"
                   rel="noopener noreferrer"
                   onClick={() => sound.playButtonClick()}
-                  className="w-full py-2.5 px-4 rounded-xl bg-amber-500/15 hover:bg-amber-500 text-amber-300 hover:text-slate-950 border border-amber-500/40 font-mono text-xs font-bold transition-all flex items-center justify-center gap-2"
+                  aria-label="Download Samir's ATS Resume in PDF format"
+                  className="w-full py-3 px-4 rounded-xl bg-amber-500/15 hover:bg-amber-500 text-amber-300 hover:text-slate-950 border border-amber-500/40 font-mono text-xs font-bold transition-all flex items-center justify-center gap-2 focus-visible:ring-2 focus-visible:ring-amber-400 focus-visible:outline-none min-h-[44px]"
                 >
-                  <Download className="w-4 h-4" />
+                  <Download className="w-4 h-4" aria-hidden="true" />
                   <span>Download Samir&apos;s ATS CV (PDF)</span>
                 </a>
               </div>
@@ -217,25 +230,25 @@ export function ContactBooking() {
                     <h3 className="text-lg font-bold text-white font-mono">
                       Production Booking Dispatch
                     </h3>
-                    <p className="text-xs text-slate-400 font-mono">
+                    <p className="text-xs text-slate-300 font-mono">
                       Submit project parameters for immediate availability confirmation
                     </p>
                   </div>
-                  <span className="text-xs font-mono text-emerald-400 font-bold px-2 py-0.5 rounded bg-emerald-950/60 border border-emerald-800">
+                  <span className="text-xs font-mono text-emerald-400 font-bold px-2.5 py-1 rounded bg-emerald-950/70 border border-emerald-700">
                     DISPATCH READY
                   </span>
                 </div>
 
                 {submitted ? (
-                  <div className="text-center py-12 space-y-4">
+                  <div className="text-center py-12 space-y-4" role="status" aria-live="polite">
                     <div className="w-16 h-16 rounded-full bg-emerald-500/20 border border-emerald-500 flex items-center justify-center text-emerald-400 mx-auto">
-                      <CheckCircle2 className="w-8 h-8" />
+                      <CheckCircle2 className="w-8 h-8" aria-hidden="true" />
                     </div>
                     <h4 className="text-xl font-bold text-white font-mono">
                       Booking Request Received!
                     </h4>
-                    <p className="text-sm text-slate-300 max-w-md mx-auto font-sans">
-                      Thank you, {formData.name || "Client"}. Samir Elgammal has received your inquiry for the {formData.productionType} and will reply within 2 hours.
+                    <p className="text-sm text-slate-200 max-w-md mx-auto font-sans">
+                      Thank you, <strong className="text-amber-400">{formData.name || "Client"}</strong>. Samir Elgammal has received your inquiry for the {formData.productionType} and will reply within 2 hours.
                     </p>
 
                     <div className="pt-4 flex flex-wrap justify-center gap-3">
@@ -243,78 +256,97 @@ export function ContactBooking() {
                         href={generateWhatsAppInquiry()}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="px-5 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-mono text-xs font-bold transition-all flex items-center gap-2"
+                        className="px-5 py-3 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-mono text-xs font-bold transition-all flex items-center gap-2 min-h-[44px]"
                       >
-                        <PhoneCall className="w-4 h-4" />
+                        <PhoneCall className="w-4 h-4" aria-hidden="true" />
                         <span>Send via WhatsApp Directly</span>
                       </a>
                       <button
                         onClick={() => setSubmitted(false)}
-                        className="px-5 py-2.5 rounded-xl bg-[#131d2e] hover:bg-[#1a273d] text-slate-300 border border-[#24354f] font-mono text-xs font-semibold"
+                        className="px-5 py-3 rounded-xl bg-[#131d2e] hover:bg-[#1a273d] text-slate-200 border border-[#24354f] font-mono text-xs font-semibold min-h-[44px]"
                       >
                         Submit Another Request
                       </button>
                     </div>
                   </div>
                 ) : (
-                  <form onSubmit={handleSubmit} className="space-y-4 text-xs font-mono">
+                  <form onSubmit={handleSubmit} noValidate className="space-y-4 text-xs font-mono">
                     {/* Name & Company */}
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                       <div>
-                        <label className="block text-slate-300 mb-1">
-                          YOUR NAME / CONTACT *
+                        <label htmlFor="client-name" className="block text-slate-200 mb-1 font-semibold">
+                          YOUR NAME / CONTACT <span className="text-amber-400">*</span>
                         </label>
                         <input
+                          id="client-name"
                           type="text"
                           required
+                          aria-required="true"
+                          aria-invalid={!!errors.name}
                           placeholder="e.g. Tariq Al-Hashimi"
                           value={formData.name}
                           onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                          className="w-full px-3.5 py-2.5 rounded-xl bg-[#080d17] border border-[#1b283d] text-slate-100 placeholder:text-slate-600 focus:outline-none focus:border-amber-400"
+                          className={`w-full px-3.5 py-3 rounded-xl bg-[#080d17] border text-slate-100 placeholder:text-slate-500 focus:outline-none min-h-[44px] ${
+                            errors.name ? "border-red-500 focus:border-red-400" : "border-[#1b283d] focus:border-amber-400"
+                          }`}
                         />
+                        {errors.name && <span className="text-red-400 text-[10px] mt-1 block">{errors.name}</span>}
                       </div>
 
                       <div>
-                        <label className="block text-slate-300 mb-1">
-                          BROADCASTER / PRODUCTION COMPANY *
+                        <label htmlFor="client-company" className="block text-slate-200 mb-1 font-semibold">
+                          BROADCASTER / PRODUCTION COMPANY <span className="text-amber-400">*</span>
                         </label>
                         <input
+                          id="client-company"
                           type="text"
                           required
+                          aria-required="true"
+                          aria-invalid={!!errors.company}
                           placeholder="e.g. Abu Dhabi Sports / Media City"
                           value={formData.company}
                           onChange={(e) => setFormData({ ...formData, company: e.target.value })}
-                          className="w-full px-3.5 py-2.5 rounded-xl bg-[#080d17] border border-[#1b283d] text-slate-100 placeholder:text-slate-600 focus:outline-none focus:border-amber-400"
+                          className={`w-full px-3.5 py-3 rounded-xl bg-[#080d17] border text-slate-100 placeholder:text-slate-500 focus:outline-none min-h-[44px] ${
+                            errors.company ? "border-red-500 focus:border-red-400" : "border-[#1b283d] focus:border-amber-400"
+                          }`}
                         />
+                        {errors.company && <span className="text-red-400 text-[10px] mt-1 block">{errors.company}</span>}
                       </div>
                     </div>
 
                     {/* Email & Phone */}
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                       <div>
-                        <label className="block text-slate-300 mb-1">
-                          EMAIL ADDRESS *
+                        <label htmlFor="client-email" className="block text-slate-200 mb-1 font-semibold">
+                          EMAIL ADDRESS <span className="text-amber-400">*</span>
                         </label>
                         <input
+                          id="client-email"
                           type="email"
                           required
+                          aria-required="true"
+                          aria-invalid={!!errors.email}
                           placeholder="tariq@network.ae"
                           value={formData.email}
                           onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                          className="w-full px-3.5 py-2.5 rounded-xl bg-[#080d17] border border-[#1b283d] text-slate-100 placeholder:text-slate-600 focus:outline-none focus:border-amber-400"
+                          className={`w-full px-3.5 py-3 rounded-xl bg-[#080d17] border text-slate-100 placeholder:text-slate-500 focus:outline-none min-h-[44px] ${
+                            errors.email ? "border-red-500 focus:border-red-400" : "border-[#1b283d] focus:border-amber-400"
+                          }`}
                         />
+                        {errors.email && <span className="text-red-400 text-[10px] mt-1 block">{errors.email}</span>}
                       </div>
 
                       <div>
-                        <label className="block text-slate-300 mb-1">
+                        <label htmlFor="client-phone" className="block text-slate-200 mb-1 font-semibold">
                           PHONE / WHATSAPP NUMBER
                         </label>
                         <input
+                          id="client-phone"
                           type="tel"
                           placeholder="+971 50 ..."
                           value={formData.phone}
                           onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                          className="w-full px-3.5 py-2.5 rounded-xl bg-[#080d17] border border-[#1b283d] text-slate-100 placeholder:text-slate-600 focus:outline-none focus:border-amber-400"
+                          className="w-full px-3.5 py-3 rounded-xl bg-[#080d17] border border-[#1b283d] text-slate-100 placeholder:text-slate-500 focus:outline-none focus:border-amber-400 min-h-[44px]"
                         />
                       </div>
                     </div>
@@ -322,16 +354,17 @@ export function ContactBooking() {
                     {/* Production Type & Target Dates */}
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                       <div>
-                        <label className="block text-slate-300 mb-1">
+                        <label htmlFor="prod-type" className="block text-slate-200 mb-1 font-semibold">
                           TYPE OF PRODUCTION
                         </label>
                         <select
+                          id="prod-type"
                           value={formData.productionType}
                           onChange={(e) => {
                             sound.playJogClick();
                             setFormData({ ...formData, productionType: e.target.value });
                           }}
-                          className="w-full px-3.5 py-2.5 rounded-xl bg-[#080d17] border border-[#1b283d] text-slate-100 focus:outline-none focus:border-amber-400"
+                          className="w-full px-3.5 py-3 rounded-xl bg-[#080d17] border border-[#1b283d] text-slate-100 focus:outline-none focus:border-amber-400 min-h-[44px]"
                         >
                           <option value="Live Sports Championship">Live Sports Championship</option>
                           <option value="Diplomatic / UN Summit">Diplomatic / UN Summit</option>
@@ -343,25 +376,26 @@ export function ContactBooking() {
                       </div>
 
                       <div>
-                        <label className="block text-slate-300 mb-1">
+                        <label htmlFor="event-dates" className="block text-slate-200 mb-1 font-semibold">
                           EVENT LOCATION & DATES
                         </label>
                         <input
+                          id="event-dates"
                           type="text"
                           placeholder="e.g. Dubai / Oct 15 – 22"
                           value={formData.dates}
                           onChange={(e) => setFormData({ ...formData, dates: e.target.value })}
-                          className="w-full px-3.5 py-2.5 rounded-xl bg-[#080d17] border border-[#1b283d] text-slate-100 placeholder:text-slate-600 focus:outline-none focus:border-amber-400"
+                          className="w-full px-3.5 py-3 rounded-xl bg-[#080d17] border border-[#1b283d] text-slate-100 placeholder:text-slate-500 focus:outline-none focus:border-amber-400 min-h-[44px]"
                         />
                       </div>
                     </div>
 
                     {/* Required Engineering Roles Multi-Select */}
-                    <div>
-                      <label className="block text-slate-300 mb-2">
+                    <fieldset>
+                      <legend className="block text-slate-200 mb-2 font-semibold">
                         REQUIRED ENGINEERING ROLES:
-                      </label>
-                      <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
+                      </legend>
+                      <div className="grid grid-cols-2 sm:grid-cols-3 gap-2" role="group" aria-label="Select roles needed">
                         {availableRoles.map((role) => {
                           const isSelected = formData.selectedRoles.includes(role);
                           return (
@@ -369,33 +403,35 @@ export function ContactBooking() {
                               key={role}
                               type="button"
                               onClick={() => handleRoleToggle(role)}
-                              className={`p-2 rounded-xl border text-[11px] font-bold text-left transition-all ${
+                              aria-pressed={isSelected}
+                              className={`p-2.5 rounded-xl border text-[11px] font-bold text-left transition-all min-h-[42px] focus-visible:ring-2 focus-visible:ring-amber-400 focus-visible:outline-none ${
                                 isSelected
-                                  ? "bg-amber-500/20 border-amber-500 text-amber-300"
-                                  : "bg-[#080d17] border-[#1b283d] text-slate-400 hover:text-white"
+                                  ? "bg-amber-500/20 border-amber-400 text-amber-300"
+                                  : "bg-[#080d17] border-[#1b283d] text-slate-300 hover:text-white"
                               }`}
                             >
-                              <div className="flex items-center gap-1.5">
-                                <span className={`w-2 h-2 rounded-full ${isSelected ? "bg-amber-400" : "bg-slate-700"}`} />
+                              <div className="flex items-center gap-2">
+                                <span className={`w-2 h-2 rounded-full ${isSelected ? "bg-amber-400" : "bg-slate-600"}`} aria-hidden="true" />
                                 <span className="truncate">{role}</span>
                               </div>
                             </button>
                           );
                         })}
                       </div>
-                    </div>
+                    </fieldset>
 
                     {/* Message / Technical Specs */}
                     <div>
-                      <label className="block text-slate-300 mb-1">
+                      <label htmlFor="event-message" className="block text-slate-200 mb-1 font-semibold">
                         EVENT NOTES / SPECIFICATIONS
                       </label>
                       <textarea
+                        id="event-message"
                         rows={3}
                         placeholder="Detail camera count, OB truck model, transmission requirements..."
                         value={formData.message}
                         onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                        className="w-full px-3.5 py-2.5 rounded-xl bg-[#080d17] border border-[#1b283d] text-slate-100 placeholder:text-slate-600 focus:outline-none focus:border-amber-400 resize-none"
+                        className="w-full px-3.5 py-2.5 rounded-xl bg-[#080d17] border border-[#1b283d] text-slate-100 placeholder:text-slate-500 focus:outline-none focus:border-amber-400 resize-none"
                       />
                     </div>
 
@@ -403,9 +439,9 @@ export function ContactBooking() {
                     <div className="pt-2 flex flex-col sm:flex-row items-center gap-3">
                       <button
                         type="submit"
-                        className="w-full sm:w-auto flex-1 py-3.5 px-6 rounded-xl bg-gradient-to-r from-amber-500 via-amber-400 to-amber-500 hover:from-amber-400 hover:to-amber-300 text-slate-950 font-bold font-mono text-xs uppercase tracking-wider shadow-xl shadow-amber-500/20 transition-all flex items-center justify-center gap-2"
+                        className="w-full sm:w-auto flex-1 py-3.5 px-6 rounded-xl bg-gradient-to-r from-amber-500 via-amber-400 to-amber-500 hover:from-amber-400 hover:to-amber-300 text-slate-950 font-bold font-mono text-xs sm:text-sm uppercase tracking-wider shadow-xl shadow-amber-500/20 transition-all flex items-center justify-center gap-2 focus-visible:ring-2 focus-visible:ring-amber-400 focus-visible:outline-none min-h-[48px]"
                       >
-                        <Send className="w-4 h-4" />
+                        <Send className="w-4 h-4" aria-hidden="true" />
                         <span>Dispatch Booking Inquiry</span>
                       </button>
 
@@ -414,9 +450,9 @@ export function ContactBooking() {
                         target="_blank"
                         rel="noopener noreferrer"
                         onClick={() => sound.playTallyClick()}
-                        className="w-full sm:w-auto py-3.5 px-4 rounded-xl bg-emerald-600/20 hover:bg-emerald-600 text-emerald-300 hover:text-white border border-emerald-500/40 font-mono text-xs font-bold transition-all flex items-center justify-center gap-2"
+                        className="w-full sm:w-auto py-3.5 px-5 rounded-xl bg-emerald-600/25 hover:bg-emerald-600 text-emerald-300 hover:text-white border border-emerald-500/50 font-mono text-xs sm:text-sm font-bold transition-all flex items-center justify-center gap-2 focus-visible:ring-2 focus-visible:ring-emerald-400 focus-visible:outline-none min-h-[48px]"
                       >
-                        <PhoneCall className="w-4 h-4" />
+                        <PhoneCall className="w-4 h-4" aria-hidden="true" />
                         <span>Instant WhatsApp</span>
                       </a>
                     </div>
