@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { useReducedMotion } from "framer-motion";
+import { useReducedMotion } from "@/lib/useReducedMotion";
 import { PERSONAL_INFO } from "@/lib/data";
 import { sound } from "@/lib/sound";
 import { Reveal } from "./Reveal";
