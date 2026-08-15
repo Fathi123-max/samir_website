@@ -1,45 +1,68 @@
 "use client";
 
-import React, { useState, useEffect, useSyncExternalStore } from "react";
+import React, { useState, useEffect, useSyncExternalStore, memo } from "react";
 import { sound } from "@/lib/sound";
 import { Volume2, VolumeX, Radio, ShieldCheck, MapPin } from "lucide-react";
 
-export function BroadcastHUD() {
+const formatTimecode = (date: Date): string => {
+  const h = String(date.getHours()).padStart(2, "0");
+  const m = String(date.getMinutes()).padStart(2, "0");
+  const s = String(date.getSeconds()).padStart(2, "0");
+  const f = String(Math.floor((date.getMilliseconds() / 1000) * 25)).padStart(2, "0");
+  return `${h}:${m}:${s}:${f}`;
+};
+
+const formatDubaiTime = (date: Date): string => {
+  const options: Intl.DateTimeFormatOptions = {
+    timeZone: "Asia/Dubai",
+    hour: "2-digit",
+    minute: "2-digit",
+    second: "2-digit",
+    hour12: false,
+  };
+  return new Intl.DateTimeFormat("en-GB", options).format(date);
+};
+
+const HudClock = memo(function HudClock() {
   const [timecode, setTimecode] = useState("00:00:00:00");
   const [dubaiTime, setDubaiTime] = useState("");
-
-  const soundEnabled = useSyncExternalStore(
-    (callback) => sound.subscribe(callback),
-    () => sound.getSoundEnabled(),
-    () => false
-  );
 
   useEffect(() => {
     const updateClocks = () => {
       const now = new Date();
-
-      // SMPTE Timecode (25 fps)
-      const h = String(now.getHours()).padStart(2, "0");
-      const m = String(now.getMinutes()).padStart(2, "0");
-      const s = String(now.getSeconds()).padStart(2, "0");
-      const f = String(Math.floor((now.getMilliseconds() / 1000) * 25)).padStart(2, "0");
-      setTimecode(`${h}:${m}:${s}:${f}`);
-
-      // Dubai Time (GST UTC+4)
-      const options: Intl.DateTimeFormatOptions = {
-        timeZone: "Asia/Dubai",
-        hour: "2-digit",
-        minute: "2-digit",
-        second: "2-digit",
-        hour12: false,
-      };
-      setDubaiTime(new Intl.DateTimeFormat("en-GB", options).format(now));
+      setTimecode(formatTimecode(now));
+      setDubaiTime(formatDubaiTime(now));
     };
 
     updateClocks();
     const interval = setInterval(updateClocks, 40);
     return () => clearInterval(interval);
   }, []);
+
+  return (
+    <div className="flex items-center gap-4 text-slate-200">
+      <div className="flex items-center gap-2">
+        <span className="hidden sm:inline text-amber-400 font-bold text-[11px]">TC:</span>
+        <span className="font-mono tracking-widest text-white bg-[#0d131f] px-3 py-1 rounded border border-[#223147] font-semibold text-xs sm:text-sm">
+          {timecode}
+        </span>
+      </div>
+
+      <div className="hidden lg:flex items-center gap-2 text-slate-300 text-xs">
+        <MapPin className="w-4 h-4 text-amber-400 shrink-0" aria-hidden="true" />
+        <span>DUBAI (UTC+4):</span>
+        <span className="text-white font-semibold">{dubaiTime}</span>
+      </div>
+    </div>
+  );
+});
+
+export function BroadcastHUD() {
+  const soundEnabled = useSyncExternalStore(
+    (callback) => sound.subscribe(callback),
+    () => sound.getSoundEnabled(),
+    () => false
+  );
 
   const handleToggleSound = () => {
     sound.toggleMute();
@@ -69,20 +92,7 @@ export function BroadcastHUD() {
       </div>
 
       {/* Center: Live Timecode & Dubai Clock */}
-      <div className="flex items-center gap-4 text-slate-200">
-        <div className="flex items-center gap-2">
-          <span className="hidden sm:inline text-amber-400 font-bold text-[11px]">TC:</span>
-          <span className="font-mono tracking-widest text-white bg-[#0d131f] px-3 py-1 rounded border border-[#223147] font-semibold text-xs sm:text-sm">
-            {timecode}
-          </span>
-        </div>
-
-        <div className="hidden lg:flex items-center gap-2 text-slate-300 text-xs">
-          <MapPin className="w-4 h-4 text-amber-400 shrink-0" aria-hidden="true" />
-          <span>DUBAI (UTC+4):</span>
-          <span className="text-white font-semibold">{dubaiTime}</span>
-        </div>
-      </div>
+      <HudClock />
 
       {/* Right: Audio FX & Dispatch Tag */}
       <div className="flex items-center gap-3">
