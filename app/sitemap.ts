@@ -1,6 +1,8 @@
 import { MetadataRoute } from "next";
 import { FLAGSHIP_EVENTS } from "@/lib/data";
 
+export const dynamic = "force-static";
+
 export default function sitemap(): MetadataRoute.Sitemap {
   const baseUrl = "https://samirelgammal.com";
 
