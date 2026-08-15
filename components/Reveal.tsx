@@ -1,7 +1,7 @@
 "use client";
 
-import React, { useRef } from "react";
-import { motion, useInView, useReducedMotion } from "framer-motion";
+import React, { useEffect, useRef, useState } from "react";
+import { useReducedMotion } from "@/lib/useReducedMotion";
 
 interface RevealProps {
   children: React.ReactNode;
@@ -13,6 +13,8 @@ interface RevealProps {
   once?: boolean;
 }
 
+const EASE = [0.21, 0.47, 0.32, 0.98] as const;
+
 export function Reveal({
   children,
   className = "",
@@ -22,63 +24,61 @@ export function Reveal({
   once = true,
 }: RevealProps) {
   const ref = useRef<HTMLDivElement>(null);
-  const isInView = useInView(ref, { once, margin: "-40px 0px" });
-  const shouldReduceMotion = useReducedMotion();
+  const [isInView, setIsInView] = useState(false);
+  const reduceMotion = useReducedMotion();
 
-  if (shouldReduceMotion) {
+  useEffect(() => {
+    if (reduceMotion) return;
+
+    const element = ref.current;
+    if (!element) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsInView(true);
+          if (once) observer.unobserve(entry.target);
+        }
+      },
+      { rootMargin: "-40px 0px", threshold: 0 }
+    );
+
+    observer.observe(element);
+    return () => observer.disconnect();
+  }, [reduceMotion, once]);
+
+  if (reduceMotion) {
     return <div className={className}>{children}</div>;
   }
 
-  const getVariants = () => {
+  const getHiddenStyle = (): React.CSSProperties => {
     switch (direction) {
       case "up":
-        return {
-          hidden: { opacity: 0, y: 28 },
-          visible: { opacity: 1, y: 0 },
-        };
+        return { opacity: 0, transform: "translateY(28px)" };
       case "down":
-        return {
-          hidden: { opacity: 0, y: -28 },
-          visible: { opacity: 1, y: 0 },
-        };
+        return { opacity: 0, transform: "translateY(-28px)" };
       case "left":
-        return {
-          hidden: { opacity: 0, x: 28 },
-          visible: { opacity: 1, x: 0 },
-        };
+        return { opacity: 0, transform: "translateX(28px)" };
       case "right":
-        return {
-          hidden: { opacity: 0, x: -28 },
-          visible: { opacity: 1, x: 0 },
-        };
+        return { opacity: 0, transform: "translateX(-28px)" };
       case "scale":
-        return {
-          hidden: { opacity: 0, scale: 0.94 },
-          visible: { opacity: 1, scale: 1 },
-        };
+        return { opacity: 0, transform: "scale(0.94)" };
       case "none":
       default:
-        return {
-          hidden: { opacity: 0 },
-          visible: { opacity: 1 },
-        };
+        return { opacity: 0 };
     }
   };
 
+  const style: React.CSSProperties = {
+    ...(isInView
+      ? { opacity: 1, transform: "none" }
+      : getHiddenStyle()),
+    transition: `opacity ${duration}s cubic-bezier(${EASE.join(",")}) ${delay}s, transform ${duration}s cubic-bezier(${EASE.join(",")}) ${delay}s`,
+  };
+
   return (
-    <motion.div
-      ref={ref}
-      variants={getVariants()}
-      initial="hidden"
-      animate={isInView ? "visible" : "hidden"}
-      transition={{
-        duration,
-        delay,
-        ease: [0.21, 0.47, 0.32, 0.98],
-      }}
-      className={className}
-    >
+    <div ref={ref} style={style} className={className}>
       {children}
-    </motion.div>
+    </div>
   );
 }
