@@ -1,17 +1,36 @@
 import React from "react";
+import dynamic from "next/dynamic";
 import { BroadcastHUD } from "@/components/BroadcastHUD";
 import { Header } from "@/components/Header";
 import { Hero } from "@/components/Hero";
-import { About } from "@/components/About";
-import { SignalFlowSimulator } from "@/components/SignalFlowSimulator";
-import { ServicesBento } from "@/components/ServicesBento";
-import { FlagshipEvents } from "@/components/FlagshipEvents";
-import { EquipmentRack } from "@/components/EquipmentRack";
-import { BroadcastCalculator } from "@/components/BroadcastCalculator";
-import { Testimonials } from "@/components/Testimonials";
-import { ContactBooking } from "@/components/ContactBooking";
-import { Footer } from "@/components/Footer";
 import { PERSONAL_INFO } from "@/lib/data";
+
+// Below-the-fold sections are code-split so the initial JS payload only covers
+// the above-the-fold chrome (HUD, Header, Hero). SSR stays on: full HTML is
+// still delivered for SEO/LCP, only hydration JS is deferred per section.
+const About = dynamic(() => import("@/components/About").then((m) => m.About));
+const SignalFlowSimulator = dynamic(() =>
+  import("@/components/SignalFlowSimulator").then((m) => m.SignalFlowSimulator)
+);
+const ServicesBento = dynamic(() =>
+  import("@/components/ServicesBento").then((m) => m.ServicesBento)
+);
+const FlagshipEvents = dynamic(() =>
+  import("@/components/FlagshipEvents").then((m) => m.FlagshipEvents)
+);
+const EquipmentRack = dynamic(() =>
+  import("@/components/EquipmentRack").then((m) => m.EquipmentRack)
+);
+const BroadcastCalculator = dynamic(() =>
+  import("@/components/BroadcastCalculator").then((m) => m.BroadcastCalculator)
+);
+const Testimonials = dynamic(() =>
+  import("@/components/Testimonials").then((m) => m.Testimonials)
+);
+const ContactBooking = dynamic(() =>
+  import("@/components/ContactBooking").then((m) => m.ContactBooking)
+);
+const Footer = dynamic(() => import("@/components/Footer").then((m) => m.Footer));
 
 export default function HomePage() {
   const jsonLd = {
