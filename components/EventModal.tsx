@@ -84,7 +84,7 @@ export function EventModal({ event, onClose }: EventModalProps) {
         role="dialog"
         aria-modal="true"
         aria-labelledby="modal-event-title"
-        className="relative w-full max-w-4xl max-h-[90vh] overflow-y-auto bg-[#0a0f19] border border-[#22334d] rounded-3xl p-6 sm:p-8 lg:p-10 shadow-2xl bevel-panel text-slate-100 custom-scrollbar"
+        className="relative w-full max-w-4xl max-h-[90vh] overflow-y-auto overscroll-contain bg-[#0a0f19] border border-[#22334d] rounded-3xl p-6 sm:p-8 lg:p-10 shadow-2xl bevel-panel text-slate-100 custom-scrollbar"
       >
         {/* Close Button */}
         <button
@@ -94,7 +94,7 @@ export function EventModal({ event, onClose }: EventModalProps) {
             onClose();
           }}
           aria-label="Close case study dialog"
-          className="absolute top-5 right-5 p-3 rounded-full bg-[#121c2c] border border-[#26374f] text-slate-200 hover:text-white hover:bg-[#1a273d] transition-all z-10 focus-visible:ring-2 focus-visible:ring-amber-400 focus-visible:outline-none min-h-[44px] min-w-[44px] flex items-center justify-center"
+          className="absolute top-5 right-5 p-3 rounded-full bg-[#121c2c] border border-[#26374f] text-slate-200 hover:text-white hover:bg-[#1a273d] transition-colors z-10 focus-visible:ring-2 focus-visible:ring-amber-400 focus-visible:outline-none min-h-[44px] min-w-[44px] flex items-center justify-center"
         >
           <X className="w-5 h-5" aria-hidden="true" />
         </button>
@@ -149,11 +149,11 @@ export function EventModal({ event, onClose }: EventModalProps) {
         {/* Key Metrics Grid */}
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-8">
           {event.keyStats.map((stat, i) => (
-            <div key={i} className="p-3.5 rounded-xl bg-[#070b12] border border-[#1b273b] text-center">
+            <div key={i} className="p-4 rounded-xl bg-[#070b12] border border-[#1b273b] text-center">
               <div className="text-xl sm:text-2xl font-extrabold text-amber-400 font-mono">
                 {stat.value}
               </div>
-              <div className="text-xs text-slate-300 font-mono mt-0.5 font-medium">
+              <div className="text-xs text-slate-300 font-mono mt-1 font-medium">
                 {stat.label}
               </div>
             </div>
@@ -167,19 +167,19 @@ export function EventModal({ event, onClose }: EventModalProps) {
             <span>Core Hardware & Signal Specifications</span>
           </h3>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs font-mono">
-            <div className="p-3.5 rounded-xl bg-[#0d1422] border border-[#1d2b40]">
+            <div className="p-4 rounded-xl bg-[#0d1422] border border-[#1d2b40]">
               <span className="text-slate-400 block text-[10px] uppercase font-bold">VIDEO FORMAT & COLOR</span>
               <span className="text-slate-100 font-semibold text-sm">{event.specs.format}</span>
             </div>
-            <div className="p-3.5 rounded-xl bg-[#0d1422] border border-[#1d2b40]">
+            <div className="p-4 rounded-xl bg-[#0d1422] border border-[#1d2b40]">
               <span className="text-slate-400 block text-[10px] uppercase font-bold">VISION MIXER</span>
               <span className="text-slate-100 font-semibold text-sm">{event.specs.visionMixer}</span>
             </div>
-            <div className="p-3.5 rounded-xl bg-[#0d1422] border border-[#1d2b40]">
+            <div className="p-4 rounded-xl bg-[#0d1422] border border-[#1d2b40]">
               <span className="text-slate-400 block text-[10px] uppercase font-bold">REPLAY SERVERS & SLOW-MO</span>
               <span className="text-slate-100 font-semibold text-sm">{event.specs.replay}</span>
             </div>
-            <div className="p-3.5 rounded-xl bg-[#0d1422] border border-[#1d2b40]">
+            <div className="p-4 rounded-xl bg-[#0d1422] border border-[#1d2b40]">
               <span className="text-slate-400 block text-[10px] uppercase font-bold">MASTER SYNC & ROUTING</span>
               <span className="text-slate-100 font-semibold text-sm">{event.specs.syncRouter}</span>
             </div>
@@ -193,10 +193,10 @@ export function EventModal({ event, onClose }: EventModalProps) {
               <Layers className="w-4 h-4 text-amber-400" aria-hidden="true" />
               <span>Technical Approach</span>
             </h3>
-            <div className="space-y-2.5 text-xs text-slate-200">
+            <div className="space-y-3 text-xs text-slate-200">
               {event.technicalApproach.map((item, i) => (
                 <div key={i} className="flex items-start gap-2">
-                  <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" aria-hidden="true" />
+                  <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0 mt-1" aria-hidden="true" />
                   <span>{item}</span>
                 </div>
               ))}
@@ -210,7 +210,7 @@ export function EventModal({ event, onClose }: EventModalProps) {
             </h3>
             <div className="space-y-2 text-xs font-mono">
               {event.signalFlow.map((step, i) => (
-                <div key={i} className="p-2.5 rounded-lg bg-[#070b12] border border-[#1a2638] flex items-start gap-2">
+                <div key={i} className="p-3 rounded-lg bg-[#070b12] border border-[#1a2638] flex items-start gap-2">
                   <span className="text-amber-400 font-bold shrink-0">0{i + 1}.</span>
                   <div>
                     <span className="text-white font-bold block">{step.step}</span>
@@ -260,9 +260,9 @@ export function EventModal({ event, onClose }: EventModalProps) {
 
         {/* CTA in Modal */}
         <div className="flex flex-wrap items-center justify-between gap-4 pt-6 border-t border-[#1a2538]">
-          <div className="flex flex-wrap gap-1.5">
+          <div className="flex flex-wrap gap-2">
             {event.tags.map((tag) => (
-              <span key={tag} className="px-2.5 py-1 rounded bg-[#101826] border border-[#202f47] text-[11px] font-mono text-slate-200">
+              <span key={tag} className="px-3 py-1 rounded bg-[#101826] border border-[#202f47] text-[11px] font-mono text-slate-200">
                 #{tag}
               </span>
             ))}
@@ -279,7 +279,7 @@ export function EventModal({ event, onClose }: EventModalProps) {
                 if (el) el.scrollIntoView({ behavior: "smooth" });
               }, 120);
             }}
-            className="px-6 py-3 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-mono text-xs font-bold transition-all focus-visible:ring-2 focus-visible:ring-amber-400 focus-visible:outline-none min-h-[44px] flex items-center"
+            className="px-6 py-3 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-mono text-xs font-bold transition-colors focus-visible:ring-2 focus-visible:ring-amber-400 focus-visible:outline-none min-h-[44px] flex items-center"
           >
             Inquire For Similar Production &rarr;
           </a>

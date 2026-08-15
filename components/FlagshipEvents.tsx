@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { FLAGSHIP_EVENTS } from "@/lib/data";
 import { CaseStudy } from "@/lib/types";
@@ -17,9 +17,26 @@ import {
 
 export function FlagshipEvents() {
   const [selectedEvent, setSelectedEvent] = useState<CaseStudy | null>(null);
-  const [selectedCategory, setSelectedCategory] = useState<string>("All");
 
   const categories = ["All", "Sports", "Summit", "Heritage", "Entertainment", "Combat Sports"];
+
+  const [selectedCategory, setSelectedCategory] = useState<string>(() => {
+    if (typeof window !== "undefined") {
+      const param = new URLSearchParams(window.location.search).get("eventCategory");
+      if (param && categories.includes(param)) return param;
+    }
+    return "All";
+  });
+
+  useEffect(() => {
+    const url = new URL(window.location.href);
+    if (selectedCategory === "All") {
+      url.searchParams.delete("eventCategory");
+    } else {
+      url.searchParams.set("eventCategory", selectedCategory);
+    }
+    window.history.replaceState(null, "", url.toString());
+  }, [selectedCategory]);
 
   const filteredEvents =
     selectedCategory === "All"
@@ -35,14 +52,14 @@ export function FlagshipEvents() {
     <section
       id="events"
       aria-label="Flagship Events"
-      className="py-20 lg:py-28 bg-[#090d16] border-b border-[#162133] relative overflow-hidden scroll-mt-28"
+      className="py-20 lg:py-28 bg-[#090d16] border-b border-[#162133] relative overflow-hidden scroll-mt-32"
     >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+      <div className="max-w-screen-2xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {/* Section Header */}
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 lg:mb-16 gap-6 sm:gap-8">
           <div className="max-w-2xl">
             <Reveal direction="down">
-              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-amber-500/10 border border-amber-500/30 text-amber-300 text-xs font-mono mb-4">
+              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-amber-500/10 border border-amber-500/30 text-amber-300 text-xs font-mono mb-4">
                 <Award className="w-4 h-4 shrink-0" aria-hidden="true" />
                 <span>HIGH-STAKES BROADCAST PRODUCTIONS</span>
               </div>
@@ -63,7 +80,7 @@ export function FlagshipEvents() {
 
           {/* Category Filter Pills */}
           <Reveal direction="left" delay={0.2}>
-            <div className="flex flex-wrap gap-2 p-1.5 bg-[#0c121e] border border-[#1e2a3f] rounded-2xl shrink-0" role="group" aria-label="Filter case studies by category">
+            <div className="flex flex-nowrap items-center gap-2 p-2 bg-[#0c121e] border border-[#1e2a3f] rounded-2xl shrink-0 max-w-full overflow-x-auto" role="group" aria-label="Filter case studies by category">
               {categories.map((cat) => {
                 const count = cat === "All" ? FLAGSHIP_EVENTS.length : FLAGSHIP_EVENTS.filter((e) => e.category === cat).length;
                 return (
@@ -74,14 +91,14 @@ export function FlagshipEvents() {
                       setSelectedCategory(cat);
                     }}
                     aria-pressed={selectedCategory === cat}
-                    className={`px-3.5 py-2 rounded-xl text-xs font-mono transition-all min-h-[36px] flex items-center gap-1.5 focus-visible:ring-2 focus-visible:ring-amber-400 focus-visible:outline-none ${
+                    className={`px-4 py-2 rounded-xl text-xs font-mono transition-colors min-h-[44px] flex items-center gap-2 whitespace-nowrap focus-visible:ring-2 focus-visible:ring-amber-400 focus-visible:outline-none ${
                       selectedCategory === cat
                         ? "bg-amber-500 text-slate-950 font-bold shadow-md shadow-amber-500/20"
                         : "text-slate-300 hover:text-white hover:bg-[#131d2e]"
                     }`}
                   >
                     <span>{cat}</span>
-                    <span className={`text-[10px] px-1.5 py-0.2 rounded-full ${selectedCategory === cat ? "bg-slate-950/20 text-slate-950" : "bg-slate-800 text-slate-400"}`}>
+                    <span className={`text-[10px] px-2 py-1 rounded-full ${selectedCategory === cat ? "bg-slate-950/20 text-slate-950" : "bg-slate-800 text-slate-400"}`}>
                       {count}
                     </span>
                   </button>
@@ -95,20 +112,20 @@ export function FlagshipEvents() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
           {filteredEvents.map((event, index) => (
             <Reveal key={event.slug} direction="up" delay={0.1 + index * 0.08}>
-              <div className="h-full rounded-3xl bg-[#0c1321] border border-[#1d2a3f] hover:border-amber-500/50 transition-all duration-300 flex flex-col justify-between overflow-hidden group shadow-xl bevel-panel">
+              <div className="h-full rounded-3xl bg-[#0c1321] border border-[#1d2a3f] hover:border-amber-500/50 transition-colors duration-300 flex flex-col justify-between overflow-hidden group shadow-xl bevel-panel">
                 <div className="p-6 sm:p-8 space-y-6">
                   {/* Top Badges */}
                   <div className="flex items-center justify-between gap-2">
-                    <span className="px-3 py-1.5 rounded-full bg-amber-500/15 border border-amber-500/30 text-amber-300 text-xs font-mono font-bold uppercase tracking-wider">
+                    <span className="px-3 py-2 rounded-full bg-amber-500/15 border border-amber-500/30 text-amber-300 text-xs font-mono font-bold uppercase tracking-wider">
                       {event.category}
                     </span>
-                    <span className="text-xs font-mono px-2.5 py-1 rounded-lg bg-[#070b12] text-slate-300 border border-[#192436] font-semibold">
+                    <span className="text-xs font-mono px-3 py-1 rounded-lg bg-[#070b12] text-slate-300 border border-[#192436] font-semibold">
                       {event.cameraCount} Cams
                     </span>
                   </div>
 
                   <div>
-                    <h3 className="text-xl sm:text-2xl font-bold text-white font-display mb-1.5 group-hover:text-amber-400 transition-colors">
+                    <h3 className="text-xl sm:text-2xl font-bold text-white font-display mb-2 group-hover:text-amber-400 transition-colors">
                       {event.title}
                     </h3>
                     <p className="text-xs font-mono text-cyan-300 font-semibold mb-3">
@@ -122,13 +139,13 @@ export function FlagshipEvents() {
 
                   {/* Metadata Row */}
                   <div className="space-y-2 text-xs font-mono text-slate-300 border-t border-[#182336] pt-4">
-                    <div className="flex items-center gap-2.5">
+                    <div className="flex items-center gap-3">
                       <MapPin className="w-4 h-4 text-amber-400 shrink-0" aria-hidden="true" />
-                      <span className="truncate">{event.venue}</span>
+                      <span className="min-w-0 line-clamp-2">{event.venue}</span>
                     </div>
-                    <div className="flex items-center gap-2.5">
+                    <div className="flex items-center gap-3">
                       <Tv className="w-4 h-4 text-cyan-400 shrink-0" aria-hidden="true" />
-                      <span className="truncate">{event.broadcaster}</span>
+                      <span className="min-w-0 line-clamp-2">{event.broadcaster}</span>
                     </div>
                   </div>
 
@@ -138,7 +155,7 @@ export function FlagshipEvents() {
                       <span className="text-base sm:text-lg font-bold text-amber-400 block">
                         {event.keyStats[0]?.value}
                       </span>
-                      <span className="text-[10px] text-slate-400 block font-medium mt-0.5">
+                      <span className="text-[10px] text-slate-400 block font-medium mt-1">
                         {event.keyStats[0]?.label}
                       </span>
                     </div>
@@ -146,7 +163,7 @@ export function FlagshipEvents() {
                       <span className="text-base sm:text-lg font-bold text-emerald-400 block">
                         {event.keyStats[1]?.value}
                       </span>
-                      <span className="text-[10px] text-slate-400 block font-medium mt-0.5">
+                      <span className="text-[10px] text-slate-400 block font-medium mt-1">
                         {event.keyStats[1]?.label}
                       </span>
                     </div>
@@ -158,17 +175,17 @@ export function FlagshipEvents() {
                   <button
                     onClick={() => handleOpenModal(event)}
                     aria-label={`Open detailed engineering breakdown for ${event.title}`}
-                    className="flex-1 py-2.5 px-4 rounded-xl bg-[#111927] hover:bg-[#182338] text-slate-100 hover:text-amber-400 border border-[#23334d] font-mono text-xs font-semibold transition-all flex items-center justify-center gap-2 min-h-[44px] focus-visible:ring-2 focus-visible:ring-amber-400 focus-visible:outline-none"
+                    className="flex-1 py-3 px-4 rounded-xl bg-[#111927] hover:bg-[#182338] text-slate-100 hover:text-amber-400 border border-[#23334d] font-mono text-xs font-semibold transition-colors flex items-center justify-center gap-2 min-h-[44px] focus-visible:ring-2 focus-visible:ring-amber-400 focus-visible:outline-none"
                   >
                     <Eye className="w-4 h-4 text-amber-400 shrink-0" aria-hidden="true" />
-                    <span>Quick Engineering View</span>
+                    <span>Engineering View</span>
                   </button>
 
                   <Link
                     href={`/events/${event.slug}`}
                     onClick={() => sound.playButtonClick()}
                     aria-label={`View full dedicated case study page for ${event.title}`}
-                    className="p-2.5 px-3.5 rounded-xl bg-amber-500/10 hover:bg-amber-500 text-amber-400 hover:text-slate-950 border border-amber-500/30 transition-all text-xs font-mono min-h-[44px] flex items-center justify-center focus-visible:ring-2 focus-visible:ring-amber-400 focus-visible:outline-none"
+                    className="p-3 px-4 rounded-xl bg-amber-500/10 hover:bg-amber-500 text-amber-400 hover:text-slate-950 border border-amber-500/30 transition-colors text-xs font-mono min-h-[44px] flex items-center justify-center focus-visible:ring-2 focus-visible:ring-amber-400 focus-visible:outline-none"
                   >
                     <ArrowRight className="w-4 h-4 shrink-0" aria-hidden="true" />
                   </Link>

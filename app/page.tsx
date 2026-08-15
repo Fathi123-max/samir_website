@@ -58,7 +58,7 @@ export default function HomePage() {
       <Header />
 
       {/* Main Content Assembly */}
-      <main className="flex-1 w-full">
+      <main id="main" className="flex-1 w-full" tabIndex={-1}>
         <Hero />
         <About />
         <SignalFlowSimulator />

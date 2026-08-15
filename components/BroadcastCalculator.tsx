@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { sound } from "@/lib/sound";
 import { Reveal } from "./Reveal";
 import {
@@ -10,13 +10,65 @@ import {
 } from "lucide-react";
 
 export function BroadcastCalculator() {
+  const delayFpsOptions = [25, 29.97, 50, 59.94];
+
   // Calculator 1: Frame Delay to Milliseconds
-  const [fps, setFps] = useState<number>(50);
-  const [frames, setFrames] = useState<number>(3);
+  const [fps, setFps] = useState<number>(() => {
+    const p =
+      typeof window !== "undefined"
+        ? new URLSearchParams(window.location.search).get("calcFps")
+        : null;
+    if (p) {
+      const v = parseFloat(p);
+      if (delayFpsOptions.some((o) => Math.abs(o - v) < 0.001)) return v;
+    }
+    return 50;
+  });
+  const [frames, setFrames] = useState<number>(() => {
+    const p =
+      typeof window !== "undefined"
+        ? new URLSearchParams(window.location.search).get("calcFrames")
+        : null;
+    if (p) {
+      const v = parseInt(p, 10);
+      if (v >= 1 && v <= 20) return v;
+    }
+    return 3;
+  });
 
   // Calculator 2: Video Signal Bandwidth Estimator
-  const [cameraChannels, setCameraChannels] = useState<number>(16);
-  const [videoStandard, setVideoStandard] = useState<"1080i50" | "1080p50" | "4k50p">("1080p50");
+  const [cameraChannels, setCameraChannels] = useState<number>(() => {
+    const p =
+      typeof window !== "undefined"
+        ? new URLSearchParams(window.location.search).get("calcCams")
+        : null;
+    if (p) {
+      const v = parseInt(p, 10);
+      if (v >= 4 && v <= 32) return v;
+    }
+    return 16;
+  });
+  const [videoStandard, setVideoStandard] = useState<"1080i50" | "1080p50" | "4k50p">(() => {
+    const p =
+      typeof window !== "undefined"
+        ? new URLSearchParams(window.location.search).get("calcStd")
+        : null;
+    if (p === "1080i50" || p === "1080p50" || p === "4k50p") return p;
+    return "1080p50";
+  });
+
+  useEffect(() => {
+    const url = new URL(window.location.href);
+    if (fps === 50) url.searchParams.delete("calcFps");
+    else url.searchParams.set("calcFps", String(fps));
+    if (frames === 3) url.searchParams.delete("calcFrames");
+    else url.searchParams.set("calcFrames", String(frames));
+    if (cameraChannels === 16) url.searchParams.delete("calcCams");
+    else url.searchParams.set("calcCams", String(cameraChannels));
+    if (videoStandard === "1080p50") url.searchParams.delete("calcStd");
+    else url.searchParams.set("calcStd", videoStandard);
+    window.history.replaceState(null, "", url.toString());
+  }, [fps, frames, cameraChannels, videoStandard]);
 
   const msPerFrame = 1000 / fps;
   const totalMs = (frames * msPerFrame).toFixed(2);
@@ -44,13 +96,13 @@ export function BroadcastCalculator() {
     <section
       id="calculator"
       aria-label="Broadcast Engineering Calculator"
-      className="py-20 lg:py-28 bg-[#090d16] border-b border-[#162133] relative overflow-hidden scroll-mt-28"
+      className="py-20 lg:py-28 bg-[#090d16] border-b border-[#162133] relative overflow-hidden scroll-mt-32"
     >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+      <div className="max-w-screen-2xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {/* Section Header */}
         <div className="max-w-3xl mb-12 lg:mb-16">
           <Reveal direction="down">
-            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-300 text-xs font-mono mb-4">
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-300 text-xs font-mono mb-4">
               <Calculator className="w-4 h-4 shrink-0" aria-hidden="true" />
               <span>ENGINEERING UTILITIES & FIELD CALCULATOR</span>
             </div>
@@ -75,7 +127,7 @@ export function BroadcastCalculator() {
           <Reveal direction="left" delay={0.2}>
             <div className="p-6 sm:p-8 lg:p-10 rounded-3xl bg-[#0c1322] border border-[#1e2d44] shadow-xl bevel-panel h-full flex flex-col justify-between space-y-6">
               <div>
-                <div className="flex items-center gap-2.5 text-emerald-400 font-mono text-xs mb-3">
+                <div className="flex items-center gap-3 text-emerald-400 font-mono text-xs mb-3">
                   <Clock className="w-4 h-4 shrink-0" aria-hidden="true" />
                   <span className="font-bold tracking-wider uppercase">LIP-SYNC & FRAME DELAY CONVERTER</span>
                 </div>
@@ -100,7 +152,7 @@ export function BroadcastCalculator() {
                           sound.playJogClick();
                           setFrames(preset.frames);
                         }}
-                        className={`p-2 rounded-xl border text-center transition-all font-mono ${
+                        className={`p-2 rounded-xl border text-center transition-colors font-mono min-h-[44px] focus-visible:ring-2 focus-visible:ring-emerald-400 focus-visible:outline-none ${
                           frames === preset.frames
                             ? "bg-emerald-500/20 border-emerald-400 text-emerald-300"
                             : "bg-[#080d17] border-[#1b283d] text-slate-300 hover:text-white"
@@ -119,7 +171,7 @@ export function BroadcastCalculator() {
                     <label className="block text-slate-200 mb-2 font-semibold">
                       BROADCAST FRAME RATE: <strong className="text-amber-400">{fps} FPS</strong>
                     </label>
-                    <div className="grid grid-cols-4 gap-2.5" role="group" aria-label="Select frame rate">
+                    <div className="grid grid-cols-2 sm:grid-cols-4 gap-3" role="group" aria-label="Select frame rate">
                       {[25, 29.97, 50, 59.94].map((rate) => (
                         <button
                           key={rate}
@@ -128,7 +180,7 @@ export function BroadcastCalculator() {
                             setFps(rate);
                           }}
                           aria-pressed={fps === rate}
-                          className={`py-2.5 rounded-xl border text-xs font-bold transition-all min-h-[40px] focus-visible:ring-2 focus-visible:ring-emerald-400 focus-visible:outline-none ${
+                          className={`py-3 rounded-xl border text-xs font-bold transition-colors min-h-[44px] focus-visible:ring-2 focus-visible:ring-emerald-400 focus-visible:outline-none ${
                             fps === rate
                               ? "bg-emerald-500 text-slate-950 border-emerald-400 font-bold"
                               : "bg-[#080d17] border-[#1b283d] text-slate-300 hover:text-white"
@@ -183,7 +235,7 @@ export function BroadcastCalculator() {
           <Reveal direction="right" delay={0.25}>
             <div className="p-6 sm:p-8 lg:p-10 rounded-3xl bg-[#0c1322] border border-[#1e2d44] shadow-xl bevel-panel h-full flex flex-col justify-between space-y-6">
               <div>
-                <div className="flex items-center gap-2.5 text-cyan-400 font-mono text-xs mb-3">
+                <div className="flex items-center gap-3 text-cyan-400 font-mono text-xs mb-3">
                   <Activity className="w-4 h-4 shrink-0" aria-hidden="true" />
                   <span className="font-bold tracking-wider uppercase">OB VAN FIBER & TRUNK BANDWIDTH</span>
                 </div>
@@ -201,7 +253,7 @@ export function BroadcastCalculator() {
                     <label className="block text-slate-200 mb-2 font-semibold">
                       VIDEO FORMAT STANDARD:
                     </label>
-                    <div className="grid grid-cols-3 gap-2.5" role="group" aria-label="Select video standard">
+                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-3" role="group" aria-label="Select video standard">
                       {(
                         [
                           { id: "1080i50", label: "1080i 50 (HD-SDI)" },
@@ -216,7 +268,7 @@ export function BroadcastCalculator() {
                             setVideoStandard(std.id);
                           }}
                           aria-pressed={videoStandard === std.id}
-                          className={`py-2.5 px-2 rounded-xl border text-[11px] font-bold truncate transition-all min-h-[40px] focus-visible:ring-2 focus-visible:ring-cyan-400 focus-visible:outline-none ${
+                          className={`py-3 px-2 rounded-xl border text-[11px] font-bold text-center leading-tight transition-colors min-h-[44px] focus-visible:ring-2 focus-visible:ring-cyan-400 focus-visible:outline-none flex items-center justify-center ${
                             videoStandard === std.id
                               ? "bg-cyan-500 text-slate-950 border-cyan-400 font-bold"
                               : "bg-[#080d17] border-[#1b283d] text-slate-300 hover:text-white"
@@ -251,8 +303,8 @@ export function BroadcastCalculator() {
                   </div>
 
                   {/* Network Trunk Load Bar */}
-                  <div className="p-3.5 rounded-xl bg-[#080d17] border border-[#1a273c]">
-                    <div className="flex justify-between text-[11px] mb-1.5">
+                  <div className="p-4 rounded-xl bg-[#080d17] border border-[#1a273c]">
+                    <div className="flex justify-between text-[11px] mb-2">
                       <span className="text-slate-300">100GbE QSFP Trunk Load:</span>
                       <span className={`font-bold ${qsfpUtilization > 80 ? "text-amber-400" : "text-emerald-400"}`}>
                         {qsfpUtilization}% ({totalSt2110Gbps} / 100 Gbps)
@@ -260,7 +312,7 @@ export function BroadcastCalculator() {
                     </div>
                     <div className="w-full bg-slate-800 rounded-full h-2 overflow-hidden">
                       <div
-                        className={`h-full rounded-full transition-all duration-300 ${
+                        className={`h-full rounded-full transition-[width] duration-300 ${
                           qsfpUtilization > 80 ? "bg-amber-400" : "bg-cyan-400"
                         }`}
                         style={{ width: `${qsfpUtilization}%` }}
@@ -271,7 +323,7 @@ export function BroadcastCalculator() {
               </div>
 
               {/* Result Readout */}
-              <div className="p-6 sm:p-8 rounded-2xl bg-[#080e18] border border-[#1c2a3f] grid grid-cols-2 gap-6 text-center font-mono">
+              <div className="p-6 sm:p-8 rounded-2xl bg-[#080e18] border border-[#1c2a3f] grid grid-cols-2 gap-4 sm:gap-6 text-center font-mono">
                 <div>
                   <span className="text-[11px] text-slate-400 uppercase block mb-1 font-bold">
                     TOTAL BASEBAND SDI

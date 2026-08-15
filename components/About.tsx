@@ -1,9 +1,38 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useSyncExternalStore } from "react";
 import { TIMELINE, PERSONAL_INFO } from "@/lib/data";
 import { sound } from "@/lib/sound";
 import { Reveal } from "./Reveal";
+
+const MILESTONE_EVENT = "samir:milestone-change";
+
+function readMilestoneIndex(): number {
+  if (typeof window === "undefined") return 0;
+  const raw = new URLSearchParams(window.location.search).get("milestone");
+  const parsed = raw === null ? NaN : Number(raw);
+  return Number.isInteger(parsed) && parsed >= 0 && parsed < TIMELINE.length ? parsed : 0;
+}
+
+function subscribeMilestone(callback: () => void): () => void {
+  window.addEventListener("popstate", callback);
+  window.addEventListener(MILESTONE_EVENT, callback);
+  return () => {
+    window.removeEventListener("popstate", callback);
+    window.removeEventListener(MILESTONE_EVENT, callback);
+  };
+}
+
+function writeMilestoneIndex(idx: number) {
+  const url = new URL(window.location.href);
+  if (idx > 0) {
+    url.searchParams.set("milestone", String(idx));
+  } else {
+    url.searchParams.delete("milestone");
+  }
+  window.history.replaceState(null, "", url.toString());
+  window.dispatchEvent(new Event(MILESTONE_EVENT));
+}
 import {
   GraduationCap,
   Award,
@@ -14,10 +43,15 @@ import {
   CheckCircle2,
   Building,
   MapPin,
+  ChevronDown,
 } from "lucide-react";
 
 export function About() {
-  const [selectedTimelineIndex, setSelectedTimelineIndex] = useState(0);
+  const selectedTimelineIndex = useSyncExternalStore(
+    subscribeMilestone,
+    readMilestoneIndex,
+    () => 0
+  );
 
   const pillars = [
     {
@@ -50,13 +84,13 @@ export function About() {
     <section
       id="story"
       aria-label="Engineering Heritage"
-      className="py-20 lg:py-28 bg-[#090d16] border-b border-[#162133] relative overflow-hidden scroll-mt-28"
+      className="py-20 lg:py-28 bg-[#090d16] border-b border-[#162133] relative overflow-hidden scroll-mt-32"
     >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+      <div className="max-w-screen-2xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {/* Section Header */}
         <div className="max-w-3xl mb-12 lg:mb-16">
           <Reveal direction="down">
-            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-amber-500/10 border border-amber-500/30 text-amber-300 text-xs font-mono mb-4">
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-amber-500/10 border border-amber-500/30 text-amber-300 text-xs font-mono mb-4">
               <GraduationCap className="w-4 h-4 shrink-0" aria-hidden="true" />
               <span>ENGINEERING HERITAGE & CREDENTIALS</span>
             </div>
@@ -76,10 +110,10 @@ export function About() {
         </div>
 
         {/* 4 Pillars Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-16 lg:mb-20">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12 lg:mb-16">
           {pillars.map((pillar, index) => (
             <Reveal key={pillar.title} direction="up" delay={0.1 + index * 0.08}>
-              <div className="h-full p-6 sm:p-8 rounded-3xl bg-[#0c1320] border border-[#1b283d] hover:border-slate-600 transition-all flex flex-col justify-between group shadow-xl bevel-panel">
+              <div className="h-full p-5 sm:p-6 rounded-3xl bg-[#0c1320] border border-[#1b283d] hover:border-slate-600 transition-colors flex flex-col justify-between group shadow-xl bevel-panel">
                 <div>
                   <div className={`w-12 h-12 rounded-2xl border flex items-center justify-center mb-6 shrink-0 ${pillar.accent}`}>
                     <pillar.icon className="w-6 h-6" aria-hidden="true" />
@@ -108,7 +142,7 @@ export function About() {
               <div className="p-6 sm:p-8 rounded-3xl bg-[#0d1522] border border-[#202f47] shadow-xl relative overflow-hidden space-y-4">
                 <div className="absolute top-0 right-0 w-32 h-32 bg-amber-500/5 rounded-full blur-2xl pointer-events-none" aria-hidden="true" />
 
-                <div className="flex items-center gap-2.5 text-amber-300 font-mono text-xs">
+                <div className="flex items-center gap-3 text-amber-300 font-mono text-xs">
                   <Award className="w-4 h-4 shrink-0" aria-hidden="true" />
                   <span className="font-bold tracking-wider">ACADEMIC FOUNDATION</span>
                 </div>
@@ -116,7 +150,7 @@ export function About() {
                 <h3 className="text-xl font-bold text-white font-display">
                   {PERSONAL_INFO.degree}
                 </h3>
-                <div className="inline-block px-3 py-1.5 rounded-lg bg-amber-500/15 border border-amber-500/40 text-amber-300 font-mono text-xs font-semibold">
+                <div className="inline-block px-3 py-2 rounded-lg bg-amber-500/15 border border-amber-500/40 text-amber-300 font-mono text-xs font-semibold">
                   {PERSONAL_INFO.degreeHonors}
                 </div>
 
@@ -127,11 +161,11 @@ export function About() {
                 <div className="mt-6 pt-6 border-t border-[#1d2b40] grid grid-cols-2 gap-4 text-xs font-mono">
                   <div>
                     <span className="text-slate-400 block text-[10px] uppercase font-bold">CORE FOCUS</span>
-                    <span className="text-white font-semibold mt-0.5 block">Telecom & Electronics</span>
+                    <span className="text-white font-semibold mt-1 block">Telecom & Electronics</span>
                   </div>
                   <div>
                     <span className="text-slate-400 block text-[10px] uppercase font-bold">CAREER SCOPE</span>
-                    <span className="text-white font-semibold mt-0.5 block">OB Vans • MCR • Flyaways</span>
+                    <span className="text-white font-semibold mt-1 block">OB Vans • MCR • Flyaways</span>
                   </div>
                 </div>
               </div>
@@ -165,21 +199,23 @@ export function About() {
                   {TIMELINE.map((node, idx) => {
                     const isSelected = selectedTimelineIndex === idx;
                     return (
-                      <div
+                      <button
                         key={node.company}
+                        type="button"
                         onClick={() => {
                           sound.playButtonClick();
-                          setSelectedTimelineIndex(idx);
+                          writeMilestoneIndex(idx);
                         }}
-                        className={`p-6 rounded-2xl border transition-all cursor-pointer ${
+                        aria-pressed={isSelected}
+                        className={`w-full text-left rounded-2xl border transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-400 ${
                           isSelected
-                            ? "bg-[#131d2e] border-amber-500/70 shadow-lg ring-1 ring-amber-500/30"
-                            : "bg-[#090e17] border-[#1a263a] hover:border-slate-600 hover:bg-[#0e1624]"
+                            ? "bg-[#131d2e] border-amber-500/70 shadow-lg ring-1 ring-amber-500/30 p-6"
+                            : "bg-[#090e17] border-[#1a263a] hover:border-slate-600 hover:bg-[#0e1624] p-4"
                         }`}
                       >
-                        <div className="flex flex-wrap items-center justify-between gap-2 mb-3">
+                        <div className="flex flex-wrap items-center justify-between gap-2 mb-2">
                           <div className="flex items-center gap-2">
-                            <span className="text-xs font-mono font-bold px-2.5 py-1 rounded bg-amber-500/15 border border-amber-500/30 text-amber-300">
+                            <span className="text-xs font-mono font-bold px-3 py-1 rounded bg-amber-500/15 border border-amber-500/30 text-amber-300">
                               {node.period}
                             </span>
                             <span className="text-xs font-mono text-cyan-300 font-semibold">
@@ -187,44 +223,55 @@ export function About() {
                             </span>
                           </div>
                           <div className="flex items-center gap-1 text-xs font-mono text-slate-300">
-                            <MapPin className="w-3.5 h-3.5 text-slate-400 shrink-0" aria-hidden="true" />
+                            <MapPin className="w-4 h-4 text-slate-400 shrink-0" aria-hidden="true" />
                             <span>{node.location}</span>
                           </div>
                         </div>
 
-                        <h3 className="text-lg sm:text-xl font-bold text-white font-display mb-1">
+                        <h3 className="text-base sm:text-lg font-bold text-white font-display mb-1">
                           {node.role}
                         </h3>
                         <div className="text-xs sm:text-sm font-mono text-slate-300 font-semibold mb-3">
                           {node.company}
                         </div>
 
-                        <p className="text-sm text-slate-300 leading-relaxed mb-4 font-sans">
-                          {node.description}
-                        </p>
+                        {!isSelected && (
+                          <div className="flex items-center gap-2 text-[11px] font-mono text-slate-400">
+                            <ChevronDown className="w-3 h-3 shrink-0" aria-hidden="true" />
+                            <span>CLICK TO EXPAND</span>
+                          </div>
+                        )}
 
-                        {/* Achievements list */}
-                        <div className="space-y-2 mb-5">
-                          {node.achievements.map((item, i) => (
-                            <div key={i} className="flex items-start gap-2.5 text-xs text-slate-200">
-                              <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" aria-hidden="true" />
-                              <span>{item}</span>
+                        {isSelected && (
+                          <>
+                            <p className="text-sm text-slate-300 leading-relaxed mb-4 font-sans">
+                              {node.description}
+                            </p>
+
+                            {/* Achievements list */}
+                            <div className="space-y-2 mb-5">
+                              {node.achievements.map((item, i) => (
+                                <div key={i} className="flex items-start gap-3 text-xs text-slate-200">
+                                  <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0 mt-1" aria-hidden="true" />
+                                  <span>{item}</span>
+                                </div>
+                              ))}
                             </div>
-                          ))}
-                        </div>
 
-                        {/* Tech tags */}
-                        <div className="flex flex-wrap gap-2 pt-3 border-t border-[#1b283d]">
-                          {node.technologies.map((tech) => (
-                            <span
-                              key={tech}
-                              className="px-2.5 py-1 rounded bg-[#070b12] border border-[#1c283c] text-[11px] font-mono text-slate-200"
-                            >
-                              {tech}
-                            </span>
-                          ))}
-                        </div>
-                      </div>
+                            {/* Tech tags */}
+                            <div className="flex flex-wrap gap-2 pt-3 border-t border-[#1b283d]">
+                              {node.technologies.map((tech) => (
+                                <span
+                                  key={tech}
+                                  className="px-3 py-1 rounded bg-[#070b12] border border-[#1c283c] text-[11px] font-mono text-slate-200"
+                                >
+                                  {tech}
+                                </span>
+                              ))}
+                            </div>
+                          </>
+                        )}
+                      </button>
                     );
                   })}
                 </div>

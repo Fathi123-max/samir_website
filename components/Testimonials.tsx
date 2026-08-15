@@ -8,11 +8,11 @@ import { Quote, Award } from "lucide-react";
 export function Testimonials() {
   return (
     <section aria-label="Testimonials" className="py-20 lg:py-28 bg-[#070b12] border-b border-[#162133] relative overflow-hidden">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+      <div className="max-w-screen-2xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {/* Section Header */}
         <div className="max-w-3xl mb-12 lg:mb-16">
           <Reveal direction="down">
-            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-amber-500/10 border border-amber-500/30 text-amber-300 text-xs font-mono mb-4">
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-amber-500/10 border border-amber-500/30 text-amber-300 text-xs font-mono mb-4">
               <Award className="w-4 h-4 shrink-0" aria-hidden="true" />
               <span>DIRECTOR & PRODUCTION ENDORSEMENTS</span>
             </div>
@@ -35,7 +35,7 @@ export function Testimonials() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
           {TESTIMONIALS.map((item, index) => (
             <Reveal key={item.id} direction="up" delay={0.1 + index * 0.1}>
-              <div className="h-full p-6 sm:p-8 rounded-3xl bg-[#0c121e] border border-[#1b283d] hover:border-slate-600 transition-all flex flex-col justify-between shadow-xl bevel-panel space-y-6">
+              <div className="h-full p-6 sm:p-8 rounded-3xl bg-[#0c121e] border border-[#1b283d] hover:border-slate-600 transition-colors flex flex-col justify-between shadow-xl bevel-panel space-y-6">
                 <div>
                   <div className="flex items-center justify-between mb-6">
                     <Quote className="w-8 h-8 text-amber-400/70 shrink-0" aria-hidden="true" />
@@ -49,7 +49,7 @@ export function Testimonials() {
                   </p>
                 </div>
 
-                <div className="pt-6 border-t border-[#182335] flex items-center gap-3.5 mt-auto">
+                <div className="pt-6 border-t border-[#182335] flex items-center gap-4 mt-auto">
                   <div className="w-11 h-11 rounded-full bg-[#182438] border border-[#2b3d5b] flex items-center justify-center font-mono font-bold text-amber-400 text-xs shrink-0">
                     {item.avatarText}
                   </div>

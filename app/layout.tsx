@@ -10,7 +10,7 @@ const syne = Syne({
 });
 
 const plusJakartaSans = Plus_Jakarta_Sans({
-  variable: "--font-sans",
+  variable: "--font-jakarta",
   subsets: ["latin"],
   weight: ["400", "500", "600", "700"],
   display: "swap",
@@ -25,6 +25,7 @@ const jetbrainsMono = JetBrains_Mono({
 
 export const viewport: Viewport = {
   themeColor: "#07090e",
+  colorScheme: "dark",
   width: "device-width",
   initialScale: 1,
   maximumScale: 5,
@@ -77,6 +78,12 @@ export default function RootLayout({
       className={`${syne.variable} ${plusJakartaSans.variable} ${jetbrainsMono.variable} scroll-smooth`}
     >
       <body className="min-h-screen bg-[var(--bg-main)] text-[var(--text-primary)] antialiased selection:bg-amber-500 selection:text-black">
+        <a
+          href="#main"
+          className="sr-only focus:not-sr-only focus:fixed focus:z-[100] focus:top-4 focus:left-4 focus:px-4 focus:py-3 focus:rounded-xl focus:bg-amber-500 focus:text-slate-950 focus:font-bold focus:font-mono focus:text-xs focus:tracking-wider focus:uppercase focus:shadow-2xl"
+        >
+          Skip to main content
+        </a>
         {children}
       </body>
     </html>

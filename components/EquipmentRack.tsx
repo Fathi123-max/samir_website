@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { EQUIPMENT_STACK } from "@/lib/data";
 import { sound } from "@/lib/sound";
 import { Reveal } from "./Reveal";
@@ -17,8 +17,24 @@ import {
 } from "lucide-react";
 
 export function EquipmentRack() {
-  const [activeCategoryId, setActiveCategoryId] = useState<string>("vision-mixers");
+  const [activeCategoryId, setActiveCategoryId] = useState<string>(() => {
+    if (typeof window !== "undefined") {
+      const param = new URLSearchParams(window.location.search).get("category");
+      if (param && EQUIPMENT_STACK.some((cat) => cat.id === param)) return param;
+    }
+    return "vision-mixers";
+  });
   const [searchQuery, setSearchQuery] = useState<string>("");
+
+  useEffect(() => {
+    const url = new URL(window.location.href);
+    if (activeCategoryId === "vision-mixers") {
+      url.searchParams.delete("category");
+    } else {
+      url.searchParams.set("category", activeCategoryId);
+    }
+    window.history.replaceState(null, "", url.toString());
+  }, [activeCategoryId]);
 
   const iconMap: Record<string, React.ElementType> = {
     LayoutGrid,
@@ -47,15 +63,15 @@ export function EquipmentRack() {
     <section
       id="rack"
       aria-label="Equipment Rack"
-      className="py-20 lg:py-28 bg-[#060910] border-b border-[#162133] relative overflow-hidden scroll-mt-28"
+      className="py-20 lg:py-28 bg-[#060910] border-b border-[#162133] relative overflow-hidden scroll-mt-32"
     >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+      <div className="max-w-screen-2xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {/* Section Header */}
         <div className="max-w-3xl mb-12 lg:mb-16">
           <Reveal direction="down">
-            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-cyan-500/10 border border-cyan-500/30 text-cyan-300 text-xs font-mono mb-4">
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-cyan-500/10 border border-cyan-500/30 text-cyan-300 text-xs font-mono mb-4">
               <Cpu className="w-4 h-4 shrink-0" aria-hidden="true" />
-              <span>BROADCAST HARDWARE & PROTOCOL MATRIX</span>
+              <span>BROADCAST HARDWARE & PROTOCOLS</span>
             </div>
           </Reveal>
 
@@ -76,43 +92,49 @@ export function EquipmentRack() {
         <Reveal direction="up" delay={0.2}>
           <div className="flex flex-col lg:flex-row items-stretch lg:items-center justify-between gap-4 mb-4">
             {/* Category Tabs */}
-            <div className="flex items-center gap-2 overflow-x-auto pb-2 lg:pb-0 scrollbar-none" role="tablist" aria-label="Equipment categories">
-              {EQUIPMENT_STACK.map((cat) => {
-                const Icon = iconMap[cat.iconName] || Cpu;
-                const isSelected = activeCategoryId === cat.id && !searchQuery;
-                return (
-                  <button
-                    key={cat.id}
-                    role="tab"
-                    aria-selected={isSelected}
-                    onClick={() => {
-                      sound.playJogClick();
-                      setActiveCategoryId(cat.id);
-                      setSearchQuery("");
-                    }}
-                    className={`px-4 py-2.5 rounded-xl text-xs font-mono whitespace-nowrap flex items-center gap-2 border transition-all min-h-[40px] focus-visible:ring-2 focus-visible:ring-cyan-400 focus-visible:outline-none ${
-                      isSelected
-                        ? "bg-cyan-500 text-slate-950 font-bold border-cyan-400 shadow-lg shadow-cyan-500/20"
-                        : "bg-[#0d1421] border-[#1d2a3f] text-slate-200 hover:text-white hover:bg-[#152033]"
-                    }`}
-                  >
-                    <Icon className="w-4 h-4 shrink-0" aria-hidden="true" />
-                    <span>{cat.name}</span>
-                  </button>
-                );
-              })}
+            <div className="relative flex-1 min-w-0">
+              <div className="flex items-center gap-2 overflow-x-auto pb-2 lg:pb-0" role="tablist" aria-label="Equipment categories">
+                {EQUIPMENT_STACK.map((cat) => {
+                  const Icon = iconMap[cat.iconName] || Cpu;
+                  const isSelected = activeCategoryId === cat.id && !searchQuery;
+                  return (
+                    <button
+                      key={cat.id}
+                      role="tab"
+                      aria-selected={isSelected}
+                      onClick={() => {
+                        sound.playJogClick();
+                        setActiveCategoryId(cat.id);
+                        setSearchQuery("");
+                      }}
+                      className={`px-4 py-3 rounded-xl text-xs font-mono whitespace-nowrap flex items-center gap-2 border transition-colors min-h-[44px] focus-visible:ring-2 focus-visible:ring-cyan-400 focus-visible:outline-none ${
+                        isSelected
+                          ? "bg-cyan-500 text-slate-950 font-bold border-cyan-400 shadow-lg shadow-cyan-500/20"
+                          : "bg-[#0d1421] border-[#1d2a3f] text-slate-200 hover:text-white hover:bg-[#152033]"
+                      }`}
+                    >
+                      <Icon className="w-4 h-4 shrink-0" aria-hidden="true" />
+                      <span>{cat.name}</span>
+                    </button>
+                  );
+                })}
+              </div>
+              <div
+                className="pointer-events-none absolute right-0 top-0 bottom-2 lg:bottom-0 w-10 bg-gradient-to-l from-[#060910] to-transparent"
+                aria-hidden="true"
+              />
             </div>
 
             {/* Quick Search with Clear button */}
-            <div className="relative min-w-[280px]">
-              <Search className="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2 shrink-0 pointer-events-none" aria-hidden="true" />
+            <div className="relative min-w-[260px]">
+              <Search className="w-4 h-4 text-slate-400 absolute left-4 top-1/2 -translate-y-1/2 shrink-0 pointer-events-none" aria-hidden="true" />
               <input
                 type="text"
-                placeholder="Search gear or protocol (e.g. Sony, 12G)..."
+                placeholder="Search gear or protocol (e.g. Sony, 12G)…"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 aria-label="Search equipment by model, manufacturer, or protocol"
-                className="w-full pl-10 pr-9 py-2.5 rounded-xl bg-[#0d1421] border border-[#1d2a3f] text-xs font-mono text-slate-100 placeholder:text-slate-500 focus:outline-none focus:border-cyan-400 min-h-[40px]"
+                className="w-full pl-10 pr-9 py-3 rounded-xl bg-[#0d1421] border border-[#1d2a3f] text-xs font-mono text-slate-100 placeholder:text-slate-500 focus:outline-none focus:border-cyan-400 min-h-[40px]"
               />
               {searchQuery && (
                 <button
@@ -123,7 +145,7 @@ export function EquipmentRack() {
                   aria-label="Clear search input"
                   className="absolute right-3 top-1/2 -translate-y-1/2 p-1 text-slate-400 hover:text-white"
                 >
-                  <X className="w-3.5 h-3.5" />
+                  <X className="w-4 h-4" />
                 </button>
               )}
             </div>
@@ -141,7 +163,7 @@ export function EquipmentRack() {
             {searchQuery.trim() && (
               <button
                 onClick={() => setSearchQuery("")}
-                className="text-amber-400 hover:underline text-[11px]"
+                className="text-amber-400 hover:underline text-[11px] rounded px-2 py-1 min-h-[44px] focus-visible:ring-2 focus-visible:ring-amber-400 focus-visible:outline-none"
               >
                 Reset Filter
               </button>
@@ -155,13 +177,13 @@ export function EquipmentRack() {
             {/* Cabinet Rail Screw Visuals */}
             <div className="hidden sm:flex justify-between px-2 pb-4 text-xs font-mono text-slate-400 border-b border-[#182538]">
               <span className="flex items-center gap-2">
-                <span className="w-2.5 h-2.5 rounded-full border border-slate-600 bg-slate-800" aria-hidden="true" />
+                <span className="w-3 h-3 rounded-full border border-slate-600 bg-slate-800" aria-hidden="true" />
                 RACK UNIT 01-16 (OB VAN BAY 4)
               </span>
               <span className="text-cyan-400 font-semibold">12G-SDI / SMPTE 2110 HYBRID READY</span>
               <span className="flex items-center gap-2">
                 ACTIVE LOAD: 42%
-                <span className="w-2.5 h-2.5 rounded-full border border-slate-600 bg-slate-800" aria-hidden="true" />
+                <span className="w-3 h-3 rounded-full border border-slate-600 bg-slate-800" aria-hidden="true" />
               </span>
             </div>
 
@@ -170,11 +192,11 @@ export function EquipmentRack() {
               {filteredItems.map((item, index) => (
                 <div
                   key={`${item.name}-${index}`}
-                  className="p-6 sm:p-7 rounded-3xl bg-[#0c1322] border border-[#1d2c44] hover:border-cyan-500/60 transition-all flex flex-col justify-between group shadow-lg space-y-5"
+                  className="p-6 sm:p-7 rounded-3xl bg-[#0c1322] border border-[#1d2c44] hover:border-cyan-500/60 transition-colors flex flex-col justify-between group shadow-lg space-y-5"
                 >
                   <div>
                     <div className="flex items-center justify-between mb-3">
-                      <span className="px-2.5 py-1 rounded bg-cyan-950/70 border border-cyan-700 text-cyan-300 text-[10px] font-mono font-bold uppercase tracking-wider">
+                      <span className="px-3 py-1 rounded bg-cyan-950/70 border border-cyan-700 text-cyan-300 text-[10px] font-mono font-bold uppercase tracking-wider">
                         {item.manufacturer}
                       </span>
                       <span className="text-xs font-mono text-amber-400 font-bold">
@@ -199,11 +221,11 @@ export function EquipmentRack() {
                     <span className="text-[10px] font-mono text-slate-400 uppercase tracking-wider block mb-2 font-bold">
                       SUPPORTED PROTOCOLS
                     </span>
-                    <div className="flex flex-wrap gap-1.5">
+                    <div className="flex flex-wrap gap-2">
                       {item.protocols.map((proto) => (
                         <span
                           key={proto}
-                          className="px-2.5 py-1 rounded-lg bg-[#060a12] border border-[#1a273c] text-[11px] font-mono text-slate-200"
+                          className="px-3 py-1 rounded-lg bg-[#060a12] border border-[#1a273c] text-[11px] font-mono text-slate-200"
                         >
                           {proto}
                         </span>

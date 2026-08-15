@@ -62,7 +62,7 @@ export default async function EventPage({
         <div>
           <Link
             href="/#events"
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-[#0d1421] border border-[#1e2c44] text-xs font-mono text-slate-200 hover:text-amber-400 hover:border-amber-500/50 transition-all min-h-[40px] focus-visible:ring-2 focus-visible:ring-amber-400 focus-visible:outline-none"
+            className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-[#0d1421] border border-[#1e2c44] text-xs font-mono text-slate-200 hover:text-amber-400 hover:border-amber-500/50 transition-colors min-h-[40px] focus-visible:ring-2 focus-visible:ring-amber-400 focus-visible:outline-none"
           >
             <ArrowLeft className="w-4 h-4 shrink-0" aria-hidden="true" />
             <span>Back to Command Center</span>
@@ -71,17 +71,17 @@ export default async function EventPage({
 
         {/* Header */}
         <div className="pb-10 border-b border-[#182335] space-y-6">
-          <div className="flex flex-wrap items-center gap-2.5">
-            <span className="px-3.5 py-1.5 rounded-full bg-amber-500/15 border border-amber-500/30 text-amber-300 font-mono text-xs font-bold uppercase tracking-wider">
+          <div className="flex flex-wrap items-center gap-3">
+            <span className="px-4 py-2 rounded-full bg-amber-500/15 border border-amber-500/30 text-amber-300 font-mono text-xs font-bold uppercase tracking-wider">
               {event.category}
             </span>
-            <span className="px-3.5 py-1.5 rounded-full bg-[#101826] border border-[#223147] text-slate-200 font-mono text-xs font-semibold">
+            <span className="px-4 py-2 rounded-full bg-[#101826] border border-[#223147] text-slate-200 font-mono text-xs font-semibold">
               {event.cameraCount} CAMERA CHANNELS
             </span>
           </div>
 
           <div className="space-y-2">
-            <h1 className="fluid-h1 font-display font-extrabold text-white tracking-tight">
+            <h1 className="text-[clamp(2rem,5vw+1rem,4.5rem)] font-display font-extrabold text-white tracking-tight">
               {event.title}
             </h1>
             <p className="text-base sm:text-xl font-mono text-cyan-300 font-semibold">
@@ -90,15 +90,15 @@ export default async function EventPage({
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-6 border-t border-[#182336] text-xs font-mono text-slate-200">
-            <div className="flex items-center gap-2.5">
+            <div className="flex items-center gap-3">
               <MapPin className="w-4 h-4 text-amber-400 shrink-0" aria-hidden="true" />
               <span>{event.venue}</span>
             </div>
-            <div className="flex items-center gap-2.5">
+            <div className="flex items-center gap-3">
               <Tv className="w-4 h-4 text-cyan-400 shrink-0" aria-hidden="true" />
               <span>{event.broadcaster}</span>
             </div>
-            <div className="flex items-center gap-2.5">
+            <div className="flex items-center gap-3">
               <Calendar className="w-4 h-4 text-emerald-400 shrink-0" aria-hidden="true" />
               <span>{event.dates}</span>
             </div>
@@ -134,7 +134,7 @@ export default async function EventPage({
 
         {/* Hardware & Signal Spec Grid */}
         <div className="space-y-4">
-          <h2 className="text-base font-mono font-bold text-white uppercase tracking-wider flex items-center gap-2.5">
+          <h2 className="text-base font-mono font-bold text-white uppercase tracking-wider flex items-center gap-3">
             <Cpu className="w-5 h-5 text-cyan-400 shrink-0" aria-hidden="true" />
             <span>Master Hardware & Signal Architecture</span>
           </h2>
@@ -161,7 +161,7 @@ export default async function EventPage({
         {/* Technical Approach & Signal Flow */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           <div className="space-y-4">
-            <h2 className="text-base font-mono font-bold text-white uppercase tracking-wider flex items-center gap-2.5">
+            <h2 className="text-base font-mono font-bold text-white uppercase tracking-wider flex items-center gap-3">
               <Layers className="w-5 h-5 text-amber-400 shrink-0" aria-hidden="true" />
               <span>Technical Approach</span>
             </h2>
@@ -176,17 +176,17 @@ export default async function EventPage({
           </div>
 
           <div className="space-y-4">
-            <h2 className="text-base font-mono font-bold text-white uppercase tracking-wider flex items-center gap-2.5">
+            <h2 className="text-base font-mono font-bold text-white uppercase tracking-wider flex items-center gap-3">
               <Zap className="w-5 h-5 text-emerald-400 shrink-0" aria-hidden="true" />
               <span>Signal Flow Chain</span>
             </h2>
             <div className="space-y-3 text-xs font-mono">
               {event.signalFlow.map((step, i) => (
-                <div key={i} className="p-3.5 rounded-xl bg-[#0a0f19] border border-[#1a263a] flex items-start gap-3">
+                <div key={i} className="p-4 rounded-xl bg-[#0a0f19] border border-[#1a263a] flex items-start gap-3">
                   <span className="text-amber-400 font-bold text-sm shrink-0">0{i + 1}.</span>
                   <div>
                     <span className="text-white font-bold block text-sm">{step.step}</span>
-                    <span className="text-slate-300 font-sans mt-0.5 block">{step.description}</span>
+                    <span className="text-slate-300 font-sans mt-1 block">{step.description}</span>
                   </div>
                 </div>
               ))}
@@ -196,7 +196,7 @@ export default async function EventPage({
 
         {/* Challenges and Solutions */}
         <div className="space-y-4">
-          <h2 className="text-base font-mono font-bold text-white uppercase tracking-wider flex items-center gap-2.5">
+          <h2 className="text-base font-mono font-bold text-white uppercase tracking-wider flex items-center gap-3">
             <AlertTriangle className="w-5 h-5 text-red-400 shrink-0" aria-hidden="true" />
             <span>High-Pressure Live Faults & Engineering Solutions</span>
           </h2>
@@ -221,7 +221,7 @@ export default async function EventPage({
 
         {/* What I'd Improve Next Time */}
         <div className="p-6 sm:p-8 rounded-3xl bg-[#090d16] border border-amber-500/40 shadow-xl space-y-2">
-          <div className="flex items-center gap-2.5 text-xs font-mono text-amber-300 font-bold">
+          <div className="flex items-center gap-3 text-xs font-mono text-amber-300 font-bold">
             <RotateCcw className="w-4 h-4 shrink-0" aria-hidden="true" />
             <span>HONEST ENGINEERING RETROSPECTIVE — “WHAT I&apos;D IMPROVE NEXT TIME”</span>
           </div>
@@ -240,10 +240,10 @@ export default async function EventPage({
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-4 border-t border-[#182438]">
               <Link
                 href={`/events/${prevEvent.slug}`}
-                className="p-5 rounded-2xl bg-[#0b1019] border border-[#1d2b40] hover:border-amber-500/50 transition-all text-left group flex flex-col justify-between space-y-2"
+                className="p-5 rounded-2xl bg-[#0b1019] border border-[#1d2b40] hover:border-amber-500/50 transition-colors text-left group flex flex-col justify-between space-y-2"
               >
-                <div className="text-[11px] font-mono text-slate-400 uppercase flex items-center gap-1.5">
-                  <ArrowLeft className="w-3.5 h-3.5 group-hover:-translate-x-1 transition-transform" />
+                <div className="text-[11px] font-mono text-slate-400 uppercase flex items-center gap-2">
+                  <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
                   <span>PREVIOUS CASE STUDY</span>
                 </div>
                 <div className="text-sm sm:text-base font-bold text-white font-display group-hover:text-amber-400 transition-colors truncate">
@@ -256,11 +256,11 @@ export default async function EventPage({
 
               <Link
                 href={`/events/${nextEvent.slug}`}
-                className="p-5 rounded-2xl bg-[#0b1019] border border-[#1d2b40] hover:border-amber-500/50 transition-all text-right group flex flex-col justify-between space-y-2"
+                className="p-5 rounded-2xl bg-[#0b1019] border border-[#1d2b40] hover:border-amber-500/50 transition-colors text-right group flex flex-col justify-between space-y-2"
               >
-                <div className="text-[11px] font-mono text-slate-400 uppercase flex items-center justify-end gap-1.5">
+                <div className="text-[11px] font-mono text-slate-400 uppercase flex items-center justify-end gap-2">
                   <span>NEXT CASE STUDY</span>
-                  <ArrowLeft className="w-3.5 h-3.5 rotate-180 group-hover:translate-x-1 transition-transform" />
+                  <ArrowLeft className="w-4 h-4 rotate-180 group-hover:translate-x-1 transition-transform" />
                 </div>
                 <div className="text-sm sm:text-base font-bold text-white font-display group-hover:text-amber-400 transition-colors truncate">
                   {nextEvent.title}
@@ -286,7 +286,7 @@ export default async function EventPage({
 
           <Link
             href="/#contact"
-            className="px-6 py-3.5 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-mono font-bold text-xs uppercase tracking-wider shrink-0 transition-all shadow-lg shadow-amber-500/20 min-h-[48px] flex items-center justify-center"
+            className="px-6 py-4 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-mono font-bold text-xs uppercase tracking-wider shrink-0 transition-colors shadow-lg shadow-amber-500/20 min-h-[48px] flex items-center justify-center"
           >
             Inquire For Dates & Roles &rarr;
           </Link>

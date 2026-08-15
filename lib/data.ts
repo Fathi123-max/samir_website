@@ -16,6 +16,7 @@ export const PERSONAL_INFO = {
   degree: "Bachelor of Electrical Engineering – Communication & Electronics",
   degreeHonors: "Very Good with Honors (B.Sc. Eng)",
   statusText: "AVAILABLE FOR UAE, GCC & INTERNATIONAL FLYAWAY",
+  statusTextShort: "UAE, GCC & FLYAWAY",
   statusActive: true,
 };
 
