@@ -2,32 +2,23 @@ import React from "react";
 import dynamic from "next/dynamic";
 import { Header } from "@/components/Header";
 import { Hero } from "@/components/Hero";
-import { MobileActionBar } from "@/components/MobileActionBar";
 import { BackToTop } from "@/components/BackToTop";
 import { PERSONAL_INFO } from "@/lib/data";
 
 // Below-the-fold sections are code-split so the initial JS payload only covers
 // the above-the-fold chrome (Header, Hero). SSR stays on: full HTML is
 // still delivered for SEO/LCP, only hydration JS is deferred per section.
-const About = dynamic(() => import("@/components/About").then((m) => m.About));
-const ServicesBento = dynamic(() =>
-  import("@/components/ServicesBento").then((m) => m.ServicesBento)
-);
+const Services = dynamic(() => import("@/components/Services").then((m) => m.Services));
 const FlagshipEvents = dynamic(() =>
   import("@/components/FlagshipEvents").then((m) => m.FlagshipEvents)
 );
 const Showreel = dynamic(() =>
   import("@/components/Showreel").then((m) => m.Showreel)
 );
-const EquipmentRack = dynamic(() =>
-  import("@/components/EquipmentRack").then((m) => m.EquipmentRack)
+const TestimonialBanner = dynamic(() =>
+  import("@/components/TestimonialBanner").then((m) => m.TestimonialBanner)
 );
-const Testimonials = dynamic(() =>
-  import("@/components/Testimonials").then((m) => m.Testimonials)
-);
-const ContactBooking = dynamic(() =>
-  import("@/components/ContactBooking").then((m) => m.ContactBooking)
-);
+const Faq = dynamic(() => import("@/components/Faq").then((m) => m.Faq));
 const Footer = dynamic(() => import("@/components/Footer").then((m) => m.Footer));
 
 export default function HomePage() {
@@ -50,6 +41,7 @@ export default function HomePage() {
       name: "Bachelor of Electrical Engineering – Communication & Electronics",
     },
     knowsAbout: [
+      "Video Production",
       "Outside Broadcast (OB) Engineering",
       "CCU Camera Control & Shading (Sony RCP-1500, Grass Valley OCP)",
       "EVS Super Slow-Motion & Live Highlights (XT3 Max, XT-VIA)",
@@ -72,20 +64,17 @@ export default function HomePage() {
 
       <main id="main" className="flex-1 w-full" tabIndex={-1}>
         <Hero />
-        <About />
-        <ServicesBento />
+        <Services />
         <FlagshipEvents />
         <Showreel />
-        <EquipmentRack />
-        <Testimonials />
-        <ContactBooking />
+        <TestimonialBanner />
+        <Faq />
       </main>
 
       <Footer />
 
-      {/* Floating back-to-top + thumb-reach quick actions (mobile) */}
+      {/* Floating back-to-top */}
       <BackToTop />
-      <MobileActionBar />
     </div>
   );
 }

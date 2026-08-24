@@ -1,123 +1,145 @@
 "use client";
 
 import React from "react";
-import Link from "next/link";
 import { PERSONAL_INFO } from "@/lib/data";
-import { Mail, PhoneCall } from "lucide-react";
+import {
+  Mail,
+  PhoneCall,
+  MapPin,
+  Clock3,
+  ArrowUpRight,
+} from "lucide-react";
 
-const NAV_LINKS = [
-  { label: "Overview", href: "#hero" },
-  { label: "Experience", href: "#story" },
-  { label: "Capabilities", href: "#services" },
-  { label: "Case Studies", href: "#events" },
-  { label: "Showreel", href: "#showreel" },
-  { label: "Tech Stack", href: "#rack" },
-  { label: "Contact", href: "#contact" },
-];
+function FacebookIcon({ className }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" className={className}>
+      <path d="M13.5 21v-7h2.5l.5-3h-3V9.05c0-.87.24-1.46 1.5-1.46h1.6V4.85c-.28-.04-1.22-.12-2.32-.12-2.3 0-3.88 1.4-3.88 3.98V11H8v3h2.4v7h3.1Z" />
+    </svg>
+  );
+}
+
+function XIcon({ className }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" className={className}>
+      <path d="M18.9 2H22l-6.77 7.74L23.2 22h-6.23l-4.88-6.38L6.5 22H3.34l7.24-8.28L2.8 2h6.39l4.41 5.83L18.9 2Zm-1.09 18.14h1.72L7.28 3.76H5.43l12.38 16.38Z" />
+    </svg>
+  );
+}
+
+const SOCIAL_ICONS: Record<string, React.ComponentType<{ className?: string }>> = {
+  Facebook: FacebookIcon,
+  "X (Twitter)": XIcon,
+};
 
 export function Footer() {
   return (
-    <footer role="contentinfo" className="bg-ink text-zinc-400">
-      <div className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8 py-14 lg:py-16 pb-28 lg:pb-16">
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-10 lg:gap-8 mb-14">
-          {/* Brand */}
-          <div className="md:col-span-5 space-y-4">
-            <div className="flex items-center gap-3">
-              <span className="w-9 h-9 rounded-lg bg-white text-ink flex items-center justify-center font-mono font-bold text-sm shrink-0">
-                SE
-              </span>
-              <div className="leading-tight">
-                <p className="font-display font-bold text-white">{PERSONAL_INFO.name}</p>
-                <p className="eyebrow text-zinc-500 text-[10px] mt-0.5">
-                  Broadcast &amp; OB Engineer — Dubai, UAE
-                </p>
-              </div>
-            </div>
-            <p className="text-sm leading-relaxed max-w-sm">
-              18+ years of live broadcast engineering across major sports leagues,
-              international summits, and primetime television.
+    <footer role="contentinfo" className="bg-ink text-zinc-300">
+      <div className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8 py-16 lg:py-20">
+        {/* Heading */}
+        <div className="max-w-2xl mb-12 lg:mb-14">
+          <p className="eyebrow text-signal mb-4">05 · Contact</p>
+          <h2 className="fluid-h2 font-display font-semibold text-white">
+            Let&apos;s discuss your{" "}
+            <em className="italic text-signal">next video project</em>.
+          </h2>
+          <a
+            href={`mailto:${PERSONAL_INFO.email}?subject=${encodeURIComponent(
+              "New video project inquiry"
+            )}`}
+            className="mt-7 inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded bg-signal hover:bg-signal-bright text-white font-semibold transition-colors min-h-[48px] focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-ink focus-visible:outline-none"
+          >
+            Start a conversation
+            <ArrowUpRight className="w-4 h-4 shrink-0" aria-hidden="true" />
+          </a>
+        </div>
+
+        {/* Contact info grid */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 pt-10 border-t border-white/10">
+          {/* Location */}
+          <div>
+            <h3 className="eyebrow text-zinc-500 mb-4">Location</h3>
+            <p className="flex items-start gap-2.5 text-sm leading-relaxed">
+              <MapPin className="w-4 h-4 shrink-0 mt-0.5 text-signal" aria-hidden="true" />
+              <span>{PERSONAL_INFO.location}</span>
             </p>
           </div>
 
-          {/* Site nav */}
-          <nav aria-label="Footer navigation" className="md:col-span-3">
-            <h2 className="eyebrow text-zinc-500 mb-4">Site</h2>
-            <ul className="space-y-2.5 text-sm">
-              {NAV_LINKS.map((link) => (
-                <li key={link.href}>
-                  <a href={link.href} className="hover:text-white transition-colors">
-                    {link.label}
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </nav>
+          {/* Working hours */}
+          <div>
+            <h3 className="eyebrow text-zinc-500 mb-4">Working hours</h3>
+            <p className="flex items-start gap-2.5 text-sm leading-relaxed">
+              <Clock3 className="w-4 h-4 shrink-0 mt-0.5 text-signal" aria-hidden="true" />
+              <span>{PERSONAL_INFO.workingHours}</span>
+            </p>
+          </div>
 
-          {/* Case studies */}
-          <nav aria-label="Case studies" className="md:col-span-2">
-            <h2 className="eyebrow text-zinc-500 mb-4">Work</h2>
-            <ul className="space-y-2.5 text-sm">
-              <li>
-                <Link href="/events/cop28-expo-city-dubai" className="hover:text-white transition-colors">
-                  COP28 Summit
-                </Link>
-              </li>
-              <li>
-                <Link href="/events/uae-pro-league-adnoc" className="hover:text-white transition-colors">
-                  UAE Pro League
-                </Link>
-              </li>
-              <li>
-                <Link href="/events/camel-racing-heritage-festivals" className="hover:text-white transition-colors">
-                  Desert Racing
-                </Link>
-              </li>
-              <li>
-                <Link href="/events/world-snooker-masters-ksa" className="hover:text-white transition-colors">
-                  Snooker Masters
-                </Link>
-              </li>
-            </ul>
-          </nav>
-
-          {/* Contact */}
-          <div className="md:col-span-2">
-            <h2 className="eyebrow text-zinc-500 mb-4">Contact</h2>
+          {/* Call / email */}
+          <div>
+            <h3 className="eyebrow text-zinc-500 mb-4">Call us</h3>
             <ul className="space-y-3 text-sm">
               <li>
                 <a
-                  href={PERSONAL_INFO.whatsappUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 hover:text-white transition-colors"
+                  href={`tel:${PERSONAL_INFO.phone.replace(/[^+\d]/g, "")}`}
+                  className="inline-flex items-center gap-2.5 hover:text-signal transition-colors focus-visible:ring-2 focus-visible:ring-signal rounded outline-none"
                 >
-                  <PhoneCall className="w-4 h-4 shrink-0" aria-hidden="true" />
+                  <PhoneCall className="w-4 h-4 shrink-0 text-signal" aria-hidden="true" />
                   <span>{PERSONAL_INFO.phone}</span>
                 </a>
               </li>
               <li>
                 <a
                   href={`mailto:${PERSONAL_INFO.email}`}
-                  className="inline-flex items-start gap-2 hover:text-white transition-colors break-all"
+                  className="inline-flex items-start gap-2.5 hover:text-signal transition-colors break-all focus-visible:ring-2 focus-visible:ring-signal rounded outline-none"
                 >
-                  <Mail className="w-4 h-4 shrink-0 mt-0.5" aria-hidden="true" />
+                  <Mail className="w-4 h-4 shrink-0 mt-0.5 text-signal" aria-hidden="true" />
                   <span className="break-all">{PERSONAL_INFO.email}</span>
                 </a>
               </li>
             </ul>
-            <Link
-              href="/#contact"
-              className="mt-6 inline-flex items-center justify-center px-5 py-3 rounded-full bg-signal hover:bg-signal-deep text-white font-semibold text-xs uppercase tracking-wide transition-colors min-h-[44px]"
-            >
-              Book for an event
-            </Link>
+          </div>
+
+          {/* Social */}
+          <div>
+            <h3 className="eyebrow text-zinc-500 mb-4">Follow Samir Elgammal</h3>
+            <ul className="flex flex-wrap items-center gap-3">
+              {PERSONAL_INFO.socials.map((social) => {
+                const Icon = SOCIAL_ICONS[social.label] ?? null;
+                const content = (
+                  <>
+                    {Icon && <Icon className="w-4 h-4 shrink-0" />}
+                    <span>{social.label}</span>
+                  </>
+                );
+                return (
+                  <li key={social.label}>
+                    {social.url ? (
+                      <a
+                        href={social.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-2 px-4 py-2.5 rounded border border-white/15 text-sm font-medium hover:border-signal hover:text-white transition-colors min-h-[44px] focus-visible:ring-2 focus-visible:ring-signal focus-visible:outline-none"
+                      >
+                        {content}
+                      </a>
+                    ) : (
+                      <span
+                        title={`Add your ${social.label} profile link in lib/data.ts`}
+                        className="inline-flex items-center gap-2 px-4 py-2.5 rounded border border-dashed border-white/20 text-sm font-medium text-zinc-400 min-h-[44px]"
+                      >
+                        {content}
+                      </span>
+                    )}
+                  </li>
+                );
+              })}
+            </ul>
           </div>
         </div>
 
         {/* Bottom bar */}
-        <div className="pt-8 border-t border-white/10 flex flex-wrap items-center justify-between gap-4 text-xs">
-          <p>© {new Date().getFullYear()} Samir Elgammal. All rights reserved.</p>
-          <p className="text-zinc-500">Broadcast &amp; OB Engineering — Dubai, UAE</p>
+        <div className="pt-8 mt-12 border-t border-white/10 flex flex-wrap items-center justify-between gap-4 text-xs text-zinc-400">
+          <p>© {new Date().getFullYear()} {PERSONAL_INFO.name}. All rights reserved.</p>
+          <p>Broadcast &amp; Video Production — {PERSONAL_INFO.location}</p>
         </div>
       </div>
     </footer>

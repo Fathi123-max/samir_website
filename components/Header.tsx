@@ -6,14 +6,13 @@ import { PERSONAL_INFO } from "@/lib/data";
 import { Menu, X, ArrowUpRight } from "lucide-react";
 
 const NAV_ITEMS = [
-  { label: "Experience", href: "#story", id: "story", index: "01" },
-  { label: "Capabilities", href: "#services", id: "services", index: "02" },
-  { label: "Case Studies", href: "#events", id: "events", index: "03" },
-  { label: "Showreel", href: "#showreel", id: "showreel", index: "04" },
-  { label: "Tech Stack", href: "#rack", id: "rack", index: "05" },
+  { label: "Services", href: "#services", id: "services", index: "01" },
+  { label: "Portfolio", href: "#events", id: "events", index: "02" },
+  { label: "Showreel", href: "#showreel", id: "showreel", index: "03" },
+  { label: "FAQ", href: "#faq", id: "faq", index: "04" },
 ];
 
-const SPY_SECTIONS = ["hero", "story", "services", "events", "showreel", "rack", "contact"];
+const SPY_SECTIONS = ["hero", "services", "events", "showreel", "faq", "contact"];
 
 export function Header() {
   const [isOpen, setIsOpen] = useState(false);
@@ -122,9 +121,9 @@ export function Header() {
             href="#hero"
             onClick={closeDrawer}
             aria-label="Samir Elgammal — Home"
-            className="flex items-center gap-3 group focus-visible:ring-2 focus-visible:ring-signal focus-visible:outline-none rounded-lg p-1 -m-1"
+            className="flex items-center gap-3 group focus-visible:ring-2 focus-visible:ring-signal focus-visible:outline-none rounded p-1 -m-1"
           >
-            <span className="w-9 h-9 rounded-lg bg-ink text-white flex items-center justify-center font-mono font-bold text-sm tracking-tight shrink-0 group-hover:bg-signal transition-colors">
+            <span className="w-9 h-9 rounded bg-signal text-white flex items-center justify-center font-mono font-bold text-sm tracking-tight shrink-0 group-hover:bg-signal-deep transition-colors">
               SE
             </span>
             <span className="hidden sm:flex flex-col leading-tight">
@@ -147,7 +146,7 @@ export function Header() {
                   href={item.href}
                   onClick={closeDrawer}
                   aria-current={isActive ? "page" : undefined}
-                  className={`relative px-3.5 py-2 rounded-full font-medium transition-colors min-h-[40px] inline-flex items-center gap-1.5 focus-visible:ring-2 focus-visible:ring-signal focus-visible:outline-none ${
+                  className={`relative px-3.5 py-2 rounded font-medium transition-colors min-h-[40px] inline-flex items-center gap-1.5 focus-visible:ring-2 focus-visible:ring-signal focus-visible:outline-none ${
                     isActive ? "text-signal" : "text-zinc-600 hover:text-ink hover:bg-paper"
                   }`}
                 >
@@ -164,9 +163,9 @@ export function Header() {
           <div className="hidden lg:flex items-center gap-3">
             <a
               href="#contact"
-              className="inline-flex items-center gap-1.5 px-4 py-2.5 rounded-full bg-signal hover:bg-signal-deep text-white text-sm font-semibold transition-colors min-h-[40px] focus-visible:ring-2 focus-visible:ring-signal focus-visible:ring-offset-2 focus-visible:outline-none"
+              className="inline-flex items-center gap-1.5 px-4 py-2.5 rounded bg-signal hover:bg-signal-deep text-white text-sm font-semibold transition-colors min-h-[40px] focus-visible:ring-2 focus-visible:ring-signal focus-visible:ring-offset-2 focus-visible:outline-none"
             >
-              Book for an event
+              Start a project
               <ArrowUpRight className="w-4 h-4" aria-hidden="true" />
             </a>
           </div>
@@ -175,7 +174,7 @@ export function Header() {
           <div className="flex lg:hidden items-center gap-2">
             <a
               href="#contact"
-              className="px-4 py-2.5 rounded-full bg-signal text-white text-xs font-semibold uppercase tracking-wide focus-visible:ring-2 focus-visible:ring-signal min-h-[44px] flex items-center justify-center"
+              className="px-4 py-2.5 rounded bg-signal text-white text-xs font-semibold uppercase tracking-wide focus-visible:ring-2 focus-visible:ring-signal min-h-[44px] flex items-center justify-center"
             >
               Book
             </a>
@@ -184,7 +183,7 @@ export function Header() {
               aria-label={isOpen ? "Close navigation menu" : "Open navigation menu"}
               aria-expanded={isOpen}
               aria-controls="mobile-navigation"
-              className="p-3 rounded-lg border border-hairline bg-white text-ink hover:bg-paper focus-visible:ring-2 focus-visible:ring-signal min-h-[44px] min-w-[44px] flex items-center justify-center"
+              className="p-3 rounded border border-hairline bg-white text-ink hover:bg-paper focus-visible:ring-2 focus-visible:ring-signal min-h-[44px] min-w-[44px] flex items-center justify-center"
             >
               {isOpen ? (
                 <X className="w-5 h-5" aria-hidden="true" />
@@ -250,9 +249,9 @@ export function Header() {
                   href="#contact"
                   onClick={closeDrawer}
                   aria-current={activeSection === "contact" ? "page" : undefined}
-                  className="flex items-center gap-4 py-3.5 min-h-[52px] font-medium text-ink hover:text-signal transition-colors focus-visible:ring-2 focus-visible:ring-signal rounded-lg px-2"
+                  className="flex items-center gap-4 py-3.5 min-h-[52px] font-medium text-ink hover:text-signal transition-colors focus-visible:ring-2 focus-visible:ring-signal rounded px-2"
                 >
-                  <span className="font-mono text-xs text-zinc-400 tabular-nums w-6">06</span>
+                  <span className="font-mono text-xs text-zinc-400 tabular-nums w-6">05</span>
                   <span className="grow">Contact</span>
                   <ArrowUpRight className="w-4 h-4 opacity-30" aria-hidden="true" />
                 </a>
@@ -263,7 +262,7 @@ export function Header() {
               <a
                 href={`tel:${PERSONAL_INFO.phone.replace(/[^+\d]/g, "")}`}
                 onClick={closeDrawer}
-                className="flex items-center justify-center px-4 py-3.5 rounded-full border border-hairline bg-paper text-ink font-semibold text-sm min-h-[48px] hover:border-signal hover:text-signal transition-colors focus-visible:ring-2 focus-visible:ring-signal focus-visible:outline-none"
+                className="flex items-center justify-center px-4 py-3.5 rounded border border-hairline bg-paper text-ink font-semibold text-sm min-h-[48px] hover:border-signal hover:text-signal transition-colors focus-visible:ring-2 focus-visible:ring-signal focus-visible:outline-none"
               >
                 Call
               </a>
@@ -272,7 +271,7 @@ export function Header() {
                 target="_blank"
                 rel="noopener noreferrer"
                 onClick={closeDrawer}
-                className="flex items-center justify-center px-4 py-3.5 rounded-full bg-ink text-white font-semibold text-sm min-h-[48px] hover:bg-zinc-700 transition-colors focus-visible:ring-2 focus-visible:ring-signal focus-visible:outline-none"
+                className="flex items-center justify-center px-4 py-3.5 rounded bg-ink text-white font-semibold text-sm min-h-[48px] hover:bg-signal transition-colors focus-visible:ring-2 focus-visible:ring-signal focus-visible:outline-none"
               >
                 WhatsApp
               </a>

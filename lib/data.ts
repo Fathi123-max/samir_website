@@ -1,10 +1,12 @@
-import { CaseStudy, ServiceItem, EquipmentCategory, TimelineNode, Testimonial, ShowcaseVideo } from "./types";
+import { CaseStudy, ServiceTier, EquipmentCategory, TimelineNode, Testimonial, ShowcaseVideo, FaqItem } from "./types";
 
 export const PERSONAL_INFO = {
   name: "Samir Elgammal",
   title: "System Broadcast & OB Engineer",
   subtitle: "CCU & EVS Replay Specialist",
-  tagline: "18+ years keeping live broadcasts on-air — from high-pressure OB vans to studio master control rooms.",
+  heroHeadline: "Video production that brings your story into focus",
+  tagline:
+    "System Broadcast and OB Engineer with more than 18 years of experience in OBs, broadcasting studios, playout engineering, CCU operator and EVS operator and guarantee. Specialized in sports studios with strong problem-solving skills and a creative approach to designing and implementing studio schematics and playout centers.",
   /**
    * Portrait photo path under /public. Empty string = styled placeholder.
    * NOTE: current image is a stand-in demo asset (Unsplash) — replace with a
@@ -21,6 +23,12 @@ export const PERSONAL_INFO = {
   phone: "+971 50 563 9015",
   email: "s.elgammal12@gmail.com",
   whatsappUrl: "https://wa.me/971505639015?text=Hello%20Samir,%20I%20would%20like%20to%20inquire%20about%20your%20broadcast%20engineering%20services.",
+  workingHours: "Sat – Thu · 09:00 – 18:00 (GST)",
+  /** Social profile URLs. Empty string = icon renders as an inert placeholder. */
+  socials: [
+    { label: "Facebook", url: "" },
+    { label: "X (Twitter)", url: "" },
+  ],
   degree: "Bachelor of Electrical Engineering – Communication & Electronics",
   degreeHonors: "Very Good with Honors (B.Sc. Eng)",
   statusText: "AVAILABLE FOR UAE, GCC & INTERNATIONAL FLYAWAY",
@@ -370,102 +378,63 @@ export const FLAGSHIP_EVENTS: CaseStudy[] = [
   },
 ];
 
-export const SERVICES: ServiceItem[] = [
+export const SERVICE_TIERS: ServiceTier[] = [
   {
-    id: "ob-van-engineering",
-    title: "OB Van & Flyaway Mobile Units",
-    subtitle: "Turnkey mobile production infrastructure & rig management",
-    iconName: "Truck",
-    summary: "Complete engineering setup, power redundancy, multi-camera fiber SMPTE rigging, generator sync, and live operations for large-scale outdoor and stadium productions.",
-    deliverables: [
-      "Tactical SMPTE hybrid fiber cable planning & deployment",
-      "Generator load balancing & UPS uninterruptible power distribution",
-      "Multi-truck interconnects and master sync distribution",
-      "Rapid rigging & de-rigging protocols under tight venue windows",
-    ],
-    keyTools: ["Sony MVS Series", "Evertz 5600SPG", "Tactical SMPTE Fiber", "UPS Systems"],
-    metrics: "150+ OB Truck Live Deployments Across UAE & GCC",
-    colSpan: "col-span-1 md:col-span-2 lg:col-span-2",
+    id: "basic-video-production",
+    title: "Basic video production",
+    description:
+      "A straightforward production option for personal videos, social content, and concise visual stories. Get professional guidance and a refined final edit designed to make your message clear.",
   },
   {
-    id: "ccu-colorimetry",
-    title: "CCU Control & Precision Shading",
-    subtitle: "Master camera matching across dynamic lighting environments",
-    iconName: "Sliders",
-    summary: "Expert multi-camera iris, master black, flare, and colorimetry calibration. Flawless live matching across shifting desert sunlight, stadium floodlights, and LED studio walls.",
-    deliverables: [
-      "Sony RCP-1500 / 3500 & Grass Valley OCP-400 master paint operations",
-      "Dynamic HDR / SDR curve management (HLG, S-Log3, Rec.709)",
-      "Lens optical tracking, back-focus calibration, and chromatic aberration tuning",
-      "Multi-camera color chart calibration (X-Rite ColorChecker, DSC Labs)",
-    ],
-    keyTools: ["Sony RCP-1500", "Grass Valley OCP-400", "Tektronix Waveform", "Leader LV5600"],
-    metrics: "ΔE < 0.8 Color Consistency Across 28+ Cameras",
-    colSpan: "col-span-1 md:col-span-1 lg:col-span-1",
+    id: "professional-video-production",
+    title: "Professional video production",
+    description:
+      "Elevate your project with a tailored production approach, from creative planning through filming and post-production. Ideal for polished campaigns, profiles, and branded content.",
   },
   {
-    id: "evs-super-slowmo",
-    title: "EVS Auto Replay & Live Highlights",
-    subtitle: "Split-second multi-angle clipping & VAR integration",
-    iconName: "Video",
-    summary: "High-speed multi-channel live clipping, playlist building, halftime highlight packages, and super slow-motion replay (3x/6x/8x) under peak live match adrenaline.",
-    deliverables: [
-      "EVS XT3 Max, XT-VIA, and Multicam LSM panel mastery",
-      "Instant referee VAR feed routing and multi-split review",
-      "High-speed sports highlight packages delivered in < 60 seconds",
-      "EVS IPDirector asset management, clip logging & archive export",
-    ],
-    keyTools: ["EVS XT3 Max", "EVS XT-VIA", "LSM Remote Controller", "IPDirector"],
-    metrics: "6,000+ Super Slow-Mo Packages Broadcasted",
-    colSpan: "col-span-1 md:col-span-1 lg:col-span-1",
+    id: "business-video-production",
+    title: "Business video production",
+    description:
+      "Engaging corporate videos, promotional content, customer stories, and social media assets produced for your brand and audience.",
   },
   {
-    id: "studio-mcr-automation",
-    title: "Studio & Playout Automation",
-    subtitle: "Mission-critical 24/7 master control room engineering",
-    iconName: "Server",
-    summary: "End-to-end studio signal flow, Pebble Beach Marina / Neptune automation, failover channel architecture, and uncompressed SDI/IP transmission playout.",
-    deliverables: [
-      "Pebble Beach Marina & Neptune automation workflow design",
-      "Master control switcher configuration (Sony DVS/MVS, FOR-A)",
-      "24/7 dual hot-standby channel redundancy and automated failover",
-      "Live studio acoustic isolation, intercom patching, and audio routing",
-    ],
-    keyTools: ["Pebble Beach Marina", "Neptune Automation", "Sony DVS-9000", "Evertz Master Sync"],
-    metrics: "99.99% Transmission Reliability Over 18 Years",
-    colSpan: "col-span-1 md:col-span-2 lg:col-span-2",
+    id: "enterprise-video-production",
+    title: "Enterprise video production",
+    description:
+      "Plan and deliver larger video initiatives with end-to-end creative support. This flexible option is built for organizations that need consistent, high-quality video at scale.",
+  },
+];
+
+export const FAQ_ITEMS: FaqItem[] = [
+  {
+    id: "faq-services",
+    question: "A question about your products or services",
+    answer:
+      "Example answer to the question. Feel free to customize this content with the actual information you want to provide.",
   },
   {
-    id: "routing-rf-sync",
-    title: "Signal Routing, Sync & RF Links",
-    subtitle: "Baseband & IP matrix switching, microwave & Vislink RF",
-    iconName: "Radio",
-    summary: "Master sync generation (Blackburst, Tri-Level, PTP), large-scale baseband routing (Nevion, Evertz), and long-range Vislink COFDM wireless cameras for chase vehicles and drones.",
-    deliverables: [
-      "Evertz 5600SPG GPS-locked master sync reference distribution",
-      "Nevion Sublime & Grass Valley baseband routing matrix programming",
-      "Vislink RF wireless camera receiver arrays with multi-mast diversity",
-      "SMPTE ST 2110 IP video gateway configuration and NMOS routing",
-    ],
-    keyTools: ["Nevion Sublime", "Evertz 5600SPG", "Vislink COFDM", "Grass Valley Routers"],
-    metrics: "128x128 Matrix Routing with Zero Frame Jitter",
-    colSpan: "col-span-1 md:col-span-1 lg:col-span-1",
+    id: "faq-service-title",
+    question: "A title for the service you provide",
+    answer:
+      "Example answer to the question. Feel free to customize this content with the actual information you want to provide.",
   },
   {
-    id: "preventive-maintenance",
-    title: "Real-Time Troubleshooting & QC",
-    subtitle: "Calm, decisive fault isolation in live broadcast crises",
-    iconName: "Activity",
-    summary: "Preventive maintenance regimes, emergency optical patching, oscilloscope/waveform signal validation, and high-pressure fault recovery with zero dead air.",
-    deliverables: [
-      "Rigorous pre-broadcast QC checklist and signal chain stress testing",
-      "Optical OTDR fiber fault locating and SMPTE cable repair",
-      "Audio phase alignment, loudness compliance (ITU-R BS.1770 / EBU R128)",
-      "Instant emergency bypass patching protocols for live switchers/routers",
-    ],
-    keyTools: ["Tektronix WFM", "Fluke OTDR", "Leader Eye-Pattern", "Audio Phase Meters"],
-    metrics: "< 30s Emergency Bypass Execution Protocol",
-    colSpan: "col-span-1 md:col-span-2 lg:col-span-2",
+    id: "faq-common-question",
+    question: "Another question your visitors may have",
+    answer:
+      "Example answer to the question. Feel free to customize this content with the actual information you want to provide.",
+  },
+  {
+    id: "faq-overview",
+    question: "Or add sub-headings to create an overview",
+    answer:
+      "Example answer to the question. Feel free to customize this content with the actual information you want to provide.",
+  },
+  {
+    id: "faq-customers-wonder",
+    question: "Something your customers often wonder about",
+    answer:
+      "Example answer to the question. Feel free to customize this content with the actual information you want to provide.",
   },
 ];
 

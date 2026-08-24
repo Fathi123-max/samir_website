@@ -5,7 +5,6 @@ import { FLAGSHIP_EVENTS } from "@/lib/data";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { MediaFrame } from "@/components/MediaFrame";
-import { MobileActionBar } from "@/components/MobileActionBar";
 import { BackToTop } from "@/components/BackToTop";
 import { toEmbedUrl } from "@/lib/utils";
 import {
@@ -369,7 +368,7 @@ export default async function EventPage({
 
             <Link
               href="/#contact"
-              className="shrink-0 px-6 py-3.5 rounded-full bg-signal hover:bg-signal-deep text-white font-semibold text-sm transition-colors min-h-[50px] inline-flex items-center gap-2 focus-visible:ring-2 focus-visible:ring-signal focus-visible:ring-offset-2 focus-visible:ring-offset-ink focus-visible:outline-none"
+              className="shrink-0 px-6 py-3.5 rounded bg-signal hover:bg-signal-deep text-white font-semibold text-sm transition-colors min-h-[50px] inline-flex items-center gap-2 focus-visible:ring-2 focus-visible:ring-signal focus-visible:ring-offset-2 focus-visible:ring-offset-ink focus-visible:outline-none"
             >
               Inquire for dates &amp; roles
               <ArrowRight className="w-4 h-4" aria-hidden="true" />
@@ -380,9 +379,8 @@ export default async function EventPage({
 
       <Footer />
 
-      {/* Floating back-to-top + thumb-reach quick actions (mobile) */}
+      {/* Floating back-to-top */}
       <BackToTop />
-      <MobileActionBar bookHref="/#contact" />
     </div>
   );
 }

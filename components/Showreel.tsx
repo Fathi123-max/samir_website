@@ -25,7 +25,7 @@ export function Showreel() {
         <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 mb-10 lg:mb-14">
           <div className="max-w-2xl">
             <Reveal direction="up">
-              <p className="eyebrow text-signal mb-4">04 · Showreel</p>
+              <p className="eyebrow text-signal mb-4">03 · Showreel</p>
             </Reveal>
             <Reveal direction="up" delay={0.08}>
               <h2 className="fluid-h2 font-display font-semibold text-ink">
@@ -51,7 +51,7 @@ export function Showreel() {
         {/* Featured player */}
         <Reveal direction="up" delay={0.16}>
           {selected?.videoUrl ? (
-            <figure className="relative aspect-video rounded-3xl overflow-hidden bg-ink ring-1 ring-black/5 shadow-[0_32px_80px_-32px_rgba(24,24,27,0.35)]">
+            <figure className="relative aspect-video rounded-lg overflow-hidden bg-ink ring-1 ring-black/5 shadow-[0_32px_80px_-32px_rgba(26,43,50,0.35)]">
               <iframe
                 key={selected.id}
                 src={toEmbedUrl(selected.videoUrl)}
@@ -65,7 +65,7 @@ export function Showreel() {
           ) : (
             <div
               aria-live="polite"
-              className="relative aspect-video rounded-3xl border border-dashed border-zinc-300 bg-paper flex flex-col items-center justify-center gap-4 p-6 text-center"
+              className="relative aspect-video rounded-lg border border-dashed border-zinc-300 bg-paper flex flex-col items-center justify-center gap-4 p-6 text-center"
             >
               <span className="w-14 h-14 rounded-full bg-white border border-hairline shadow-sm flex items-center justify-center text-zinc-400">
                 <Clapperboard className="w-6 h-6" aria-hidden="true" />
@@ -97,9 +97,9 @@ export function Showreel() {
                   onClick={() => setSelectedId(video.id)}
                   aria-pressed={isSelected}
                   aria-label={`Play video: ${video.title}`}
-                  className={`group w-full text-left rounded-2xl overflow-hidden border transition-all focus-visible:ring-2 focus-visible:ring-signal focus-visible:outline-none ${
+                  className={`group w-full text-left rounded overflow-hidden border transition-all focus-visible:ring-2 focus-visible:ring-signal focus-visible:outline-none ${
                     isSelected
-                      ? "border-signal shadow-[0_12px_32px_-12px_rgba(234,88,12,0.35)]"
+                      ? "border-signal shadow-[0_12px_32px_-12px_rgba(35,155,167,0.4)]"
                       : "border-hairline card-lift"
                   }`}
                 >

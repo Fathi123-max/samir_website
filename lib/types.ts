@@ -42,16 +42,16 @@ export interface CaseStudy {
   tags: string[];
 }
 
-export interface ServiceItem {
+export interface ServiceTier {
   id: string;
   title: string;
-  subtitle: string;
-  iconName: string;
-  summary: string;
-  deliverables: string[];
-  keyTools: string[];
-  metrics: string;
-  colSpan?: string;
+  description: string;
+}
+
+export interface FaqItem {
+  id: string;
+  question: string;
+  answer: string;
 }
 
 export interface EquipmentItem {

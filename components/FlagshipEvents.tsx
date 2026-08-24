@@ -60,7 +60,7 @@ export function FlagshipEvents() {
         <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-8 mb-12 lg:mb-16">
           <div className="max-w-2xl">
             <Reveal direction="up">
-              <p className="eyebrow text-signal mb-4">03 · Case Studies</p>
+              <p className="eyebrow text-signal mb-4">02 · Portfolio</p>
             </Reveal>
             <Reveal direction="up" delay={0.08}>
               <h2 className="fluid-h2 font-display font-semibold text-ink">
@@ -94,7 +94,7 @@ export function FlagshipEvents() {
                     key={cat}
                     onClick={() => writeEventCategory(cat)}
                     aria-pressed={isActive}
-                    className={`px-4 py-2 rounded-full text-sm font-medium transition-colors min-h-[40px] focus-visible:ring-2 focus-visible:ring-signal focus-visible:outline-none ${
+                    className={`px-4 py-2 rounded text-sm font-medium transition-colors min-h-[40px] focus-visible:ring-2 focus-visible:ring-signal focus-visible:outline-none ${
                       isActive
                         ? "bg-ink text-white"
                         : "bg-white border border-hairline text-zinc-600 hover:text-signal hover:border-signal/50"
@@ -118,7 +118,7 @@ export function FlagshipEvents() {
               <Link
                 href={`/events/${event.slug}`}
                 aria-label={`Read the full case study: ${event.title}`}
-                className="card-lift group flex flex-col h-full rounded-3xl bg-white border border-hairline overflow-hidden focus-visible:ring-2 focus-visible:ring-signal focus-visible:outline-none"
+                className="card-lift group flex flex-col h-full rounded-lg bg-white border border-hairline overflow-hidden focus-visible:ring-2 focus-visible:ring-signal focus-visible:outline-none"
               >
                 {/* Cover media */}
                 <div className="relative">
