@@ -3,23 +3,22 @@
 import React, { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import { PERSONAL_INFO } from "@/lib/data";
-import { sound } from "@/lib/sound";
-import {
-  Menu,
-  X,
-  Radio,
-  Calendar,
-  Layers,
-  Sliders,
-  Cpu,
-  Calculator,
-  PhoneCall,
-  ChevronRight,
-} from "lucide-react";
+import { Menu, X, ArrowUpRight } from "lucide-react";
+
+const NAV_ITEMS = [
+  { label: "Experience", href: "#story", id: "story", index: "01" },
+  { label: "Capabilities", href: "#services", id: "services", index: "02" },
+  { label: "Case Studies", href: "#events", id: "events", index: "03" },
+  { label: "Showreel", href: "#showreel", id: "showreel", index: "04" },
+  { label: "Tech Stack", href: "#rack", id: "rack", index: "05" },
+];
+
+const SPY_SECTIONS = ["hero", "story", "services", "events", "showreel", "rack", "contact"];
 
 export function Header() {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [progress, setProgress] = useState(0);
   const [activeSection, setActiveSection] = useState("hero");
   const drawerRef = useRef<HTMLDivElement | null>(null);
 
@@ -62,151 +61,153 @@ export function Header() {
   }, [isOpen]);
 
   useEffect(() => {
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 20);
+    let ticking = false;
 
-      const sections = ["hero", "story", "simulator", "services", "events", "rack", "calculator", "contact"];
-      const scrollPos = window.scrollY + 140;
+    const update = () => {
+      const scrollY = window.scrollY;
+      setScrolled(scrollY > 20);
 
-      for (let i = sections.length - 1; i >= 0; i--) {
-        const section = sections[i];
-        const el = document.getElementById(section);
-        if (el) {
-          const top = el.offsetTop;
-          if (scrollPos >= top) {
-            setActiveSection(section);
-            break;
-          }
+      // Page scroll progress (0..1)
+      const max = document.documentElement.scrollHeight - window.innerHeight;
+      setProgress(max > 0 ? Math.min(1, scrollY / max) : 0);
+
+      // Scroll-spy
+      const scrollPos = scrollY + 140;
+      for (let i = SPY_SECTIONS.length - 1; i >= 0; i--) {
+        const el = document.getElementById(SPY_SECTIONS[i]);
+        if (el && scrollPos >= el.offsetTop) {
+          setActiveSection(SPY_SECTIONS[i]);
+          break;
         }
+      }
+
+      ticking = false;
+    };
+
+    const handleScroll = () => {
+      if (!ticking) {
+        ticking = true;
+        window.requestAnimationFrame(update);
       }
     };
 
+    update();
     window.addEventListener("scroll", handleScroll, { passive: true });
-    return () => window.removeEventListener("scroll", handleScroll);
+    window.addEventListener("resize", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+      window.removeEventListener("resize", handleScroll);
+    };
   }, []);
 
-  const navItems = [
-    { label: "Experience", href: "#story", id: "story", icon: Layers },
-    { label: "Live Routing", href: "#simulator", id: "simulator", icon: Radio },
-    { label: "Capabilities", href: "#services", id: "services", icon: Sliders },
-    { label: "Case Studies", href: "#events", id: "events", icon: Calendar },
-    { label: "Tech Stack", href: "#rack", id: "rack", icon: Cpu },
-    { label: "Calculators", href: "#calculator", id: "calculator", icon: Calculator },
-  ];
-
-  const handleNavClick = () => {
-    sound.playButtonClick();
-    setIsOpen(false);
-  };
+  const closeDrawer = () => setIsOpen(false);
 
   return (
-    <>
     <header
       role="banner"
-      className={`sticky top-0 z-40 transition-colors duration-200 ${
+      className={`sticky top-0 z-40 transition-all duration-200 ${
         scrolled
-          ? "bg-[#07090e]/95 backdrop-blur-md border-b border-[#1c2638] shadow-2xl"
-          : "bg-[#07090e]/85 backdrop-blur-sm border-b border-[#141d2b]"
+          ? "bg-white/85 backdrop-blur-md border-b border-hairline shadow-[0_1px_2px_rgba(24,24,27,0.05)]"
+          : "bg-white/60 backdrop-blur-sm border-b border-transparent"
       }`}
     >
-      <div className="max-w-screen-2xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-16 sm:h-20">
-          {/* Brand Logo & Title */}
+      <div className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div
+          className={`flex items-center justify-between transition-[height] duration-200 ${
+            scrolled ? "h-14 sm:h-16" : "h-16 sm:h-[4.5rem]"
+          }`}
+        >
+          {/* Brand */}
           <Link
             href="#hero"
-            onClick={() => sound.playTallyClick()}
-            aria-label="Samir Elgammal - Home"
-            className="flex items-center gap-2 sm:gap-4 group focus-visible:ring-2 focus-visible:ring-amber-400 focus-visible:outline-none rounded-xl p-1"
+            onClick={closeDrawer}
+            aria-label="Samir Elgammal — Home"
+            className="flex items-center gap-3 group focus-visible:ring-2 focus-visible:ring-signal focus-visible:outline-none rounded-lg p-1 -m-1"
           >
-            <div className="relative w-10 h-10 rounded-xl bg-gradient-to-br from-[#182335] to-[#0d1420] border border-[#2d3f5e] flex items-center justify-center font-mono font-black text-amber-400 group-hover:border-amber-500/70 transition-[border-color,box-shadow] shadow-md group-hover:shadow-amber-500/20 shrink-0">
-              <span className="text-base tracking-tighter">SE</span>
-              <span className="absolute -top-1 -right-1 w-3 h-3 rounded-full bg-emerald-500 border-2 border-[#07090e] animate-pulse" aria-hidden="true" />
-            </div>
-            <div className="flex flex-col justify-center min-w-0">
-              <div className="flex items-center gap-2 min-w-0">
-                <span className="font-display font-bold text-base sm:text-lg text-white group-hover:text-amber-400 transition-colors tracking-tight whitespace-nowrap">
-                  {PERSONAL_INFO.name}
-                </span>
-                <span className="hidden md:inline-block px-2 py-0.5 rounded text-[10px] font-mono bg-amber-500/15 text-amber-300 border border-amber-500/40 font-semibold shrink-0 leading-none">
-                  OB / CCU / EVS
-                </span>
-              </div>
-              <p className="hidden sm:block text-xs text-slate-300 font-mono tracking-wide leading-tight whitespace-nowrap">
-                System Broadcast Engineer • Dubai
-              </p>
-            </div>
+            <span className="w-9 h-9 rounded-lg bg-ink text-white flex items-center justify-center font-mono font-bold text-sm tracking-tight shrink-0 group-hover:bg-signal transition-colors">
+              SE
+            </span>
+            <span className="hidden sm:flex flex-col leading-tight">
+              <span className="font-display font-semibold text-[15px] text-ink tracking-tight whitespace-nowrap">
+                {PERSONAL_INFO.name}
+              </span>
+              <span className="eyebrow text-muted text-[10px] whitespace-nowrap">
+                Broadcast &amp; OB Engineer
+              </span>
+            </span>
           </Link>
 
-          {/* Desktop Navigation Links */}
-          <nav aria-label="Main Navigation" className="hidden xl:flex items-center gap-0.5 bg-[#0c121e]/90 border border-[#1e2a3d] p-1 rounded-full text-xs font-mono">
-            {navItems.map((item) => {
+          {/* Desktop Navigation */}
+          <nav aria-label="Main navigation" className="hidden lg:flex items-center gap-1 text-sm">
+            {NAV_ITEMS.map((item) => {
               const isActive = activeSection === item.id;
               return (
                 <a
                   key={item.id}
                   href={item.href}
-                  onClick={handleNavClick}
+                  onClick={closeDrawer}
                   aria-current={isActive ? "page" : undefined}
-                  className={`px-3 py-2 rounded-full whitespace-nowrap transition-colors focus-visible:ring-2 focus-visible:ring-amber-400 focus-visible:outline-none min-h-[40px] inline-flex items-center ${
-                    isActive
-                      ? "bg-gradient-to-r from-amber-500 to-amber-600 text-slate-950 font-bold shadow-md shadow-amber-500/25"
-                      : "text-slate-200 hover:text-white hover:bg-[#162133]"
+                  className={`relative px-3.5 py-2 rounded-full font-medium transition-colors min-h-[40px] inline-flex items-center gap-1.5 focus-visible:ring-2 focus-visible:ring-signal focus-visible:outline-none ${
+                    isActive ? "text-signal" : "text-zinc-600 hover:text-ink hover:bg-paper"
                   }`}
                 >
-                  <span>{item.label}</span>
+                  {isActive && (
+                    <span className="w-1 h-1 rounded-full bg-signal shrink-0" aria-hidden="true" />
+                  )}
+                  {item.label}
                 </a>
               );
             })}
           </nav>
 
-          {/* Action CTAs */}
-          <div className="hidden xl:flex items-center gap-2.5">
+          {/* Desktop CTA */}
+          <div className="hidden lg:flex items-center gap-3">
             <a
               href="#contact"
-              onClick={() => sound.playButtonClick()}
-              className="relative inline-flex items-center gap-1.5 px-3.5 py-2.5 rounded-xl bg-gradient-to-r from-amber-500 via-amber-400 to-amber-500 hover:from-amber-400 hover:to-amber-300 text-slate-950 font-bold text-xs tracking-wider uppercase shadow-lg shadow-amber-500/25 hover:shadow-amber-500/40 transition-colors font-mono active:scale-95 focus-visible:ring-2 focus-visible:ring-amber-400 focus-visible:outline-none min-h-[40px]"
+              className="inline-flex items-center gap-1.5 px-4 py-2.5 rounded-full bg-signal hover:bg-signal-deep text-white text-sm font-semibold transition-colors min-h-[40px] focus-visible:ring-2 focus-visible:ring-signal focus-visible:ring-offset-2 focus-visible:outline-none"
             >
-              <PhoneCall className="w-4 h-4 shrink-0" aria-hidden="true" />
-              <span>Book For Event</span>
-            </a>
-
-            <a
-              href={PERSONAL_INFO.whatsappUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              onClick={() => sound.playTallyClick()}
-              aria-label="Direct message Samir on WhatsApp"
-              className="p-2.5 px-3 rounded-xl bg-[#111927] hover:bg-[#1a2538] border border-[#23334c] text-emerald-400 hover:text-emerald-300 transition-colors text-xs font-mono flex items-center gap-2 focus-visible:ring-2 focus-visible:ring-emerald-400 focus-visible:outline-none min-h-[40px]"
-            >
-              <span className="w-2 h-2 rounded-full bg-emerald-500 animate-ping shrink-0" aria-hidden="true" />
-              <span className="hidden md:inline font-semibold">WhatsApp</span>
+              Book for an event
+              <ArrowUpRight className="w-4 h-4" aria-hidden="true" />
             </a>
           </div>
 
-          {/* Mobile Menu Button */}
-          <div className="flex xl:hidden items-center gap-2">
+          {/* Mobile actions */}
+          <div className="flex lg:hidden items-center gap-2">
             <a
               href="#contact"
-              onClick={() => sound.playButtonClick()}
-              className="px-4 py-2 rounded-xl bg-amber-500 text-slate-950 font-bold text-xs font-mono uppercase focus-visible:ring-2 focus-visible:ring-amber-400 min-h-[44px] flex items-center justify-center"
+              className="px-4 py-2.5 rounded-full bg-signal text-white text-xs font-semibold uppercase tracking-wide focus-visible:ring-2 focus-visible:ring-signal min-h-[44px] flex items-center justify-center"
             >
               Book
             </a>
             <button
-              onClick={() => {
-                sound.playButtonClick();
-                setIsOpen(!isOpen);
-              }}
+              onClick={() => setIsOpen(!isOpen)}
               aria-label={isOpen ? "Close navigation menu" : "Open navigation menu"}
               aria-expanded={isOpen}
               aria-controls="mobile-navigation"
-              className="p-3 rounded-xl bg-[#111927] border border-[#23334c] text-slate-200 hover:text-white focus-visible:ring-2 focus-visible:ring-amber-400 min-h-[44px] min-w-[44px] flex items-center justify-center"
+              className="p-3 rounded-lg border border-hairline bg-white text-ink hover:bg-paper focus-visible:ring-2 focus-visible:ring-signal min-h-[44px] min-w-[44px] flex items-center justify-center"
             >
-              {isOpen ? <X className="w-5 h-5 shrink-0" aria-hidden="true" /> : <Menu className="w-5 h-5 shrink-0" aria-hidden="true" />}
+              {isOpen ? (
+                <X className="w-5 h-5" aria-hidden="true" />
+              ) : (
+                <Menu className="w-5 h-5" aria-hidden="true" />
+              )}
             </button>
           </div>
         </div>
       </div>
+
+      {/* Scroll progress */}
+      <div
+        className={`absolute bottom-0 left-0 h-[2px] bg-signal transition-opacity duration-300 ${
+          scrolled ? "opacity-100" : "opacity-0"
+        }`}
+        style={{ width: `${progress * 100}%` }}
+        role="progressbar"
+        aria-label="Page scroll progress"
+        aria-valuenow={Math.round(progress * 100)}
+        aria-valuemin={0}
+        aria-valuemax={100}
+      />
 
       {/* Mobile Drawer */}
       {isOpen && (
@@ -214,80 +215,81 @@ export function Header() {
           ref={drawerRef}
           id="mobile-navigation"
           tabIndex={-1}
-          className="relative z-40 xl:hidden bg-[#0a0f19]/95 backdrop-blur-xl border-b border-[#1c2638] px-5 pt-4 pb-6 shadow-2xl focus:outline-none drawer-enter overscroll-contain max-h-[calc(100dvh-4rem)] overflow-y-auto"
+          className="lg:hidden absolute inset-x-0 top-full z-40 bg-white border-b border-hairline px-5 pt-4 pb-6 shadow-[0_24px_48px_-16px_rgba(24,24,27,0.18)] focus:outline-none drawer-enter overscroll-contain max-h-[calc(100dvh-4rem)] overflow-y-auto"
         >
-          <nav aria-label="Mobile Navigation" className="flex flex-col font-mono text-sm">
-            <p className="px-3 pb-3 text-[10px] font-mono uppercase tracking-[0.25em] text-slate-500">
-              Menu
-            </p>
-
-            <div className="flex flex-col gap-0.5">
-              {navItems.map((item) => {
+          <nav aria-label="Mobile navigation" className="flex flex-col text-sm">
+            <p className="eyebrow text-muted pb-3">Sections</p>
+            <ul className="divide-y divide-hairline">
+              {NAV_ITEMS.map((item) => {
                 const isActive = activeSection === item.id;
                 return (
-                  <a
-                    key={item.id}
-                    href={item.href}
-                    onClick={handleNavClick}
-                    aria-current={isActive ? "page" : undefined}
-                    className={`group flex items-center justify-between gap-3 px-3 py-3 rounded-xl min-h-[48px] transition-colors focus-visible:ring-2 focus-visible:ring-amber-400 ${
-                      isActive
-                        ? "bg-amber-500/[0.08] text-amber-300"
-                        : "text-slate-200 hover:text-white hover:bg-white/[0.04]"
-                    }`}
-                  >
-                    <span className="flex items-center gap-3 min-w-0">
-                      <item.icon
-                        className={`w-4 h-4 shrink-0 transition-colors ${
-                          isActive ? "text-amber-400" : "text-slate-500 group-hover:text-slate-300"
-                        }`}
-                        aria-hidden="true"
-                      />
-                      <span className="font-medium truncate">{item.label}</span>
-                    </span>
-                    <ChevronRight
-                      className={`w-4 h-4 shrink-0 transition-transform group-hover:translate-x-0.5 ${
-                        isActive ? "text-amber-400" : "text-slate-600"
+                  <li key={item.id}>
+                    <a
+                      href={item.href}
+                      onClick={closeDrawer}
+                      aria-current={isActive ? "page" : undefined}
+                      className={`flex items-center gap-4 py-3.5 min-h-[52px] font-medium transition-colors focus-visible:ring-2 focus-visible:ring-signal rounded-lg px-2 ${
+                        isActive ? "text-signal" : "text-ink hover:text-signal"
                       }`}
-                      aria-hidden="true"
-                    />
-                  </a>
+                    >
+                      <span className="font-mono text-xs text-zinc-400 tabular-nums w-6">
+                        {item.index}
+                      </span>
+                      <span className="grow">{item.label}</span>
+                      {isActive ? (
+                        <span className="w-1.5 h-1.5 rounded-full bg-signal shrink-0" aria-hidden="true" />
+                      ) : (
+                        <ArrowUpRight className="w-4 h-4 opacity-30" aria-hidden="true" />
+                      )}
+                    </a>
+                  </li>
                 );
               })}
-            </div>
+              <li>
+                <a
+                  href="#contact"
+                  onClick={closeDrawer}
+                  aria-current={activeSection === "contact" ? "page" : undefined}
+                  className="flex items-center gap-4 py-3.5 min-h-[52px] font-medium text-ink hover:text-signal transition-colors focus-visible:ring-2 focus-visible:ring-signal rounded-lg px-2"
+                >
+                  <span className="font-mono text-xs text-zinc-400 tabular-nums w-6">06</span>
+                  <span className="grow">Contact</span>
+                  <ArrowUpRight className="w-4 h-4 opacity-30" aria-hidden="true" />
+                </a>
+              </li>
+            </ul>
 
-            <div className="mt-4 pt-4 border-t border-[#1c2638]/70 flex flex-col gap-2">
+            <div className="grid grid-cols-2 gap-3 mt-5">
               <a
-                href="#contact"
-                onClick={handleNavClick}
-                className="flex items-center justify-center gap-2 px-4 py-3 rounded-xl bg-gradient-to-r from-amber-500 via-amber-400 to-amber-500 text-slate-950 font-bold text-xs font-mono uppercase tracking-wider shadow-lg shadow-amber-500/20 hover:from-amber-400 hover:to-amber-300 transition-colors active:scale-[0.99] min-h-[48px]"
+                href={`tel:${PERSONAL_INFO.phone.replace(/[^+\d]/g, "")}`}
+                onClick={closeDrawer}
+                className="flex items-center justify-center px-4 py-3.5 rounded-full border border-hairline bg-paper text-ink font-semibold text-sm min-h-[48px] hover:border-signal hover:text-signal transition-colors focus-visible:ring-2 focus-visible:ring-signal focus-visible:outline-none"
               >
-                <PhoneCall className="w-4 h-4 shrink-0" aria-hidden="true" />
-                <span>Book For Event</span>
+                Call
               </a>
               <a
                 href={PERSONAL_INFO.whatsappUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                onClick={() => sound.playTallyClick()}
-                className="flex items-center justify-center gap-2 px-4 py-3 rounded-xl bg-[#0c1420] border border-[#1e2a3d] text-slate-200 hover:text-white hover:border-[#2a3952] hover:bg-[#111927] transition-colors text-xs font-mono font-semibold min-h-[48px]"
+                onClick={closeDrawer}
+                className="flex items-center justify-center px-4 py-3.5 rounded-full bg-ink text-white font-semibold text-sm min-h-[48px] hover:bg-zinc-700 transition-colors focus-visible:ring-2 focus-visible:ring-signal focus-visible:outline-none"
               >
-                <span className="w-2 h-2 rounded-full bg-emerald-500 animate-ping shrink-0" aria-hidden="true" />
-                <span>WhatsApp</span>
+                WhatsApp
               </a>
             </div>
           </nav>
         </div>
       )}
-    </header>
 
-    {isOpen && (
-      <div
-        className="fixed inset-0 bg-black/60 backdrop-blur-sm z-30 xl:hidden"
-        onClick={() => setIsOpen(false)}
-        aria-hidden="true"
-      />
-    )}
-    </>
+      {isOpen && (
+        <button
+          type="button"
+          className="fixed inset-0 z-30 bg-ink/20 backdrop-blur-[2px] cursor-default"
+          onClick={() => setIsOpen(false)}
+          aria-hidden="true"
+          tabIndex={-1}
+        />
+      )}
+    </header>
   );
 }

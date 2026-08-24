@@ -7,7 +7,12 @@ export interface CaseStudy {
   broadcaster: string;
   dates: string;
   role: string;
+  /** Card + page-hero image, path under /public (e.g. "/images/cop28/cover.jpg"). Empty = styled placeholder. */
   heroImage?: string;
+  /** Additional photos shown in the detail-page gallery. */
+  gallery?: string[];
+  /** Embeddable video URL (YouTube/Vimeo) shown on the detail page. */
+  videoUrl?: string;
   summary: string;
   cameraCount: number;
   specs: {
@@ -86,6 +91,17 @@ export interface Testimonial {
   organization: string;
   event: string;
   avatarText: string;
+}
+
+/** One tile in the homepage showreel gallery. */
+export interface ShowcaseVideo {
+  id: string;
+  title: string;
+  caption: string;
+  /** Poster frame path under /public (e.g. "/images/showreel/cop28.jpg"). Empty = styled placeholder. */
+  thumb?: string;
+  /** YouTube/Vimeo URL. Empty = placeholder player slot. */
+  videoUrl?: string;
 }
 
 export interface BookingFormData {

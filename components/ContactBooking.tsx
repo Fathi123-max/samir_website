@@ -1,9 +1,8 @@
 "use client";
 
-import React, { useState } from "react";
+import React from "react";
 import confetti from "canvas-confetti";
 import { PERSONAL_INFO } from "@/lib/data";
-import { sound } from "@/lib/sound";
 import { Reveal } from "./Reveal";
 import {
   PhoneCall,
@@ -11,12 +10,10 @@ import {
   MapPin,
   Send,
   CheckCircle2,
-  Download,
-  FileText,
 } from "lucide-react";
 
 export function ContactBooking() {
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = React.useState({
     name: "",
     email: "",
     phone: "",
@@ -28,8 +25,8 @@ export function ContactBooking() {
     message: "",
   });
 
-  const [submitted, setSubmitted] = useState(false);
-  const [errors, setErrors] = useState<Record<string, string>>({});
+  const [submitted, setSubmitted] = React.useState(false);
+  const [errors, setErrors] = React.useState<Record<string, string>>({});
 
   const availableRoles = [
     "OB Systems Lead",
@@ -41,18 +38,12 @@ export function ContactBooking() {
   ];
 
   const handleRoleToggle = (role: string) => {
-    sound.playJogClick();
-    if (formData.selectedRoles.includes(role)) {
-      setFormData({
-        ...formData,
-        selectedRoles: formData.selectedRoles.filter((r) => r !== role),
-      });
-    } else {
-      setFormData({
-        ...formData,
-        selectedRoles: [...formData.selectedRoles, role],
-      });
-    }
+    setFormData((prev) => ({
+      ...prev,
+      selectedRoles: prev.selectedRoles.includes(role)
+        ? prev.selectedRoles.filter((r) => r !== role)
+        : [...prev.selectedRoles, role],
+    }));
   };
 
   const validateForm = () => {
@@ -60,7 +51,8 @@ export function ContactBooking() {
     if (!formData.name.trim()) newErrors.name = "Please enter your name";
     if (!formData.email.trim() || !formData.email.includes("@"))
       newErrors.email = "Please enter a valid email address";
-    if (!formData.company.trim()) newErrors.company = "Please enter your company or channel name";
+    if (!formData.company.trim())
+      newErrors.company = "Please enter your company or channel name";
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
@@ -72,22 +64,18 @@ export function ContactBooking() {
         (id) => document.getElementById(id)
       );
       const el = firstInvalid ? document.getElementById(firstInvalid) : null;
-      if (el) {
-        (el as HTMLElement).focus();
-      } else {
-        document.querySelector<HTMLElement>('[aria-invalid="true"]')?.focus();
-      }
+      if (el) (el as HTMLElement).focus();
       return;
     }
 
-    sound.playTallyClick();
-
-    confetti({
-      particleCount: 100,
-      spread: 70,
-      origin: { y: 0.6 },
-      colors: ["#f59e0b", "#06b6d4", "#10b981", "#ffffff"],
-    });
+    if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      confetti({
+        particleCount: 90,
+        spread: 70,
+        origin: { y: 0.6 },
+        colors: ["#ea580c", "#fb923c", "#18181b", "#ffffff"],
+      });
+    }
 
     setSubmitted(true);
   };
@@ -95,201 +83,171 @@ export function ContactBooking() {
   const generateWhatsAppInquiry = () => {
     const rolesText = formData.selectedRoles.join(", ");
     const text = encodeURIComponent(
-      `Hello Samir, my name is ${formData.name || "[Name]"} from ${formData.company || "[Company]"}.\n\nWe would like to book you for a ${formData.productionType} in ${formData.location || "UAE"}.\nTarget Dates: ${formData.dates || "Upcoming"}\nRequired Roles: ${rolesText}\n\nMessage: ${formData.message || "Please share your availability."}`
+      `Hello Samir, my name is ${formData.name || "[Name]"} from ${
+        formData.company || "[Company]"
+      }.\n\nWe would like to book you for a ${formData.productionType} in ${
+        formData.location || "UAE"
+      }.\nTarget Dates: ${formData.dates || "Upcoming"}\nRequired Roles: ${rolesText}\n\nMessage: ${
+        formData.message || "Please share your availability."
+      }`
     );
     return `https://wa.me/971505639015?text=${text}`;
   };
 
+  const inputClass = (hasError?: boolean) =>
+    `w-full px-4 py-3 rounded-xl bg-white border text-ink placeholder:text-zinc-400 focus:outline-none focus-visible:ring-2 focus-visible:ring-signal min-h-[48px] transition-colors ${
+      hasError ? "border-red-400" : "border-hairline focus:border-signal"
+    }`;
+
   return (
     <section
       id="contact"
-      aria-label="Contact and Production Booking"
-      className="py-20 lg:py-28 bg-[#06090f] relative overflow-hidden"
+      aria-label="Contact and booking"
+      className="py-20 lg:py-28 bg-canvas scroll-mt-20"
     >
-      {/* Background ambient lighting */}
-      <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[700px] h-[300px] bg-amber-500/5 rounded-full blur-3xl pointer-events-none" aria-hidden="true" />
-
-      <div className="max-w-screen-2xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        {/* Section Header */}
-        <div className="max-w-3xl mb-12 lg:mb-16">
-          <Reveal direction="down">
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-amber-500/10 border border-amber-500/30 text-amber-300 text-xs font-mono mb-4">
-              <PhoneCall className="w-4 h-4 shrink-0" aria-hidden="true" />
-              <span>PRODUCTION BOOKING & DISPATCH</span>
-            </div>
+      <div className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8">
+        {/* Section header */}
+        <div className="max-w-3xl mb-14 lg:mb-20">
+          <Reveal direction="up">
+            <p className="eyebrow text-signal mb-4">07 · Contact</p>
           </Reveal>
-
-          <Reveal direction="up" delay={0.1}>
-            <h2 className="fluid-h2 font-display font-extrabold text-white tracking-tight">
-              Book Samir for Your Next Live Broadcast.
+          <Reveal direction="up" delay={0.08}>
+            <h2 className="fluid-h2 font-display font-semibold text-ink">
+              Book Samir for your{" "}
+              <em className="italic text-signal">next live broadcast</em>.
             </h2>
           </Reveal>
-
-          <Reveal direction="up" delay={0.15}>
-            <p className="text-slate-200 fluid-body mt-4 font-normal">
-              Available for tier-1 OB truck deployments, sports championships, studio playout setups, and international flyaways across Dubai, Abu Dhabi, Saudi Arabia, and the GCC.
+          <Reveal direction="up" delay={0.16}>
+            <p className="text-zinc-600 fluid-body mt-5">
+              Available for OB truck deployments, sports championships, studio
+              playout, and international flyaways across Dubai, Abu Dhabi,
+              Saudi Arabia, and the GCC.
             </p>
           </Reveal>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start">
-          {/* Left Column: Direct Contact Details & Live Availability */}
-          <div className="lg:col-span-5 space-y-6 sm:space-y-8">
-            {/* Status Card */}
-            <Reveal direction="left" delay={0.2}>
-              <div className="p-6 sm:p-8 rounded-3xl bg-[#0c121e] border border-[#1f2d44] shadow-xl bevel-panel space-y-6">
-                <div className="flex items-center gap-3">
-                  <span className="relative flex h-3 w-3" aria-hidden="true">
-                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
-                    <span className="relative inline-flex rounded-full h-3 w-3 bg-emerald-500" />
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-start">
+          {/* Left column — direct contact */}
+          <div className="lg:col-span-5 space-y-8">
+            <Reveal direction="up" delay={0.1}>
+              <div className="rounded-2xl border border-hairline bg-paper p-6 sm:p-8">
+                <p className="inline-flex items-center gap-2.5 text-xs font-semibold text-emerald-700 uppercase tracking-wide mb-5">
+                  <span className="relative flex h-2 w-2" aria-hidden="true">
+                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-500 opacity-60" />
+                    <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500" />
                   </span>
-                  <span className="text-xs font-mono font-bold text-emerald-400 uppercase tracking-wider">
-                    CURRENT AVAILABILITY STATUS
-                  </span>
-                </div>
+                  Currently available
+                </p>
 
-                <div>
-                  <h3 className="text-lg font-bold text-white font-mono mb-2">
-                    Open for UAE, GCC & Flyaway Deployments
-                  </h3>
-                  <p className="text-xs sm:text-sm text-slate-300 font-sans leading-relaxed">
-                    Immediate dispatch capability for sports OB trucks, international summits, and studio playout facilities.
-                  </p>
-                </div>
+                <h3 className="font-display font-bold text-xl text-ink leading-snug mb-1.5">
+                  Open for UAE, GCC &amp; flyaway deployments
+                </h3>
+                <p className="text-sm text-zinc-600 leading-relaxed mb-7">
+                  Immediate dispatch capability for sports OB trucks,
+                  international summits, and studio playout facilities.
+                </p>
 
-                <div className="space-y-4 border-t border-[#182438] pt-6 text-xs font-mono">
-                  <a
-                    href={PERSONAL_INFO.whatsappUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    onClick={() => sound.playTallyClick()}
-                    aria-label="Chat directly on WhatsApp with Samir"
-                    className="flex items-center justify-between p-4 rounded-2xl bg-emerald-950/50 border border-emerald-700/80 text-emerald-300 hover:bg-emerald-900/60 transition-colors focus-visible:ring-2 focus-visible:ring-emerald-400 focus-visible:outline-none min-h-[52px]"
-                  >
-                    <div className="flex items-center gap-4">
-                      <PhoneCall className="w-5 h-5 text-emerald-400 shrink-0" aria-hidden="true" />
-                      <div>
-                        <span className="text-[10px] text-slate-300 block font-medium">PHONE & WHATSAPP</span>
-                        <span className="font-bold text-white text-sm">{PERSONAL_INFO.phone}</span>
-                      </div>
-                    </div>
-                    <span className="text-xs px-3 py-1 rounded-lg bg-emerald-800 text-white font-bold">
-                      CHAT &rarr;
+                <ul className="divide-y divide-hairline border-y border-hairline">
+                  <li>
+                    <a
+                      href={PERSONAL_INFO.whatsappUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      aria-label="Chat directly on WhatsApp with Samir"
+                      className="group flex items-center gap-4 py-4 focus-visible:ring-2 focus-visible:ring-signal focus-visible:outline-none rounded-lg"
+                    >
+                      <span className="w-9 h-9 rounded-full bg-white border border-hairline flex items-center justify-center shrink-0 group-hover:border-signal group-hover:text-signal text-ink transition-colors">
+                        <PhoneCall className="w-4 h-4" aria-hidden="true" />
+                      </span>
+                      <span className="min-w-0">
+                        <span className="eyebrow text-muted block">Phone &amp; WhatsApp</span>
+                        <span className="font-semibold text-ink text-sm">{PERSONAL_INFO.phone}</span>
+                      </span>
+                    </a>
+                  </li>
+                  <li>
+                    <a
+                      href={`mailto:${PERSONAL_INFO.email}`}
+                      aria-label="Send email to Samir"
+                      className="group flex items-center gap-4 py-4 focus-visible:ring-2 focus-visible:ring-signal focus-visible:outline-none rounded-lg"
+                    >
+                      <span className="w-9 h-9 rounded-full bg-white border border-hairline flex items-center justify-center shrink-0 group-hover:border-signal group-hover:text-signal text-ink transition-colors">
+                        <Mail className="w-4 h-4" aria-hidden="true" />
+                      </span>
+                      <span className="min-w-0">
+                        <span className="eyebrow text-muted block">Email</span>
+                        <span className="font-semibold text-ink text-sm break-all">{PERSONAL_INFO.email}</span>
+                      </span>
+                    </a>
+                  </li>
+                  <li className="flex items-center gap-4 py-4">
+                    <span className="w-9 h-9 rounded-full bg-white border border-hairline flex items-center justify-center shrink-0 text-ink">
+                      <MapPin className="w-4 h-4" aria-hidden="true" />
                     </span>
-                  </a>
-
-                  <a
-                    href={`mailto:${PERSONAL_INFO.email}`}
-                    onClick={() => sound.playButtonClick()}
-                    aria-label="Send email to Samir"
-                    className="flex items-center justify-between p-4 rounded-2xl bg-[#090e17] border border-[#1d2a3f] text-slate-200 hover:text-white hover:bg-[#121c2d] transition-colors focus-visible:ring-2 focus-visible:ring-cyan-400 focus-visible:outline-none min-h-[52px]"
-                  >
-                    <div className="flex items-center gap-4">
-                      <Mail className="w-5 h-5 text-cyan-400 shrink-0" aria-hidden="true" />
-                      <div>
-                        <span className="text-[10px] text-slate-400 block font-medium">DIRECT EMAIL</span>
-                        <span className="font-bold text-slate-100">{PERSONAL_INFO.email}</span>
-                      </div>
-                    </div>
-                  </a>
-
-                  <div className="flex items-center gap-4 p-4 rounded-2xl bg-[#090e17] border border-[#1d2a3f] text-slate-200 min-h-[52px]">
-                    <MapPin className="w-5 h-5 text-amber-400 shrink-0" aria-hidden="true" />
-                    <div>
-                      <span className="text-[10px] text-slate-400 block font-medium">OPERATIONAL BASE</span>
-                      <span className="font-bold text-slate-100">{PERSONAL_INFO.location}</span>
-                    </div>
-                  </div>
-                </div>
+                    <span className="min-w-0">
+                      <span className="eyebrow text-muted block">Based in</span>
+                      <span className="font-semibold text-ink text-sm">{PERSONAL_INFO.location}</span>
+                    </span>
+                  </li>
+                </ul>
               </div>
             </Reveal>
 
-            {/* ATS CV & Spec Sheet Download Tile */}
-            <Reveal direction="left" delay={0.25}>
-              <div className="p-6 sm:p-8 rounded-3xl bg-[#0c121e] border border-[#1f2d44] shadow-xl space-y-4">
-                <div className="flex items-center gap-3 text-amber-300 font-mono text-xs">
-                  <FileText className="w-4 h-4 shrink-0" aria-hidden="true" />
-                  <span className="font-bold tracking-wider uppercase">OFFICIAL ENGINEERING PROFILE</span>
-                </div>
-                <h3 className="text-lg font-bold text-white font-display">
-                  ATS-Optimized CV & Technical Dossier
-                </h3>
-                <p className="text-xs sm:text-sm text-slate-300 font-sans leading-relaxed">
-                  Download Samir’s full engineering curriculum vitae detailing 18+ years of vision mixer, CCU, and EVS event assignments.
-                </p>
-
+            <Reveal direction="up" delay={0.16}>
+              <p className="text-sm text-zinc-500 leading-relaxed px-1">
+                Prefer email? Send production specs directly to{" "}
                 <a
-                  href={`${PERSONAL_INFO.whatsappUrl}?text=${encodeURIComponent("Hi Samir, I'd like to request your ATS CV and technical dossier for review.")}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  onClick={() => sound.playButtonClick()}
-                  aria-label="Request Samir's ATS CV via WhatsApp"
-                  className="w-full py-4 px-4 rounded-xl bg-amber-500/15 hover:bg-amber-500 text-amber-300 hover:text-slate-950 border border-amber-500/40 font-mono text-xs font-bold transition-colors flex items-center justify-center gap-2 focus-visible:ring-2 focus-visible:ring-amber-400 focus-visible:outline-none min-h-[48px]"
+                  href={`mailto:${PERSONAL_INFO.email}`}
+                  className="font-semibold text-signal hover:underline focus-visible:ring-2 focus-visible:ring-signal rounded"
                 >
-                  <Download className="w-4 h-4 shrink-0" aria-hidden="true" />
-                  <span>Request CV via WhatsApp</span>
-                </a>
-              </div>
+                  {PERSONAL_INFO.email}
+                </a>{" "}
+                — replies within two hours during UAE business days.
+              </p>
             </Reveal>
           </div>
 
-          {/* Right Column: Interactive Booking Form */}
+          {/* Right column — form */}
           <div className="lg:col-span-7">
-            <Reveal direction="right" delay={0.2}>
-              <div className="p-6 sm:p-8 lg:p-10 rounded-3xl bg-[#0c121e] border border-[#1f2d44] shadow-2xl bevel-panel space-y-6">
-                <div className="flex flex-wrap items-center justify-between gap-3 border-b border-[#182336] pb-5">
-                  <div>
-                    <h3 className="text-lg sm:text-xl font-bold text-white font-mono">
-                      Production Booking Dispatch
-                    </h3>
-                    <p className="text-xs text-slate-300 font-mono mt-1">
-                      Submit project parameters for immediate availability confirmation
-                    </p>
-                  </div>
-                  <span className="text-xs font-mono text-emerald-400 font-bold px-3 py-1 rounded-lg bg-emerald-950/70 border border-emerald-700">
-                    DISPATCH READY
-                  </span>
-                </div>
-
+            <Reveal direction="up" delay={0.14}>
+              <div className="card-lift p-6 sm:p-8 lg:p-10 rounded-2xl bg-white border border-hairline">
                 {submitted ? (
                   <div className="text-center py-12 space-y-5" role="status" aria-live="polite">
-                    <div className="w-16 h-16 rounded-full bg-emerald-500/20 border border-emerald-500 flex items-center justify-center text-emerald-400 mx-auto">
-                      <CheckCircle2 className="w-8 h-8 shrink-0" aria-hidden="true" />
-                    </div>
-                    <div className="space-y-2">
-                      <h4 className="text-xl font-bold text-white font-mono">
-                        Booking Request Received!
-                      </h4>
-                      <p className="text-sm text-slate-200 max-w-md mx-auto font-sans leading-relaxed">
-                        Thank you, <strong className="text-amber-400">{formData.name || "Client"}</strong>. Samir Elgammal has received your inquiry for the {formData.productionType} and will reply within 2 hours.
-                      </p>
-                    </div>
-
-                    <div className="pt-4 flex flex-wrap justify-center gap-4">
+                    <span className="inline-flex w-16 h-16 rounded-full bg-emerald-50 border border-emerald-200 items-center justify-center text-emerald-600 mx-auto">
+                      <CheckCircle2 className="w-8 h-8" aria-hidden="true" />
+                    </span>
+                    <h3 className="font-display font-semibold text-2xl text-ink">
+                      Booking request received
+                    </h3>
+                    <p className="text-sm text-zinc-600 max-w-md mx-auto leading-relaxed">
+                      Thank you, <strong className="text-ink">{formData.name || "there"}</strong>.
+                      Your inquiry for the {formData.productionType.toLowerCase()} has been noted —
+                      send it straight through on WhatsApp for the fastest reply.
+                    </p>
+                    <div className="flex flex-wrap justify-center gap-3 pt-3">
                       <a
                         href={generateWhatsAppInquiry()}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="px-6 py-4 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-mono text-xs font-bold transition-colors flex items-center gap-2 min-h-[48px]"
+                        className="px-6 py-3.5 rounded-full bg-signal hover:bg-signal-deep text-white font-semibold text-sm transition-colors min-h-[50px] inline-flex items-center gap-2 focus-visible:ring-2 focus-visible:ring-signal focus-visible:ring-offset-2 focus-visible:outline-none"
                       >
                         <PhoneCall className="w-4 h-4 shrink-0" aria-hidden="true" />
-                        <span>Send via WhatsApp Directly</span>
+                        Send via WhatsApp
                       </a>
                       <button
                         onClick={() => setSubmitted(false)}
-                        className="px-6 py-4 rounded-xl bg-[#131d2e] hover:bg-[#1a273d] text-slate-200 border border-[#24354f] font-mono text-xs font-semibold min-h-[48px]"
+                        className="px-6 py-3.5 rounded-full border border-hairline hover:border-signal hover:text-signal text-ink font-semibold text-sm transition-colors min-h-[50px]"
                       >
-                        Submit Another Request
+                        Submit another request
                       </button>
                     </div>
                   </div>
                 ) : (
-                  <form onSubmit={handleSubmit} noValidate className="space-y-5 text-xs font-mono">
-                    {/* Name & Company */}
+                  <form onSubmit={handleSubmit} noValidate className="space-y-5">
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
                       <div>
-                        <label htmlFor="client-name" className="block text-slate-200 mb-2 font-semibold">
-                          YOUR NAME / CONTACT <span className="text-amber-400">*</span>
+                        <label htmlFor="client-name" className="block text-sm font-semibold text-ink mb-2">
+                          Name <span className="text-signal">*</span>
                         </label>
                         <input
                           id="client-name"
@@ -299,19 +257,21 @@ export function ContactBooking() {
                           aria-invalid={!!errors.name}
                           aria-describedby={errors.name ? "client-name-error" : undefined}
                           autoComplete="name"
-                          placeholder="e.g. Tariq Al-Hashimi"
+                          placeholder="Your full name"
                           value={formData.name}
                           onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                          className={`w-full px-4 py-3 rounded-xl bg-[#080d17] border text-slate-100 placeholder:text-slate-500 focus:outline-none focus-visible:ring-2 focus-visible:ring-amber-400 min-h-[48px] ${
-                            errors.name ? "border-red-500 focus:border-red-400" : "border-[#1b283d] focus:border-amber-400"
-                          }`}
+                          className={inputClass(!!errors.name)}
                         />
-                        {errors.name && <span id="client-name-error" className="text-red-400 text-[11px] mt-1 block font-medium">{errors.name}</span>}
+                        {errors.name && (
+                          <span id="client-name-error" className="text-red-600 text-xs mt-1.5 block">
+                            {errors.name}
+                          </span>
+                        )}
                       </div>
 
                       <div>
-                        <label htmlFor="client-company" className="block text-slate-200 mb-2 font-semibold">
-                          BROADCASTER / COMPANY <span className="text-amber-400">*</span>
+                        <label htmlFor="client-company" className="block text-sm font-semibold text-ink mb-2">
+                          Company / broadcaster <span className="text-signal">*</span>
                         </label>
                         <input
                           id="client-company"
@@ -321,22 +281,23 @@ export function ContactBooking() {
                           aria-invalid={!!errors.company}
                           aria-describedby={errors.company ? "client-company-error" : undefined}
                           autoComplete="organization"
-                          placeholder="e.g. Abu Dhabi Sports / Media City"
+                          placeholder="e.g. Abu Dhabi Sports"
                           value={formData.company}
                           onChange={(e) => setFormData({ ...formData, company: e.target.value })}
-                          className={`w-full px-4 py-3 rounded-xl bg-[#080d17] border text-slate-100 placeholder:text-slate-500 focus:outline-none focus-visible:ring-2 focus-visible:ring-amber-400 min-h-[48px] ${
-                            errors.company ? "border-red-500 focus:border-red-400" : "border-[#1b283d] focus:border-amber-400"
-                          }`}
+                          className={inputClass(!!errors.company)}
                         />
-                        {errors.company && <span id="client-company-error" className="text-red-400 text-[11px] mt-1 block font-medium">{errors.company}</span>}
+                        {errors.company && (
+                          <span id="client-company-error" className="text-red-600 text-xs mt-1.5 block">
+                            {errors.company}
+                          </span>
+                        )}
                       </div>
                     </div>
 
-                    {/* Email & Phone */}
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
                       <div>
-                        <label htmlFor="client-email" className="block text-slate-200 mb-2 font-semibold">
-                          EMAIL ADDRESS <span className="text-amber-400">*</span>
+                        <label htmlFor="client-email" className="block text-sm font-semibold text-ink mb-2">
+                          Email <span className="text-signal">*</span>
                         </label>
                         <input
                           id="client-email"
@@ -347,46 +308,46 @@ export function ContactBooking() {
                           aria-describedby={errors.email ? "client-email-error" : undefined}
                           autoComplete="email"
                           spellCheck={false}
-                          placeholder="tariq@network.ae"
+                          placeholder="you@network.ae"
                           value={formData.email}
                           onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                          className={`w-full px-4 py-3 rounded-xl bg-[#080d17] border text-slate-100 placeholder:text-slate-500 focus:outline-none focus-visible:ring-2 focus-visible:ring-amber-400 min-h-[48px] ${
-                            errors.email ? "border-red-500 focus:border-red-400" : "border-[#1b283d] focus:border-amber-400"
-                          }`}
+                          className={inputClass(!!errors.email)}
                         />
-                        {errors.email && <span id="client-email-error" className="text-red-400 text-[11px] mt-1 block font-medium">{errors.email}</span>}
+                        {errors.email && (
+                          <span id="client-email-error" className="text-red-600 text-xs mt-1.5 block">
+                            {errors.email}
+                          </span>
+                        )}
                       </div>
 
                       <div>
-                        <label htmlFor="client-phone" className="block text-slate-200 mb-2 font-semibold">
-                          PHONE / WHATSAPP NUMBER
+                        <label htmlFor="client-phone" className="block text-sm font-semibold text-ink mb-2">
+                          Phone / WhatsApp
                         </label>
                         <input
                           id="client-phone"
                           type="tel"
                           autoComplete="tel"
-                          placeholder="+971 50 …"
+                          placeholder="+971 …"
                           value={formData.phone}
                           onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                          className="w-full px-4 py-3 rounded-xl bg-[#080d17] border border-[#1b283d] text-slate-100 placeholder:text-slate-500 focus:outline-none focus:border-amber-400 focus-visible:ring-2 focus-visible:ring-amber-400 min-h-[48px]"
+                          className={inputClass()}
                         />
                       </div>
                     </div>
 
-                    {/* Production Type & Target Dates */}
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
                       <div>
-                        <label htmlFor="prod-type" className="block text-slate-200 mb-2 font-semibold">
-                          TYPE OF PRODUCTION
+                        <label htmlFor="prod-type" className="block text-sm font-semibold text-ink mb-2">
+                          Type of production
                         </label>
                         <select
                           id="prod-type"
                           value={formData.productionType}
-                          onChange={(e) => {
-                            sound.playJogClick();
-                            setFormData({ ...formData, productionType: e.target.value });
-                          }}
-                          className="w-full px-4 py-3 rounded-xl bg-[#080d17] border border-[#1b283d] text-slate-100 focus:outline-none focus:border-amber-400 min-h-[48px]"
+                          onChange={(e) =>
+                            setFormData({ ...formData, productionType: e.target.value })
+                          }
+                          className={`${inputClass()} appearance-none`}
                         >
                           <option value="Live Sports Championship">Live Sports Championship</option>
                           <option value="Diplomatic / UN Summit">Diplomatic / UN Summit</option>
@@ -398,8 +359,8 @@ export function ContactBooking() {
                       </div>
 
                       <div>
-                        <label htmlFor="event-dates" className="block text-slate-200 mb-2 font-semibold">
-                          EVENT LOCATION & DATES
+                        <label htmlFor="event-dates" className="block text-sm font-semibold text-ink mb-2">
+                          Location &amp; dates
                         </label>
                         <input
                           id="event-dates"
@@ -407,17 +368,16 @@ export function ContactBooking() {
                           placeholder="e.g. Dubai / Oct 15 – 22"
                           value={formData.dates}
                           onChange={(e) => setFormData({ ...formData, dates: e.target.value })}
-                          className="w-full px-4 py-3 rounded-xl bg-[#080d17] border border-[#1b283d] text-slate-100 placeholder:text-slate-500 focus:outline-none focus:border-amber-400 focus-visible:ring-2 focus-visible:ring-amber-400 min-h-[48px]"
+                          className={inputClass()}
                         />
                       </div>
                     </div>
 
-                    {/* Required Engineering Roles Multi-Select */}
-                    <fieldset className="space-y-2">
-                      <legend className="block text-slate-200 mb-2 font-semibold">
-                        REQUIRED ENGINEERING ROLES:
+                    <fieldset>
+                      <legend className="block text-sm font-semibold text-ink mb-2.5">
+                        Required engineering roles
                       </legend>
-                      <div className="grid grid-cols-2 sm:grid-cols-3 gap-3" role="group" aria-label="Select roles needed">
+                      <div className="flex flex-wrap gap-2" role="group" aria-label="Select roles needed">
                         {availableRoles.map((role) => {
                           const isSelected = formData.selectedRoles.includes(role);
                           return (
@@ -426,56 +386,49 @@ export function ContactBooking() {
                               type="button"
                               onClick={() => handleRoleToggle(role)}
                               aria-pressed={isSelected}
-                              className={`p-3 rounded-xl border text-xs font-bold text-left transition-colors min-h-[44px] focus-visible:ring-2 focus-visible:ring-amber-400 focus-visible:outline-none ${
+                              className={`px-3.5 py-2 rounded-full text-xs font-medium border transition-colors min-h-[38px] focus-visible:ring-2 focus-visible:ring-signal focus-visible:outline-none ${
                                 isSelected
-                                  ? "bg-amber-500/20 border-amber-400 text-amber-300"
-                                  : "bg-[#080d17] border-[#1b283d] text-slate-300 hover:text-white"
+                                  ? "bg-signal-tint border-signal/40 text-signal"
+                                  : "bg-white border-hairline text-zinc-500 hover:text-signal hover:border-signal/50"
                               }`}
                             >
-                              <div className="flex items-center gap-2 min-w-0">
-                                <span className={`w-2 h-2 rounded-full shrink-0 ${isSelected ? "bg-amber-400" : "bg-slate-600"}`} aria-hidden="true" />
-                                <span className="min-w-0 leading-tight">{role}</span>
-                              </div>
+                              {role}
                             </button>
                           );
                         })}
                       </div>
                     </fieldset>
 
-                    {/* Message / Technical Specs */}
                     <div>
-                      <label htmlFor="event-message" className="block text-slate-200 mb-2 font-semibold">
-                        EVENT NOTES / SPECIFICATIONS
+                      <label htmlFor="event-message" className="block text-sm font-semibold text-ink mb-2">
+                        Event notes
                       </label>
                       <textarea
                         id="event-message"
-                        rows={5}
-                        placeholder="Detail camera count, OB truck model, transmission requirements…"
+                        rows={4}
+                        placeholder="Camera count, transmission requirements, anything else…"
                         value={formData.message}
                         onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                        className="w-full px-4 py-3 rounded-xl bg-[#080d17] border border-[#1b283d] text-slate-100 placeholder:text-slate-500 focus:outline-none focus:border-amber-400 focus-visible:ring-2 focus-visible:ring-amber-400 resize-none min-h-[120px]"
+                        className={`${inputClass()} resize-none min-h-[110px]`}
                       />
                     </div>
 
-                    {/* Submit Buttons */}
-                    <div className="pt-2 flex flex-col sm:flex-row items-center gap-4">
+                    <div className="pt-2 flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
                       <button
                         type="submit"
-                        className="w-full sm:w-auto flex-1 py-4 px-6 rounded-xl bg-gradient-to-r from-amber-500 via-amber-400 to-amber-500 hover:from-amber-400 hover:to-amber-300 text-slate-950 font-bold font-mono text-xs sm:text-sm uppercase tracking-wider shadow-xl shadow-amber-500/20 transition-colors flex items-center justify-center gap-3 focus-visible:ring-2 focus-visible:ring-amber-400 focus-visible:outline-none min-h-[48px]"
+                        className="flex-1 py-3.5 px-6 rounded-full bg-signal hover:bg-signal-deep text-white font-semibold transition-colors inline-flex items-center justify-center gap-2 min-h-[52px] focus-visible:ring-2 focus-visible:ring-signal focus-visible:ring-offset-2 focus-visible:outline-none"
                       >
                         <Send className="w-4 h-4 shrink-0" aria-hidden="true" />
-                        <span>Dispatch Booking Inquiry</span>
+                        Send booking inquiry
                       </button>
-
                       <a
                         href={generateWhatsAppInquiry()}
                         target="_blank"
                         rel="noopener noreferrer"
-                        onClick={() => sound.playTallyClick()}
-                        className="w-full sm:w-auto py-4 px-6 rounded-xl bg-emerald-600/25 hover:bg-emerald-600 text-emerald-300 hover:text-white border border-emerald-500/50 font-mono text-xs sm:text-sm font-bold transition-colors flex items-center justify-center gap-2 focus-visible:ring-2 focus-visible:ring-emerald-400 focus-visible:outline-none min-h-[48px]"
+                        className="py-3.5 px-6 rounded-full border border-hairline hover:border-signal hover:text-signal text-ink font-semibold transition-colors inline-flex items-center justify-center gap-2 min-h-[52px] focus-visible:ring-2 focus-visible:ring-signal focus-visible:outline-none"
                       >
                         <PhoneCall className="w-4 h-4 shrink-0" aria-hidden="true" />
-                        <span>Instant WhatsApp</span>
+                        Instant WhatsApp
                       </a>
                     </div>
                   </form>

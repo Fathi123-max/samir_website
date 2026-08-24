@@ -1,10 +1,18 @@
-import { CaseStudy, ServiceItem, EquipmentCategory, TimelineNode, Testimonial } from "./types";
+import { CaseStudy, ServiceItem, EquipmentCategory, TimelineNode, Testimonial, ShowcaseVideo } from "./types";
 
 export const PERSONAL_INFO = {
   name: "Samir Elgammal",
   title: "System Broadcast & OB Engineer",
   subtitle: "CCU & EVS Replay Specialist",
   tagline: "18+ years keeping live broadcasts on-air — from high-pressure OB vans to studio master control rooms.",
+  /**
+   * Portrait photo path under /public. Empty string = styled placeholder.
+   * NOTE: current image is a stand-in demo asset (Unsplash) — replace with a
+   * real portrait of Samir at the same path.
+   */
+  portrait: "/images/samir-portrait.jpg",
+  /** Showreel video embed URL (YouTube/Vimeo). Empty string hides the showreel CTA. */
+  showreelUrl: "https://www.youtube.com/watch?v=-UM3atf8iAI",
   experienceYears: 18,
   eventsCount: 150,
   broadcastersCount: 22,
@@ -23,6 +31,9 @@ export const PERSONAL_INFO = {
 export const FLAGSHIP_EVENTS: CaseStudy[] = [
   {
     slug: "cop28-expo-city-dubai",
+    heroImage: "/images/events/cop28-cover.jpg",
+    gallery: ["/images/events/g-camera.jpg", "/images/events/g-mic.jpg"],
+    videoUrl: "https://www.youtube.com/watch?v=-UM3atf8iAI",
     title: "COP28 UN Climate Summit",
     subtitle: "Global Unilateral & Host Broadcaster Transmission Matrix",
     category: "Summit",
@@ -79,6 +90,9 @@ export const FLAGSHIP_EVENTS: CaseStudy[] = [
   },
   {
     slug: "uae-pro-league-adnoc",
+    heroImage: "/images/events/pro-league-cover.jpg",
+    gallery: ["/images/events/g-pitch.jpg", "/images/events/g-tech.jpg"],
+    videoUrl: "https://www.youtube.com/watch?v=GzxZcTk2HT4",
     title: "UAE Pro League (ADNOC Football)",
     subtitle: "16-Camera 4K Live OB Truck & Dual EVS Super Slow-Mo",
     category: "Sports",
@@ -135,6 +149,9 @@ export const FLAGSHIP_EVENTS: CaseStudy[] = [
   },
   {
     slug: "camel-racing-heritage-festivals",
+    heroImage: "/images/events/desert-cover.jpg",
+    gallery: ["/images/events/g-sand.jpg", "/images/events/g-studio.jpg"],
+    videoUrl: "https://www.youtube.com/watch?v=558JWScMdcY",
     title: "National Camel & Desert Racing Championships",
     subtitle: "Extreme Desert Environment RF Wireless & High-Speed Mobile OB",
     category: "Heritage",
@@ -191,6 +208,9 @@ export const FLAGSHIP_EVENTS: CaseStudy[] = [
   },
   {
     slug: "world-snooker-masters-ksa",
+    heroImage: "/images/events/snooker-cover.jpg",
+    gallery: ["/images/events/g-audio.jpg", "/images/events/g-director.jpg"],
+    videoUrl: "https://www.youtube.com/watch?v=JXMvxICIj4w",
     title: "World Snooker Masters & Riyadh Season",
     subtitle: "Micro-Detail Lighting Calibration & Ultra-Silent Control",
     category: "Sports",
@@ -242,6 +262,9 @@ export const FLAGSHIP_EVENTS: CaseStudy[] = [
   },
   {
     slug: "primetime-game-shows-emirates-draw",
+    heroImage: "/images/events/draw-cover.jpg",
+    gallery: ["/images/events/g-filming.jpg", "/images/events/g-engineer.jpg"],
+    videoUrl: "https://www.youtube.com/watch?v=GzxZcTk2HT4",
     title: "Emirates Draw & Primetime Live Shows",
     subtitle: "High-Security RNG Verification & Redundant Pebble Beach Playout",
     category: "Entertainment",
@@ -293,6 +316,9 @@ export const FLAGSHIP_EVENTS: CaseStudy[] = [
   },
   {
     slug: "abu-dhabi-jiu-jitsu-world-championship",
+    heroImage: "/images/events/jitsi-cover.jpg",
+    gallery: ["/images/events/g-tech.jpg", "/images/events/g-pitch.jpg"],
+    videoUrl: "https://www.youtube.com/watch?v=558JWScMdcY",
     title: "Abu Dhabi Jiu-Jitsu World Championship",
     subtitle: "8-Mat Simultaneous Live Feeds & Instant Referee Video Review",
     category: "Combat Sports",
@@ -605,5 +631,43 @@ export const TESTIMONIALS: Testimonial[] = [
     organization: "Media Mania Production UAE",
     event: "Al Dhafra National Camel Festival",
     avatarText: "MV",
+  },
+];
+
+/**
+ * Showreel gallery — one tile per video on the homepage.
+ * Set `thumb` (poster image path under /public) and `videoUrl` (YouTube/Vimeo)
+ * to replace the placeholder slots; empty strings render styled placeholders.
+ * NOTE: current entries are stand-in demo videos (real OB-truck/EVS content
+ * from YouTube) — swap in Samir's own footage at the same paths.
+ */
+export const SHOWREEL_VIDEOS: ShowcaseVideo[] = [
+  {
+    id: "cop28-world-feed",
+    title: "COP28 — World Feed Operations",
+    caption: "Plenary hall matrix & 35+ unilateral feeds",
+    thumb: "/images/showreel/cop28-world-feed.jpg",
+    videoUrl: "https://www.youtube.com/watch?v=-UM3atf8iAI",
+  },
+  {
+    id: "uae-pro-league",
+    title: "UAE Pro League — Super Slow-Mo",
+    caption: "16-camera 4K truck & EVS replay workflow",
+    thumb: "/images/showreel/uae-pro-league.jpg",
+    videoUrl: "https://www.youtube.com/watch?v=GzxZcTk2HT4",
+  },
+  {
+    id: "desert-racing-rf",
+    title: "Desert Racing — RF Tracking",
+    caption: "12 km Vislink chase-cam coverage",
+    thumb: "/images/showreel/desert-racing-rf.jpg",
+    videoUrl: "https://www.youtube.com/watch?v=558JWScMdcY",
+  },
+  {
+    id: "snooker-macro",
+    title: "World Snooker Masters — Macro",
+    caption: "300 fps cue-ball replay engineering",
+    thumb: "/images/showreel/snooker-macro.jpg",
+    videoUrl: "https://www.youtube.com/watch?v=JXMvxICIj4w",
   },
 ];

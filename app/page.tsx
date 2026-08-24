@@ -1,28 +1,26 @@
 import React from "react";
 import dynamic from "next/dynamic";
-import { BroadcastHUD } from "@/components/BroadcastHUD";
 import { Header } from "@/components/Header";
 import { Hero } from "@/components/Hero";
+import { MobileActionBar } from "@/components/MobileActionBar";
+import { BackToTop } from "@/components/BackToTop";
 import { PERSONAL_INFO } from "@/lib/data";
 
 // Below-the-fold sections are code-split so the initial JS payload only covers
-// the above-the-fold chrome (HUD, Header, Hero). SSR stays on: full HTML is
+// the above-the-fold chrome (Header, Hero). SSR stays on: full HTML is
 // still delivered for SEO/LCP, only hydration JS is deferred per section.
 const About = dynamic(() => import("@/components/About").then((m) => m.About));
-const SignalFlowSimulator = dynamic(() =>
-  import("@/components/SignalFlowSimulator").then((m) => m.SignalFlowSimulator)
-);
 const ServicesBento = dynamic(() =>
   import("@/components/ServicesBento").then((m) => m.ServicesBento)
 );
 const FlagshipEvents = dynamic(() =>
   import("@/components/FlagshipEvents").then((m) => m.FlagshipEvents)
 );
+const Showreel = dynamic(() =>
+  import("@/components/Showreel").then((m) => m.Showreel)
+);
 const EquipmentRack = dynamic(() =>
   import("@/components/EquipmentRack").then((m) => m.EquipmentRack)
-);
-const BroadcastCalculator = dynamic(() =>
-  import("@/components/BroadcastCalculator").then((m) => m.BroadcastCalculator)
 );
 const Testimonials = dynamic(() =>
   import("@/components/Testimonials").then((m) => m.Testimonials)
@@ -63,34 +61,31 @@ export default function HomePage() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col bg-[#07090e] text-slate-100 selection:bg-amber-500 selection:text-black">
+    <div className="min-h-screen flex flex-col bg-canvas text-ink">
       {/* Schema.org Structured Data */}
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
 
-      {/* Top Real-Time Broadcast Telemetry HUD */}
-      <BroadcastHUD />
-
-      {/* Fixed Sticky Navigation */}
       <Header />
 
-      {/* Main Content Assembly */}
       <main id="main" className="flex-1 w-full" tabIndex={-1}>
         <Hero />
         <About />
-        <SignalFlowSimulator />
         <ServicesBento />
         <FlagshipEvents />
+        <Showreel />
         <EquipmentRack />
-        <BroadcastCalculator />
         <Testimonials />
         <ContactBooking />
       </main>
 
-      {/* Broadcast Footer */}
       <Footer />
+
+      {/* Floating back-to-top + thumb-reach quick actions (mobile) */}
+      <BackToTop />
+      <MobileActionBar />
     </div>
   );
 }

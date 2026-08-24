@@ -10,116 +10,102 @@ import {
   Server,
   Radio,
   Activity,
-  CheckCircle2,
-  Cpu,
 } from "lucide-react";
 
-export function ServicesBento() {
-  const iconMap: Record<string, React.ElementType> = {
-    Truck,
-    Sliders,
-    Video,
-    Server,
-    Radio,
-    Activity,
-  };
+const ICONS: Record<string, React.ElementType> = {
+  Truck,
+  Sliders,
+  Video,
+  Server,
+  Radio,
+  Activity,
+};
 
+export function ServicesBento() {
   return (
     <section
       id="services"
-      aria-label="Engineering Capabilities"
-      className="py-20 lg:py-28 bg-[#070b12] border-b border-[#162133] relative overflow-hidden scroll-mt-32"
+      aria-label="Capabilities"
+      className="py-20 lg:py-28 bg-canvas scroll-mt-20"
     >
-      <div className="max-w-screen-2xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        {/* Section Title */}
-        <div className="max-w-3xl mb-12 lg:mb-16">
-          <Reveal direction="down">
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-amber-500/10 border border-amber-500/30 text-amber-300 text-xs font-mono mb-4">
-              <Cpu className="w-4 h-4 shrink-0" aria-hidden="true" />
-              <span>CORE ENGINEERING DISCIPLINES</span>
-            </div>
+      <div className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8">
+        {/* Section header */}
+        <div className="max-w-3xl mb-14 lg:mb-20">
+          <Reveal direction="up">
+            <p className="eyebrow text-signal mb-4">02 · Capabilities</p>
           </Reveal>
-
-          <Reveal direction="up" delay={0.1}>
-            <h2 className="fluid-h2 font-display font-extrabold text-white tracking-tight">
-              Broadcast-Grade Engineering Capabilities.
+          <Reveal direction="up" delay={0.08}>
+            <h2 className="fluid-h2 font-display font-semibold text-ink">
+              Broadcast-grade engineering,{" "}
+              <em className="italic text-signal">end to end</em>.
             </h2>
           </Reveal>
-
-          <Reveal direction="up" delay={0.15}>
-            <p className="text-slate-200 fluid-body mt-4 font-normal">
-              Practical, field-tested engineering execution across high-adrenaline live sports, international diplomatic summits, and 24/7 master control facilities.
+          <Reveal direction="up" delay={0.16}>
+            <p className="text-zinc-600 fluid-body mt-5">
+              Field-proven execution across live sports, international summits,
+              and 24/7 master control — from first rig to final wrap.
             </p>
           </Reveal>
         </div>
 
-        {/* Bento Grid Layout with varied spans */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
+        {/* Service cards */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 lg:gap-6">
           {SERVICES.map((service, index) => {
-            const Icon = iconMap[service.iconName] || Activity;
+            const Icon = ICONS[service.iconName] ?? Activity;
 
             return (
               <Reveal
                 key={service.id}
                 direction="up"
-                delay={0.1 + index * 0.07}
+                delay={0.08 + index * 0.06}
                 className={service.colSpan || "col-span-1"}
               >
-                <div className="h-full p-6 sm:p-8 rounded-3xl bg-[#0c121e] border border-[#1b283d] hover:border-amber-500/50 transition-colors duration-300 flex flex-col justify-between group shadow-xl bevel-panel space-y-6">
-                  <div>
-                    {/* Top Header */}
-                    <div className="flex items-center justify-between mb-6">
-                      <div className="w-14 h-14 rounded-2xl bg-[#131d2e] border border-[#24354f] flex items-center justify-center text-amber-400 group-hover:scale-105 group-hover:border-amber-500/60 transition-[transform,border-color] shrink-0">
-                        <Icon className="w-7 h-7" aria-hidden="true" />
-                      </div>
-                      <span className="text-[11px] font-mono px-3 py-2 rounded-lg bg-[#070a10] border border-[#1a2538] text-slate-300 font-semibold">
-                        {service.metrics}
-                      </span>
-                    </div>
-
-                    <h3 className={`text-xl sm:text-2xl font-bold text-white font-display mb-2 group-hover:text-amber-400 transition-colors ${
-                      service.colSpan?.includes("lg:col-span-2") ? "max-w-2xl" : ""
-                    }`}>
-                      {service.title}
-                    </h3>
-                    <p className="text-xs font-mono text-cyan-300 mb-4 font-semibold">
-                      {service.subtitle}
-                    </p>
-                    <p className="text-sm text-slate-200 leading-relaxed font-sans mb-6">
-                      {service.summary}
-                    </p>
-
-                    {/* Deliverables List */}
-                    <div className="space-y-3">
-                      <span className="text-[11px] font-mono text-slate-400 uppercase tracking-wider block font-bold">
-                        KEY DELIVERABLES
-                      </span>
-                      {service.deliverables.map((item, idx) => (
-                        <div key={idx} className="flex items-start gap-3 text-xs text-slate-200">
-                          <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0 mt-1" aria-hidden="true" />
-                          <span>{item}</span>
-                        </div>
-                      ))}
-                    </div>
+                <article className="card-lift h-full p-6 sm:p-8 rounded-2xl bg-white border border-hairline flex flex-col">
+                  <div className="flex items-start justify-between gap-4 mb-6">
+                    <span className="w-12 h-12 rounded-xl bg-signal-tint text-signal flex items-center justify-center shrink-0">
+                      <Icon className="w-6 h-6" aria-hidden="true" />
+                    </span>
                   </div>
 
-                  {/* Bottom Tool Matrix */}
-                  <div className="pt-5 border-t border-[#182336] mt-auto">
-                    <span className="text-[10px] font-mono text-slate-400 uppercase tracking-wider block mb-2 font-bold">
-                      HARDWARE & PROTOCOLS
-                    </span>
-                    <div className="flex flex-wrap gap-2">
+                  <h3 className="font-display font-bold text-ink text-xl mb-1.5 leading-snug">
+                    {service.title}
+                  </h3>
+                  <p className="text-sm font-medium text-signal mb-4">
+                    {service.subtitle}
+                  </p>
+                  <p className="text-sm text-zinc-600 leading-relaxed mb-6">
+                    {service.summary}
+                  </p>
+
+                  <ul className="space-y-2.5 mb-6" aria-label={`Key deliverables for ${service.title}`}>
+                    {service.deliverables.map((item) => (
+                      <li key={item} className="flex items-start gap-2.5 text-sm text-zinc-700">
+                        <span
+                          className="mt-[9px] w-1.5 h-1.5 rounded-full bg-signal shrink-0"
+                          aria-hidden="true"
+                        />
+                        <span>{item}</span>
+                      </li>
+                    ))}
+                  </ul>
+
+                  <div className="mt-auto pt-5 border-t border-hairline">
+                    <p className="eyebrow text-muted mb-2.5">Tools &amp; protocols</p>
+                    <div className="flex flex-wrap gap-1.5">
                       {service.keyTools.map((tool) => (
                         <span
                           key={tool}
-                          className="px-3 py-1 rounded-lg bg-[#080d15] border border-[#1d2b3f] text-[11px] font-mono text-slate-200"
+                          className="px-2.5 py-1 rounded-md bg-paper border border-hairline text-[11px] font-mono text-zinc-600"
                         >
                           {tool}
                         </span>
                       ))}
                     </div>
+                    <p className="text-xs font-semibold text-zinc-500 mt-4 tabular-nums">
+                      {service.metrics}
+                    </p>
                   </div>
-                </div>
+                </article>
               </Reveal>
             );
           })}

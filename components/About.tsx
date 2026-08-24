@@ -1,282 +1,198 @@
 "use client";
 
-import React, { useSyncExternalStore } from "react";
+import React from "react";
 import { TIMELINE, PERSONAL_INFO } from "@/lib/data";
-import { sound } from "@/lib/sound";
 import { Reveal } from "./Reveal";
-
-const MILESTONE_EVENT = "samir:milestone-change";
-
-function readMilestoneIndex(): number {
-  if (typeof window === "undefined") return 0;
-  const raw = new URLSearchParams(window.location.search).get("milestone");
-  const parsed = raw === null ? NaN : Number(raw);
-  return Number.isInteger(parsed) && parsed >= 0 && parsed < TIMELINE.length ? parsed : 0;
-}
-
-function subscribeMilestone(callback: () => void): () => void {
-  window.addEventListener("popstate", callback);
-  window.addEventListener(MILESTONE_EVENT, callback);
-  return () => {
-    window.removeEventListener("popstate", callback);
-    window.removeEventListener(MILESTONE_EVENT, callback);
-  };
-}
-
-function writeMilestoneIndex(idx: number) {
-  const url = new URL(window.location.href);
-  if (idx > 0) {
-    url.searchParams.set("milestone", String(idx));
-  } else {
-    url.searchParams.delete("milestone");
-  }
-  window.history.replaceState(null, "", url.toString());
-  window.dispatchEvent(new Event(MILESTONE_EVENT));
-}
+import { MediaFrame } from "./MediaFrame";
 import {
-  GraduationCap,
-  Award,
-  Layers,
-  Zap,
   ShieldCheck,
+  Zap,
+  Layers,
   Flame,
   CheckCircle2,
-  Building,
-  MapPin,
-  ChevronDown,
 } from "lucide-react";
 
+/**
+ * Field photos — set paths under /public (e.g. "/images/about/ob-compound.jpg").
+ * Missing entries render as styled placeholder slots.
+ * NOTE: current images are stand-in demo assets (Unsplash) — replace with
+ * Samir's own production photos at the same paths.
+ */
+const ABOUT_PHOTOS: Record<string, string | undefined> = {
+  "OB COMPOUND — FIBER PATCH WALL": "/images/about/ob-compound.jpg",
+  "CCU PAINT RACK": "/images/about/ccu-rack.jpg",
+  "LIVE ON SET": "/images/about/on-set.jpg",
+};
+
+const PILLARS = [
+  {
+    icon: ShieldCheck,
+    title: "Zero-downtime redundancy",
+    description:
+      "Parallel optical trunks, dual-redundant master sync, and secondary router clean-switches designed so no live broadcast ever goes black.",
+  },
+  {
+    icon: Zap,
+    title: "Sub-minute fault triage",
+    description:
+      "Trained instinct under live pressure to isolate fiber breaks, Genlock drift, or switcher lockups in seconds — not minutes.",
+  },
+  {
+    icon: Layers,
+    title: "Master colorimetry",
+    description:
+      "Scientific multi-camera calibration to ΔE < 0.8 across desert sun, stadium floodlights, and LED studio walls.",
+  },
+  {
+    icon: Flame,
+    title: "EVS replay precision",
+    description:
+      "Split-second multi-angle clipping and super slow-motion packages for VAR decisions and director highlight cuts.",
+  },
+];
+
 export function About() {
-  const selectedTimelineIndex = useSyncExternalStore(
-    subscribeMilestone,
-    readMilestoneIndex,
-    () => 0
-  );
-
-  const pillars = [
-    {
-      icon: ShieldCheck,
-      title: "Zero-Downtime Signal Redundancy",
-      description: "Designing parallel optical trunks, dual-redundant Evertz master syncs, and secondary router clean-switches so no live broadcast ever goes black.",
-      accent: "text-emerald-400 border-emerald-500/30 bg-emerald-950/20",
-    },
-    {
-      icon: Zap,
-      title: "Sub-Minute Emergency Triage",
-      description: "Trained instinct under intense live pressure to diagnose optical fiber breaks, Genlock drift, or switcher GPU lockups in seconds.",
-      accent: "text-amber-400 border-amber-500/30 bg-amber-950/20",
-    },
-    {
-      icon: Layers,
-      title: "Master Colorimetry (ΔE < 0.8)",
-      description: "Scientific calibration across multi-vendor cameras (Sony & Grass Valley) preserving visual harmony across harsh Arabian sun, night floodlights, and LED sets.",
-      accent: "text-cyan-400 border-cyan-500/30 bg-cyan-950/20",
-    },
-    {
-      icon: Flame,
-      title: "Ultra-Fast EVS Replay Precision",
-      description: "Split-second multi-angle clipping and slow-motion packages for referee VAR decisions and director highlight cuts in under 60 seconds.",
-      accent: "text-red-400 border-red-500/30 bg-red-950/20",
-    },
-  ];
-
   return (
     <section
       id="story"
-      aria-label="Engineering Heritage"
-      className="py-20 lg:py-28 bg-[#090d16] border-b border-[#162133] relative overflow-hidden scroll-mt-32"
+      aria-label="Experience and credentials"
+      className="py-20 lg:py-28 bg-paper border-y border-hairline scroll-mt-20"
     >
-      <div className="max-w-screen-2xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        {/* Section Header */}
-        <div className="max-w-3xl mb-12 lg:mb-16">
-          <Reveal direction="down">
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-amber-500/10 border border-amber-500/30 text-amber-300 text-xs font-mono mb-4">
-              <GraduationCap className="w-4 h-4 shrink-0" aria-hidden="true" />
-              <span>ENGINEERING HERITAGE & CREDENTIALS</span>
-            </div>
+      <div className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8">
+        {/* Section header */}
+        <div className="max-w-3xl mb-14 lg:mb-20">
+          <Reveal direction="up">
+            <p className="eyebrow text-signal mb-4">01 · The Engineer</p>
           </Reveal>
-
-          <Reveal direction="up" delay={0.1}>
-            <h2 className="fluid-h2 font-display font-extrabold text-white tracking-tight">
-              18+ Years at the Nexus of Live Adrenaline & Precision Engineering.
+          <Reveal direction="up" delay={0.08}>
+            <h2 className="fluid-h2 font-display font-semibold text-ink">
+              18 years at the intersection of live adrenaline and{" "}
+              <em className="italic text-signal">precision engineering</em>.
             </h2>
           </Reveal>
-
-          <Reveal direction="up" delay={0.15}>
-            <p className="text-slate-200 fluid-body mt-4 font-normal">
-              Holding a Bachelor of Electrical Engineering in Communication & Electronics (Graduated with Honors), Samir combines deep RF/baseband theoretical physics with hands-on mastery of tier-1 OB truck deployments and 24/7 master control playout facilities.
+          <Reveal direction="up" delay={0.16}>
+            <p className="text-zinc-600 fluid-body mt-5">
+              Holding a Bachelor of Electrical Engineering in Communication &amp;
+              Electronics ({PERSONAL_INFO.degreeHonors}), Samir pairs deep RF and baseband theory with hands-on mastery of tier-1 OB truck deployments and 24/7 master control facilities.
             </p>
           </Reveal>
         </div>
 
-        {/* 4 Pillars Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12 lg:mb-16">
-          {pillars.map((pillar, index) => (
-            <Reveal key={pillar.title} direction="up" delay={0.1 + index * 0.08}>
-              <div className="h-full p-5 sm:p-6 rounded-3xl bg-[#0c1320] border border-[#1b283d] hover:border-slate-600 transition-colors flex flex-col justify-between group shadow-xl bevel-panel">
-                <div>
-                  <div className={`w-12 h-12 rounded-2xl border flex items-center justify-center mb-6 shrink-0 ${pillar.accent}`}>
-                    <pillar.icon className="w-6 h-6" aria-hidden="true" />
-                  </div>
-                  <h3 className="text-lg font-bold text-white font-display mb-3 group-hover:text-amber-400 transition-colors">
-                    {pillar.title}
-                  </h3>
-                  <p className="text-sm text-slate-300 leading-relaxed font-sans">
-                    {pillar.description}
-                  </p>
-                </div>
-                <div className="pt-6 mt-6 border-t border-[#162133] flex items-center justify-between text-[11px] font-mono text-slate-400">
-                  <span>STANDARD PROTOCOL</span>
-                  <span className="text-emerald-400 font-bold">ACTIVE</span>
-                </div>
+        {/* Field photography strip */}
+        <Reveal direction="up" delay={0.1}>
+          <div className="grid grid-cols-3 gap-2.5 sm:gap-5 mb-14 lg:mb-20">
+            {[
+              { label: "OB COMPOUND — FIBER PATCH WALL", alt: "Outside broadcast compound and fiber patch wall" },
+              { label: "CCU PAINT RACK", alt: "CCU camera control paint rack" },
+              { label: "LIVE ON SET", alt: "Samir on set during a live production" },
+            ].map((photo) => (
+              <MediaFrame
+                key={photo.label}
+                src={ABOUT_PHOTOS[photo.label]}
+                alt={photo.alt}
+                ratio="video"
+                label={photo.label}
+                sizes="(min-width: 640px) 33vw, 33vw"
+                className="rounded-xl sm:rounded-2xl ring-1 ring-black/5 shadow-sm"
+              />
+            ))}
+          </div>
+        </Reveal>
+
+        {/* Pillars */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 mb-16 lg:mb-24">
+          {PILLARS.map((pillar, index) => (
+            <Reveal key={pillar.title} direction="up" delay={0.1 + index * 0.07}>
+              <div className="card-lift h-full p-6 rounded-2xl bg-white border border-hairline">
+                <span className="w-11 h-11 rounded-full bg-signal-tint text-signal flex items-center justify-center mb-5 shrink-0">
+                  <pillar.icon className="w-5 h-5" aria-hidden="true" />
+                </span>
+                <h3 className="font-display font-bold text-ink text-lg leading-snug mb-2.5">
+                  {pillar.title}
+                </h3>
+                <p className="text-sm text-zinc-600 leading-relaxed">
+                  {pillar.description}
+                </p>
               </div>
             </Reveal>
           ))}
         </div>
 
-        {/* Academic & Career Micro Timeline Container */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start">
-          {/* Left: Academic Degree & Philosophy Tile */}
-          <div className="lg:col-span-5 space-y-6">
-            <Reveal direction="left" delay={0.2}>
-              <div className="p-6 sm:p-8 rounded-3xl bg-[#0d1522] border border-[#202f47] shadow-xl relative overflow-hidden space-y-4">
-                <div className="absolute top-0 right-0 w-32 h-32 bg-amber-500/5 rounded-full blur-2xl pointer-events-none" aria-hidden="true" />
-
-                <div className="flex items-center gap-3 text-amber-300 font-mono text-xs">
-                  <Award className="w-4 h-4 shrink-0" aria-hidden="true" />
-                  <span className="font-bold tracking-wider">ACADEMIC FOUNDATION</span>
-                </div>
-
-                <h3 className="text-xl font-bold text-white font-display">
-                  {PERSONAL_INFO.degree}
-                </h3>
-                <div className="inline-block px-3 py-2 rounded-lg bg-amber-500/15 border border-amber-500/40 text-amber-300 font-mono text-xs font-semibold">
-                  {PERSONAL_INFO.degreeHonors}
-                </div>
-
-                <p className="text-sm text-slate-200 leading-relaxed pt-2">
-                  Rigorous engineering training in electromagnetics, signal modulation, digital signal processing (DSP), and high-frequency communication protocols provides the scientific bedrock for solving complex broadcast matrix failures in real-time.
+        {/* Career timeline */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16">
+          <div className="lg:col-span-4">
+            <Reveal direction="up">
+              <h3 className="font-display font-semibold text-ink fluid-h3 mb-4">
+                Career track record.
+              </h3>
+              <p className="text-zinc-600 leading-relaxed mb-8">
+                From national playout centers in Cairo to world-feed summits in
+                Dubai — a steady climb toward higher-stakes live production.
+              </p>
+              <blockquote className="border-l-2 border-signal pl-5 py-1">
+                <p className="text-sm italic text-zinc-600 leading-relaxed">
+                  “A true broadcast engineer never hopes for luck. We design
+                  triple redundancy, monitor signal health continuously, and stay
+                  calm when the red tally turns on.”
                 </p>
-
-                <div className="mt-6 pt-6 border-t border-[#1d2b40] grid grid-cols-2 gap-4 text-xs font-mono">
-                  <div>
-                    <span className="text-slate-400 block text-[10px] uppercase font-bold">CORE FOCUS</span>
-                    <span className="text-white font-semibold mt-1 block">Telecom & Electronics</span>
-                  </div>
-                  <div>
-                    <span className="text-slate-400 block text-[10px] uppercase font-bold">CAREER SCOPE</span>
-                    <span className="text-white font-semibold mt-1 block">OB Vans • MCR • Flyaways</span>
-                  </div>
-                </div>
-              </div>
-            </Reveal>
-
-            {/* Quick Quote Card */}
-            <Reveal direction="left" delay={0.25}>
-              <div className="p-6 rounded-2xl bg-[#090e18] border border-[#1a2538] text-xs font-mono text-slate-200 space-y-2">
-                <div className="text-amber-300 font-bold tracking-wider uppercase">“ZERO SILENT FAILURES”</div>
-                <p className="text-slate-300 italic font-sans text-sm leading-relaxed">
-                  “A true broadcast engineer never hopes for luck. We design triple redundancy, monitor signal eye-patterns continuously, and stay completely calm when the red tally light turns on.”
-                </p>
-                <div className="pt-2 text-right text-slate-400 font-mono">— Samir Elgammal</div>
-              </div>
+                <footer className="eyebrow text-muted mt-3">— Samir Elgammal</footer>
+              </blockquote>
             </Reveal>
           </div>
 
-          {/* Right: Interactive Career Milestone Chronology */}
-          <div className="lg:col-span-7">
-            <Reveal direction="right" delay={0.2}>
-              <div className="rounded-3xl bg-[#0c121e] border border-[#1e2c42] p-6 sm:p-8 shadow-xl">
-                <div className="flex items-center justify-between border-b border-[#1b283d] pb-5 mb-6">
-                  <div className="flex items-center gap-2 text-slate-200 font-mono text-xs">
-                    <Building className="w-4 h-4 text-cyan-400 shrink-0" aria-hidden="true" />
-                    <span className="font-bold tracking-wider uppercase">CAREER TRACK RECORD & MILESTONES</span>
-                  </div>
-                  <span className="text-[11px] font-mono text-slate-400">2008 — PRESENT</span>
-                </div>
-
-                <div className="space-y-5">
-                  {TIMELINE.map((node, idx) => {
-                    const isSelected = selectedTimelineIndex === idx;
-                    return (
-                      <button
-                        key={node.company}
-                        type="button"
-                        onClick={() => {
-                          sound.playButtonClick();
-                          writeMilestoneIndex(idx);
-                        }}
-                        aria-pressed={isSelected}
-                        className={`w-full text-left rounded-2xl border transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-400 ${
-                          isSelected
-                            ? "bg-[#131d2e] border-amber-500/70 shadow-lg ring-1 ring-amber-500/30 p-6"
-                            : "bg-[#090e17] border-[#1a263a] hover:border-slate-600 hover:bg-[#0e1624] p-4"
-                        }`}
-                      >
-                        <div className="flex flex-wrap items-center justify-between gap-2 mb-2">
-                          <div className="flex items-center gap-2">
-                            <span className="text-xs font-mono font-bold px-3 py-1 rounded bg-amber-500/15 border border-amber-500/30 text-amber-300">
-                              {node.period}
-                            </span>
-                            <span className="text-xs font-mono text-cyan-300 font-semibold">
-                              {node.type}
-                            </span>
-                          </div>
-                          <div className="flex items-center gap-1 text-xs font-mono text-slate-300">
-                            <MapPin className="w-4 h-4 text-slate-400 shrink-0" aria-hidden="true" />
-                            <span>{node.location}</span>
-                          </div>
-                        </div>
-
-                        <h3 className="text-base sm:text-lg font-bold text-white font-display mb-1">
-                          {node.role}
-                        </h3>
-                        <div className="text-xs sm:text-sm font-mono text-slate-300 font-semibold mb-3">
-                          {node.company}
-                        </div>
-
-                        {!isSelected && (
-                          <div className="flex items-center gap-2 text-[11px] font-mono text-slate-400">
-                            <ChevronDown className="w-3 h-3 shrink-0" aria-hidden="true" />
-                            <span>CLICK TO EXPAND</span>
-                          </div>
-                        )}
-
-                        {isSelected && (
-                          <>
-                            <p className="text-sm text-slate-300 leading-relaxed mb-4 font-sans">
-                              {node.description}
-                            </p>
-
-                            {/* Achievements list */}
-                            <div className="space-y-2 mb-5">
-                              {node.achievements.map((item, i) => (
-                                <div key={i} className="flex items-start gap-3 text-xs text-slate-200">
-                                  <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0 mt-1" aria-hidden="true" />
-                                  <span>{item}</span>
-                                </div>
-                              ))}
-                            </div>
-
-                            {/* Tech tags */}
-                            <div className="flex flex-wrap gap-2 pt-3 border-t border-[#1b283d]">
-                              {node.technologies.map((tech) => (
-                                <span
-                                  key={tech}
-                                  className="px-3 py-1 rounded bg-[#070b12] border border-[#1c283c] text-[11px] font-mono text-slate-200"
-                                >
-                                  {tech}
-                                </span>
-                              ))}
-                            </div>
-                          </>
-                        )}
-                      </button>
-                    );
-                  })}
-                </div>
-              </div>
-            </Reveal>
+          <div className="lg:col-span-8">
+            <ol className="relative space-y-10 before:absolute before:left-[7px] before:top-2 before:bottom-2 before:w-px before:bg-zinc-200">
+              {TIMELINE.map((node, idx) => (
+                <li key={node.company} className="relative pl-8">
+                  <span
+                    className={`absolute left-0 top-2 w-[15px] h-[15px] rounded-full border-2 ${
+                      idx === 0
+                        ? "bg-signal border-signal"
+                        : "bg-white border-zinc-300"
+                    }`}
+                    aria-hidden="true"
+                  />
+                  <Reveal direction="up" delay={0.08 * idx}>
+                    <div className="flex flex-wrap items-center gap-x-3 gap-y-1 mb-2">
+                      <span className="font-mono text-xs font-medium text-signal">
+                        {node.period}
+                      </span>
+                      <span className="text-xs text-zinc-400">{node.location}</span>
+                    </div>
+                    <h4 className="font-display font-bold text-ink text-lg leading-snug">
+                      {node.role}
+                    </h4>
+                    <p className="text-sm font-semibold text-zinc-500 mb-4">
+                      {node.company}
+                    </p>
+                    <p className="text-sm text-zinc-600 leading-relaxed mb-4 max-w-prose">
+                      {node.description}
+                    </p>
+                    <ul className="space-y-2 mb-4">
+                      {node.achievements.map((item, i) => (
+                        <li key={i} className="flex items-start gap-2.5 text-sm text-zinc-700">
+                          <CheckCircle2
+                            className="w-4 h-4 text-signal shrink-0 mt-0.5"
+                            aria-hidden="true"
+                          />
+                          <span>{item}</span>
+                        </li>
+                      ))}
+                    </ul>
+                    <div className="flex flex-wrap gap-1.5">
+                      {node.technologies.map((tech) => (
+                        <span
+                          key={tech}
+                          className="px-2.5 py-1 rounded-md bg-white border border-hairline text-[11px] font-mono text-zinc-500"
+                        >
+                          {tech}
+                        </span>
+                      ))}
+                    </div>
+                  </Reveal>
+                </li>
+              ))}
+            </ol>
           </div>
         </div>
       </div>

@@ -10,7 +10,7 @@ This block is written and re-added by `next dev` — verify at `node_modules/nex
 
 # samir_website
 
-Personal portfolio for a broadcast/OB engineer. Single-page site (`app/page.tsx`) plus statically generated case-study pages at `app/events/[slug]/page.tsx`. Stack: Next.js 16.3.1 (App Router), React 19, TypeScript (strict), Tailwind CSS v4, framer-motion, canvas-confetti, lucide-react.
+Personal portfolio for a broadcast/OB engineer. Single-page site (`app/page.tsx`) plus statically generated case-study pages at `app/events/[slug]/page.tsx`. Stack: Next.js 16.3.1 (App Router), React 19, TypeScript (strict), Tailwind CSS v4, canvas-confetti, lucide-react.
 
 ## Commands
 
@@ -20,18 +20,21 @@ Personal portfolio for a broadcast/OB engineer. Single-page site (`app/page.tsx`
 
 ## Architecture
 
-- **All content is data-driven.** `lib/data.ts` is the single source of truth: `PERSONAL_INFO`, `FLAGSHIP_EVENTS`, `SERVICES`, `EQUIPMENT_STACK`, `TIMELINE`, `TESTIMONIALS` (typed in `lib/types.ts`). Add a case study by appending to `FLAGSHIP_EVENTS` — `generateStaticParams` in `app/events/[slug]/page.tsx` and `app/sitemap.ts` pick it up automatically.
+- **All content is data-driven.** `lib/data.ts` is the single source of truth: `PERSONAL_INFO`, `FLAGSHIP_EVENTS`, `SERVICES`, `EQUIPMENT_STACK`, `TIMELINE`, `TESTIMONIALS`, `SHOWREEL_VIDEOS` (typed in `lib/types.ts`). Add a case study by appending to `FLAGSHIP_EVENTS` — `generateStaticParams` in `app/events/[slug]/page.tsx` and `app/sitemap.ts` pick it up automatically.
+- **Media placeholders:** every media slot renders a styled placeholder when its path/URL is an empty string. Fill these to go live: `PERSONAL_INFO.portrait` (hero), `PERSONAL_INFO.showreelUrl` (hero CTA + showreel link-out), `SHOWREEL_VIDEOS[].thumb/videoUrl` (homepage video gallery, click-to-play), `CaseStudy.heroImage`, `CaseStudy.gallery[]`, `CaseStudy.videoUrl`. Case-study pages render 4 labeled photo slots + 1 video slot even when data is empty.
 - **Server/client boundary:** every component in `components/` is a client component (`"use client"`). Only the `app/` pages are server components. Don't add server-only logic (fs, direct DB, etc.) to `components/`.
 - Path alias `@/*` → repo root.
-- `lib/sound.ts` = Web Audio synth; persisted via `localStorage` key `broadcast_sound_enabled`. Always guard `window` usage (already done; keep it that way).
 - `lib/utils.ts` exports `cn()` (clsx + tailwind-merge) and `formatTimecode()`.
 
 ## Design conventions (keep consistent)
 
-- Dark broadcast/OB theme: base `#07090e`, amber accents, cyan/mono labels. Components use hardcoded hexes (e.g. `#0d1421`, `#1e2c44`), not only CSS vars — stay within this palette.
-- Reuse helper classes from `app/globals.css`: `fluid-h1/h2/h3`, `font-display`, `bg-scanlines`, `bg-led-grid`, `bevel-panel`, `bevel-button`, `glow-live/amber/teal/green`. Add new global effects there (Tailwind v4 `@theme`, CSS-first — no `tailwind.config`).
-- Google Fonts loaded via `next/font/google` in `app/layout.tsx`: Syne, Plus Jakarta Sans, JetBrains Mono.
-- Section anchor IDs are tracked by `components/Header.tsx` (scroll-spy list): `hero, story, simulator, services, events, rack, calculator, contact`. New sections must be added to that list and nav.
+- Editorial Light theme: white canvas (`#ffffff`), warm paper bands (`#faf9f7`), ink text (`#18181b`), hairline borders (`#e4e4e7`), single signal-orange accent (`#ea580c`). Colors are Tailwind v4 theme tokens defined in `app/globals.css` under `@theme`: use `bg-canvas`, `bg-paper`, `text-ink`, `text-muted`, `border-hairline`, `bg-signal`, `bg-signal-tint`.
+- Reuse helper classes from `app/globals.css`: `fluid-h1/h2/h3`, `fluid-body`, `font-display`, `eyebrow` (mono micro-labels above section headings), `card-lift` (hairline card with hover elevation). Add new global effects there (Tailwind v4 `@theme`, CSS-first — no `tailwind.config`).
+- Section numbering in eyebrows: 01 The Engineer (`#story`), 02 Capabilities, 03 Case Studies, 04 Showreel, 05 Tech Stack, 06 Endorsements, 07 Contact.
+- Google Fonts loaded via `next/font/google` in `app/layout.tsx`: Fraunces (display serif; use `font-semibold` + `italic` accents, not extrabold), Inter (body), JetBrains Mono (micro-labels only).
+- Media: photo/video slots go through `components/MediaFrame.tsx` — renders `next/image` when a `/public` path is set in data (`PERSONAL_INFO.portrait`, `CaseStudy.heroImage/gallery/videoUrl`, `PERSONAL_INFO.showreelUrl`), otherwise an elegant dotted placeholder. Empty string = placeholder.
+- Mobile-first + thumb reach: fixed bottom quick-action bar on <lg via `components/MobileActionBar.tsx` (rendered in `app/page.tsx`; Footer compensates with bottom padding). Author styles base-first, enhance with `sm:`/`lg:` prefixes.
+- Section anchor IDs are tracked by `components/Header.tsx` (scroll-spy list): `hero, story, services, events, showreel, rack, contact`. New sections must be added to that list and nav.
 
 ## SEO / domain gotcha
 

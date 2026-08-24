@@ -2,20 +2,20 @@ import React from "react";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import { FLAGSHIP_EVENTS } from "@/lib/data";
-import { BroadcastHUD } from "@/components/BroadcastHUD";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
+import { MediaFrame } from "@/components/MediaFrame";
+import { MobileActionBar } from "@/components/MobileActionBar";
+import { BackToTop } from "@/components/BackToTop";
+import { toEmbedUrl } from "@/lib/utils";
 import {
   ArrowLeft,
+  ArrowRight,
   Calendar,
   MapPin,
   Tv,
   CheckCircle2,
-  AlertTriangle,
-  Zap,
-  RotateCcw,
-  Layers,
-  Cpu,
+  Clapperboard,
 } from "lucide-react";
 import type { Metadata } from "next";
 
@@ -53,247 +53,336 @@ export default async function EventPage({
   }
 
   return (
-    <div className="min-h-screen flex flex-col bg-[#07090e] text-slate-100 selection:bg-amber-500 selection:text-black">
-      <BroadcastHUD />
+    <div className="min-h-screen flex flex-col bg-canvas text-ink">
       <Header />
 
-      <main className="flex-1 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-20 w-full space-y-12">
-        {/* Back Link */}
-        <div>
-          <Link
-            href="/#events"
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-[#0d1421] border border-[#1e2c44] text-xs font-mono text-slate-200 hover:text-amber-400 hover:border-amber-500/50 transition-colors min-h-[40px] focus-visible:ring-2 focus-visible:ring-amber-400 focus-visible:outline-none"
-          >
-            <ArrowLeft className="w-4 h-4 shrink-0" aria-hidden="true" />
-            <span>Back to Command Center</span>
-          </Link>
-        </div>
+      <main className="flex-1 w-full">
+        <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-14 lg:py-20 space-y-12 sm:space-y-16">
+          {/* Breadcrumb */}
+          <nav aria-label="Breadcrumb">
+            <ol className="flex items-center gap-2 text-sm flex-wrap">
+              <li>
+                <Link
+                  href="/"
+                  className="text-zinc-500 hover:text-signal transition-colors focus-visible:ring-2 focus-visible:ring-signal rounded px-1 py-1 min-h-[36px] inline-flex items-center"
+                >
+                  Home
+                </Link>
+              </li>
+              <li aria-hidden="true" className="text-zinc-300">/</li>
+              <li>
+                <Link
+                  href="/#events"
+                  className="text-zinc-500 hover:text-signal transition-colors focus-visible:ring-2 focus-visible:ring-signal rounded px-1 py-1 min-h-[36px] inline-flex items-center"
+                >
+                  Case studies
+                </Link>
+              </li>
+              <li aria-hidden="true" className="text-zinc-300">/</li>
+              <li aria-current="page" className="text-ink font-medium truncate max-w-[55vw] sm:max-w-md">
+                {event.title}
+              </li>
+            </ol>
+          </nav>
 
-        {/* Header */}
-        <div className="pb-10 border-b border-[#182335] space-y-6">
-          <div className="flex flex-wrap items-center gap-3">
-            <span className="px-4 py-2 rounded-full bg-amber-500/15 border border-amber-500/30 text-amber-300 font-mono text-xs font-bold uppercase tracking-wider">
-              {event.category}
-            </span>
-            <span className="px-4 py-2 rounded-full bg-[#101826] border border-[#223147] text-slate-200 font-mono text-xs font-semibold">
-              {event.cameraCount} CAMERA CHANNELS
-            </span>
-          </div>
-
-          <div className="space-y-2">
-            <h1 className="text-[clamp(2rem,5vw+1rem,4.5rem)] font-display font-extrabold text-white tracking-tight">
-              {event.title}
-            </h1>
-            <p className="text-base sm:text-xl font-mono text-cyan-300 font-semibold">
-              {event.subtitle}
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-6 border-t border-[#182336] text-xs font-mono text-slate-200">
-            <div className="flex items-center gap-3">
-              <MapPin className="w-4 h-4 text-amber-400 shrink-0" aria-hidden="true" />
-              <span>{event.venue}</span>
+          {/* Header */}
+          <header className="space-y-7">
+            <div className="flex flex-wrap items-center gap-3">
+              <span className="px-3.5 py-1.5 rounded-full bg-signal-tint text-signal text-[11px] font-mono uppercase tracking-wider font-medium">
+                {event.category}
+              </span>
+              <span className="px-3.5 py-1.5 rounded-full border border-hairline text-zinc-600 text-xs font-medium tabular-nums">
+                {event.cameraCount} camera channels
+              </span>
             </div>
-            <div className="flex items-center gap-3">
-              <Tv className="w-4 h-4 text-cyan-400 shrink-0" aria-hidden="true" />
-              <span>{event.broadcaster}</span>
-            </div>
-            <div className="flex items-center gap-3">
-              <Calendar className="w-4 h-4 text-emerald-400 shrink-0" aria-hidden="true" />
-              <span>{event.dates}</span>
-            </div>
-          </div>
-        </div>
 
-        {/* Role & Summary Card */}
-        <div className="p-6 sm:p-8 rounded-3xl bg-[#0c121e] border border-[#1d2b42] shadow-xl space-y-3">
-          <span className="text-xs font-mono text-amber-300 font-bold uppercase tracking-wider block">
-            SAMIR&apos;S ROLE & MISSION
-          </span>
-          <h2 className="text-xl sm:text-2xl font-bold text-white font-mono">
-            {event.role}
-          </h2>
-          <p className="text-slate-200 fluid-body leading-relaxed pt-1">
-            {event.summary}
-          </p>
-        </div>
+            <div className="space-y-4">
+              <h1 className="fluid-h1 font-display font-semibold text-ink">
+                {event.title}
+              </h1>
+              <p className="text-lg sm:text-xl text-zinc-500 leading-relaxed max-w-3xl">
+                {event.subtitle}
+              </p>
+            </div>
 
-        {/* Stats Matrix */}
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
-          {event.keyStats.map((stat, i) => (
-            <div key={i} className="p-4 sm:p-5 rounded-2xl bg-[#0a0f18] border border-[#1b263b] text-center space-y-1">
-              <div className="text-2xl sm:text-3xl font-extrabold text-amber-400 font-mono">
-                {stat.value}
+            <dl className="flex flex-wrap gap-x-8 gap-y-3 pt-2 text-sm text-zinc-600">
+              <div className="inline-flex items-center gap-2.5">
+                <MapPin className="w-4 h-4 text-signal shrink-0" aria-hidden="true" />
+                <dt className="sr-only">Venue</dt>
+                <dd>{event.venue}</dd>
               </div>
-              <div className="text-xs text-slate-300 font-mono font-medium">
-                {stat.label}
+              <div className="inline-flex items-center gap-2.5">
+                <Tv className="w-4 h-4 text-signal shrink-0" aria-hidden="true" />
+                <dt className="sr-only">Broadcaster</dt>
+                <dd>{event.broadcaster}</dd>
               </div>
-            </div>
-          ))}
-        </div>
+              <div className="inline-flex items-center gap-2.5">
+                <Calendar className="w-4 h-4 text-signal shrink-0" aria-hidden="true" />
+                <dt className="sr-only">Dates</dt>
+                <dd>{event.dates}</dd>
+              </div>
+            </dl>
+          </header>
 
-        {/* Hardware & Signal Spec Grid */}
-        <div className="space-y-4">
-          <h2 className="text-base font-mono font-bold text-white uppercase tracking-wider flex items-center gap-3">
-            <Cpu className="w-5 h-5 text-cyan-400 shrink-0" aria-hidden="true" />
-            <span>Master Hardware & Signal Architecture</span>
-          </h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs font-mono">
-            <div className="p-5 rounded-2xl bg-[#0c1320] border border-[#1d2b40] space-y-1">
-              <span className="text-slate-400 block text-[10px] uppercase font-bold">VIDEO FORMAT & ENCODING</span>
-              <span className="text-slate-100 font-bold text-sm block">{event.specs.format}</span>
-            </div>
-            <div className="p-5 rounded-2xl bg-[#0c1320] border border-[#1d2b40] space-y-1">
-              <span className="text-slate-400 block text-[10px] uppercase font-bold">VISION MIXER</span>
-              <span className="text-slate-100 font-bold text-sm block">{event.specs.visionMixer}</span>
-            </div>
-            <div className="p-5 rounded-2xl bg-[#0c1320] border border-[#1d2b40] space-y-1">
-              <span className="text-slate-400 block text-[10px] uppercase font-bold">REPLAY & SLOW-MOTION</span>
-              <span className="text-slate-100 font-bold text-sm block">{event.specs.replay}</span>
-            </div>
-            <div className="p-5 rounded-2xl bg-[#0c1320] border border-[#1d2b40] space-y-1">
-              <span className="text-slate-400 block text-[10px] uppercase font-bold">MASTER SYNC & ROUTING</span>
-              <span className="text-slate-100 font-bold text-sm block">{event.specs.syncRouter}</span>
-            </div>
-          </div>
-        </div>
+          {/* Hero media */}
+          <MediaFrame
+            src={event.heroImage}
+            alt={`${event.title} — cover photograph`}
+            ratio="video"
+            label="COVER PHOTO / VIDEO STILL"
+            priority
+            sizes="(min-width: 896px) 56rem, 100vw"
+            className="rounded-3xl ring-1 ring-black/5 shadow-[0_24px_60px_-24px_rgba(24,24,27,0.25)]"
+          />
 
-        {/* Technical Approach & Signal Flow */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          <div className="space-y-4">
-            <h2 className="text-base font-mono font-bold text-white uppercase tracking-wider flex items-center gap-3">
-              <Layers className="w-5 h-5 text-amber-400 shrink-0" aria-hidden="true" />
-              <span>Technical Approach</span>
+          {/* Role & summary */}
+          <section className="border-t border-hairline pt-10 space-y-3">
+            <p className="eyebrow text-muted">Role</p>
+            <h2 className="font-display italic font-semibold text-xl sm:text-2xl text-signal">
+              {event.role}
             </h2>
-            <div className="space-y-3 text-sm text-slate-200">
-              {event.technicalApproach.map((item, i) => (
-                <div key={i} className="flex items-start gap-3">
-                  <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0 mt-1" aria-hidden="true" />
-                  <span>{item}</span>
+            <p className="fluid-body text-zinc-600 leading-relaxed">{event.summary}</p>
+          </section>
+
+          {/* Key stats */}
+          <section aria-label="Key statistics">
+            <dl className="grid grid-cols-2 md:grid-cols-4 gap-4">
+              {event.keyStats.map((stat) => (
+                <div
+                  key={stat.label}
+                  className="rounded-2xl bg-paper border border-hairline p-5"
+                >
+                  <dd className="font-display italic font-semibold text-2xl xl:text-3xl text-ink tracking-tight tabular-nums">
+                    {stat.value}
+                  </dd>
+                  <dt className="text-xs text-zinc-500 mt-1.5 leading-snug">{stat.label}</dt>
                 </div>
               ))}
-            </div>
-          </div>
+            </dl>
+          </section>
 
-          <div className="space-y-4">
-            <h2 className="text-base font-mono font-bold text-white uppercase tracking-wider flex items-center gap-3">
-              <Zap className="w-5 h-5 text-emerald-400 shrink-0" aria-hidden="true" />
-              <span>Signal Flow Chain</span>
+          {/* Hardware specs */}
+          <section className="border-t border-hairline pt-10 space-y-6">
+            <h2 className="font-display font-semibold text-ink fluid-h3">
+              Hardware &amp; signal architecture
             </h2>
-            <div className="space-y-3 text-xs font-mono">
-              {event.signalFlow.map((step, i) => (
-                <div key={i} className="p-4 rounded-xl bg-[#0a0f19] border border-[#1a263a] flex items-start gap-3">
-                  <span className="text-amber-400 font-bold text-sm shrink-0">0{i + 1}.</span>
-                  <div>
-                    <span className="text-white font-bold block text-sm">{step.step}</span>
-                    <span className="text-slate-300 font-sans mt-1 block">{step.description}</span>
-                  </div>
+            <dl className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              {[
+                ["Video format", event.specs.format],
+                ["Vision mixer", event.specs.visionMixer],
+                ["Replay & slow-motion", event.specs.replay],
+                ["Master sync & routing", event.specs.syncRouter],
+              ].map(([label, value]) => (
+                <div key={label} className="rounded-2xl border border-hairline p-5">
+                  <dt className="eyebrow text-muted mb-2">{label}</dt>
+                  <dd className="text-sm font-semibold text-ink leading-relaxed">{value}</dd>
                 </div>
               ))}
-            </div>
-          </div>
-        </div>
+            </dl>
+          </section>
 
-        {/* Challenges and Solutions */}
-        <div className="space-y-4">
-          <h2 className="text-base font-mono font-bold text-white uppercase tracking-wider flex items-center gap-3">
-            <AlertTriangle className="w-5 h-5 text-red-400 shrink-0" aria-hidden="true" />
-            <span>High-Pressure Live Faults & Engineering Solutions</span>
-          </h2>
-          <div className="space-y-4">
+          {/* Approach + signal flow */}
+          <section className="border-t border-hairline pt-10 grid grid-cols-1 md:grid-cols-2 gap-10">
+            <div className="space-y-5">
+              <h2 className="font-display font-semibold text-lg text-ink">Technical approach</h2>
+              <ul className="space-y-3.5">
+                {event.technicalApproach.map((item, i) => (
+                  <li key={i} className="flex items-start gap-3 text-sm text-zinc-700 leading-relaxed">
+                    <CheckCircle2 className="w-4 h-4 text-signal shrink-0 mt-0.5" aria-hidden="true" />
+                    <span>{item}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            <div className="space-y-5">
+              <h2 className="font-display font-semibold text-lg text-ink">Signal flow</h2>
+              <ol className="relative space-y-4 before:absolute before:left-[9px] before:top-2 before:bottom-2 before:w-px before:bg-zinc-200">
+                {event.signalFlow.map((step, i) => (
+                  <li key={i} className="relative pl-8">
+                    <span className="absolute left-0 top-1 w-5 h-5 rounded-full bg-white border border-zinc-300 flex items-center justify-center font-mono text-[9px] font-bold text-signal">
+                      {i + 1}
+                    </span>
+                    <p className="text-sm font-semibold text-ink">{step.step}</p>
+                    <p className="text-sm text-zinc-600 leading-relaxed">{step.description}</p>
+                  </li>
+                ))}
+              </ol>
+            </div>
+          </section>
+
+          {/* Challenges */}
+          <section className="border-t border-hairline pt-10 space-y-5">
+            <h2 className="font-display font-semibold text-ink fluid-h3">
+              Live faults &amp; engineering fixes
+            </h2>
             {event.challengesAndSolutions.map((item, i) => (
-              <div key={i} className="p-6 rounded-2xl bg-[#0e1424] border border-[#22334f] space-y-3">
-                <div className="text-xs font-mono">
-                  <span className="text-red-400 font-bold uppercase block mb-1">CHALLENGE ENCOUNTERED:</span>
-                  <span className="text-slate-100 text-sm font-sans">{item.challenge}</span>
+              <article key={i} className="rounded-2xl border border-hairline p-6 sm:p-7 space-y-4">
+                <div>
+                  <p className="eyebrow text-red-600 mb-1.5">Challenge</p>
+                  <p className="text-sm text-zinc-700 leading-relaxed">{item.challenge}</p>
                 </div>
-                <div className="text-xs font-mono">
-                  <span className="text-emerald-400 font-bold uppercase block mb-1">REAL-TIME ENGINEERING FIX:</span>
-                  <span className="text-slate-100 text-sm font-sans">{item.solution}</span>
+                <div>
+                  <p className="eyebrow text-emerald-700 mb-1.5">Fix</p>
+                  <p className="text-sm text-zinc-700 leading-relaxed">{item.solution}</p>
                 </div>
-                <div className="text-xs text-slate-300 pl-4 border-l-2 border-amber-500 font-sans">
-                  <strong className="text-white">Impact on Broadcast:</strong> {item.impact}
+                <div className="pt-1 border-l-2 border-signal pl-4">
+                  <p className="text-sm text-zinc-600 leading-relaxed">
+                    <strong className="text-ink font-semibold">Impact:</strong> {item.impact}
+                  </p>
                 </div>
-              </div>
+              </article>
             ))}
-          </div>
-        </div>
+          </section>
 
-        {/* What I'd Improve Next Time */}
-        <div className="p-6 sm:p-8 rounded-3xl bg-[#090d16] border border-amber-500/40 shadow-xl space-y-2">
-          <div className="flex items-center gap-3 text-xs font-mono text-amber-300 font-bold">
-            <RotateCcw className="w-4 h-4 shrink-0" aria-hidden="true" />
-            <span>HONEST ENGINEERING RETROSPECTIVE — “WHAT I&apos;D IMPROVE NEXT TIME”</span>
-          </div>
-          <p className="text-sm sm:text-base text-slate-200 font-sans italic leading-relaxed pt-1">
-            &ldquo;{event.improvementReflection}&rdquo;
-          </p>
-        </div>
+          {/* Video section — embeds when videoUrl is set, styled slot otherwise */}
+          <section className="border-t border-hairline pt-10 space-y-5">
+            <h2 className="font-display font-semibold text-ink fluid-h3">On-air footage</h2>
+            {event.videoUrl ? (
+              <div className="relative aspect-video rounded-2xl overflow-hidden bg-ink ring-1 ring-black/5">
+                <iframe
+                  src={toEmbedUrl(event.videoUrl)}
+                  title={`${event.title} — broadcast footage`}
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowFullScreen
+                  loading="lazy"
+                  className="absolute inset-0 w-full h-full"
+                />
+              </div>
+            ) : (
+              <div className="relative aspect-video rounded-2xl border border-dashed border-zinc-300 bg-paper flex flex-col items-center justify-center gap-3 p-6 text-center">
+                <span className="w-12 h-12 rounded-full bg-white border border-hairline shadow-sm flex items-center justify-center text-zinc-400">
+                  <Clapperboard className="w-5 h-5" aria-hidden="true" />
+                </span>
+                <p className="eyebrow text-zinc-400">Video slot</p>
+                <p className="text-xs text-zinc-500 max-w-xs leading-relaxed">
+                  Set <code className="font-mono">videoUrl</code> for this case study in{" "}
+                  <code className="font-mono">lib/data.ts</code> to embed footage here.
+                </p>
+              </div>
+            )}
+          </section>
 
-        {/* Next / Prev Case Study Navigation */}
-        {(() => {
-          const currentIndex = FLAGSHIP_EVENTS.findIndex((e) => e.slug === event.slug);
-          const prevEvent = currentIndex > 0 ? FLAGSHIP_EVENTS[currentIndex - 1] : FLAGSHIP_EVENTS[FLAGSHIP_EVENTS.length - 1];
-          const nextEvent = currentIndex < FLAGSHIP_EVENTS.length - 1 ? FLAGSHIP_EVENTS[currentIndex + 1] : FLAGSHIP_EVENTS[0];
+          {/* Photo gallery — real photos when provided, labeled slots otherwise */}
+          {(() => {
+            const hasGallery = !!event.gallery && event.gallery.length > 0;
+            const photos = hasGallery
+              ? event.gallery!
+              : Array.from({ length: 4 }, () => "");
 
-          return (
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-4 border-t border-[#182438]">
-              <Link
-                href={`/events/${prevEvent.slug}`}
-                className="p-5 rounded-2xl bg-[#0b1019] border border-[#1d2b40] hover:border-amber-500/50 transition-colors text-left group flex flex-col justify-between space-y-2"
-              >
-                <div className="text-[11px] font-mono text-slate-400 uppercase flex items-center gap-2">
-                  <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
-                  <span>PREVIOUS CASE STUDY</span>
+            return (
+              <section className="border-t border-hairline pt-10 space-y-5">
+                <h2 className="font-display font-semibold text-ink fluid-h3">Production gallery</h2>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  {photos.map((photo, i) => (
+                    <MediaFrame
+                      key={`photo-${i}`}
+                      src={photo || undefined}
+                      alt={
+                        photo
+                          ? `${event.title} — behind-the-scenes photo ${i + 1}`
+                          : `${event.title} — production photo slot ${i + 1}`
+                      }
+                      ratio={hasGallery ? (i % 3 === 0 ? "video" : "square") : "video"}
+                      label={photo ? undefined : `PRODUCTION PHOTO SLOT ${String(i + 1).padStart(2, "0")}`}
+                      sizes="(min-width: 640px) 50vw, 100vw"
+                      className={`rounded-2xl ring-1 ring-black/5 ${hasGallery && i % 3 === 0 ? "sm:col-span-2" : ""}`}
+                    />
+                  ))}
                 </div>
-                <div className="text-sm sm:text-base font-bold text-white font-display group-hover:text-amber-400 transition-colors truncate">
-                  {prevEvent.title}
-                </div>
-                <div className="text-xs font-mono text-cyan-300">
-                  {prevEvent.category} • {prevEvent.cameraCount} Cams
-                </div>
-              </Link>
+                {!hasGallery && (
+                  <p className="text-xs text-zinc-500">
+                    Add paths to the <code className="font-mono">gallery</code> array for this case study in{" "}
+                    <code className="font-mono">lib/data.ts</code> to replace these slots.
+                  </p>
+                )}
+              </section>
+            );
+          })()}
 
-              <Link
-                href={`/events/${nextEvent.slug}`}
-                className="p-5 rounded-2xl bg-[#0b1019] border border-[#1d2b40] hover:border-amber-500/50 transition-colors text-right group flex flex-col justify-between space-y-2"
-              >
-                <div className="text-[11px] font-mono text-slate-400 uppercase flex items-center justify-end gap-2">
-                  <span>NEXT CASE STUDY</span>
-                  <ArrowLeft className="w-4 h-4 rotate-180 group-hover:translate-x-1 transition-transform" />
-                </div>
-                <div className="text-sm sm:text-base font-bold text-white font-display group-hover:text-amber-400 transition-colors truncate">
-                  {nextEvent.title}
-                </div>
-                <div className="text-xs font-mono text-cyan-300">
-                  {nextEvent.category} • {nextEvent.cameraCount} Cams
-                </div>
-              </Link>
-            </div>
-          );
-        })()}
+          {/* Retrospective */}
+          <section className="rounded-2xl bg-paper border border-hairline p-6 sm:p-8">
+            <p className="eyebrow text-signal mb-3">What I&apos;d improve next time</p>
+            <blockquote className="font-display italic text-lg sm:text-xl text-zinc-700 leading-relaxed">
+              “{event.improvementReflection}”
+            </blockquote>
+          </section>
 
-        {/* Bottom Booking Action Banner */}
-        <div className="p-8 sm:p-10 rounded-3xl bg-gradient-to-br from-[#121c2e] to-[#0a101c] border border-amber-500/40 flex flex-col sm:flex-row items-center justify-between gap-6 sm:gap-8 shadow-2xl">
-          <div className="space-y-1">
-            <h2 className="text-xl sm:text-2xl font-bold text-white font-display">
-              Planning a Similar Live Broadcast Production?
-            </h2>
-            <p className="text-xs sm:text-sm text-slate-300 font-mono">
-              Samir Elgammal is available for OB Truck, CCU, and EVS operations across UAE and GCC.
-            </p>
-          </div>
-
-          <Link
-            href="/#contact"
-            className="px-6 py-4 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-mono font-bold text-xs uppercase tracking-wider shrink-0 transition-colors shadow-lg shadow-amber-500/20 min-h-[48px] flex items-center justify-center"
+          {/* Prev / next */}
+          <nav
+            aria-label="Case study navigation"
+            className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-4 border-t border-hairline"
           >
-            Inquire For Dates & Roles &rarr;
-          </Link>
-        </div>
+            {(() => {
+              const currentIndex = FLAGSHIP_EVENTS.findIndex((e) => e.slug === event.slug);
+              const prevEvent =
+                currentIndex > 0
+                  ? FLAGSHIP_EVENTS[currentIndex - 1]
+                  : FLAGSHIP_EVENTS[FLAGSHIP_EVENTS.length - 1];
+              const nextEvent =
+                currentIndex < FLAGSHIP_EVENTS.length - 1
+                  ? FLAGSHIP_EVENTS[currentIndex + 1]
+                  : FLAGSHIP_EVENTS[0];
+
+              return (
+                <>
+                  <Link
+                    href={`/events/${prevEvent.slug}`}
+                    className="group rounded-2xl border border-hairline hover:border-signal/50 p-5 transition-colors focus-visible:ring-2 focus-visible:ring-signal focus-visible:outline-none"
+                  >
+                    <span className="eyebrow text-muted flex items-center gap-2 mb-2">
+                      <ArrowLeft className="w-3.5 h-3.5 transition-transform group-hover:-translate-x-0.5" />
+                      Previous
+                    </span>
+                    <span className="font-display font-semibold text-ink group-hover:text-signal transition-colors block truncate">
+                      {prevEvent.title}
+                    </span>
+                  </Link>
+
+                  <Link
+                    href={`/events/${nextEvent.slug}`}
+                    className="group rounded-2xl border border-hairline hover:border-signal/50 p-5 transition-colors text-right focus-visible:ring-2 focus-visible:ring-signal focus-visible:outline-none"
+                  >
+                    <span className="eyebrow text-muted inline-flex items-center gap-2 mb-2">
+                      Next
+                      <ArrowRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-0.5" />
+                    </span>
+                    <span className="font-display font-semibold text-ink group-hover:text-signal transition-colors block truncate">
+                      {nextEvent.title}
+                    </span>
+                  </Link>
+                </>
+              );
+            })()}
+          </nav>
+
+          {/* Booking banner */}
+          <section className="rounded-3xl bg-ink text-white p-8 sm:p-12 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-8">
+            <div className="space-y-2 max-w-md">
+              <h2 className="font-display italic font-semibold text-2xl sm:text-3xl leading-snug">
+                Planning a similar production?
+              </h2>
+              <p className="text-sm text-zinc-400 leading-relaxed">
+                Available for OB truck, CCU, and EVS operations across the UAE and GCC.
+              </p>
+            </div>
+
+            <Link
+              href="/#contact"
+              className="shrink-0 px-6 py-3.5 rounded-full bg-signal hover:bg-signal-deep text-white font-semibold text-sm transition-colors min-h-[50px] inline-flex items-center gap-2 focus-visible:ring-2 focus-visible:ring-signal focus-visible:ring-offset-2 focus-visible:ring-offset-ink focus-visible:outline-none"
+            >
+              Inquire for dates &amp; roles
+              <ArrowRight className="w-4 h-4" aria-hidden="true" />
+            </Link>
+          </section>
+        </article>
       </main>
 
       <Footer />
+
+      {/* Floating back-to-top + thumb-reach quick actions (mobile) */}
+      <BackToTop />
+      <MobileActionBar bookHref="/#contact" />
     </div>
   );
 }
