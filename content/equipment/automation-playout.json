@@ -1,0 +1,11 @@
+{
+  "id": "automation-playout",
+  "name": "Automation & Playout Systems",
+  "iconName": "Cpu",
+  "description": "Master control room automation, transmission schedulers, and software-defined playout.",
+  "items": [
+    { "name": "Pebble Beach Marina", "model": "Enterprise Playout Automation", "manufacturer": "Pebble Beach Systems", "role": "Master Control Channel Playout", "protocols": ["VDCP", "Router Protocol", "API"], "experienceYears": 11, "featured": true },
+    { "name": "Pebble Beach Neptune", "model": "Automated Playout Controller", "manufacturer": "Pebble Beach Systems", "role": "MCR Automation Engine", "protocols": ["GPI/O", "RS-422"], "experienceYears": 13, "featured": true },
+    { "name": "vMix Pro / HD", "model": "Software Live Switcher & Streamer", "manufacturer": "StudioCoast", "role": "Backup Digital Playout & Web Tx", "protocols": ["NDI", "SRT", "RTMP", "SDI"], "experienceYears": 8 }
+  ]
+}

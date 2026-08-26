@@ -1,0 +1,12 @@
+{
+  "id": "routing-sync-rf",
+  "name": "Routing, Master Sync & Wireless RF",
+  "iconName": "Radio",
+  "description": "Baseband routers, GPS-locked SPG generators, and microwave wireless camera links.",
+  "items": [
+    { "name": "Evertz 5600SPG / 5601MSC", "model": "Master Sync & Timecode Generator", "manufacturer": "Evertz Microsystems", "role": "Master Reference Clock & GPS", "protocols": ["Blackburst", "Tri-Level", "LTC/VITC"], "experienceYears": 15, "featured": true },
+    { "name": "Nevion Sublime 128x128", "model": "HD/3G-SDI Routing Matrix", "manufacturer": "Nevion", "role": "Core OB Van Signal Router", "protocols": ["SNMP", "Serial Router Protocol"], "experienceYears": 13, "featured": true },
+    { "name": "Vislink Wireless Systems", "model": "COFDM RF Camera Transmitters", "manufacturer": "Vislink", "role": "Chase Vehicles & Steadicams", "protocols": ["DVB-T", "COFDM RF 2GHz/7GHz"], "experienceYears": 11, "featured": true },
+    { "name": "Evertz Frame Synchronizers", "model": "7700 Series Modular Processing", "manufacturer": "Evertz", "role": "Audio De-Embed & Frame Sync", "protocols": ["HD-SDI", "AES Audio"], "experienceYears": 14 }
+  ]
+}

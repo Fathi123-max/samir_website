@@ -1,0 +1,59 @@
+{
+  "slug": "uae-pro-league-adnoc",
+  "heroImage": "/images/events/pro-league-cover.jpg",
+  "gallery": ["/images/events/g-pitch.jpg", "/images/events/g-tech.jpg"],
+  "videoUrl": "https://www.youtube.com/watch?v=GzxZcTk2HT4",
+  "title": "UAE Pro League (ADNOC Football)",
+  "subtitle": "16-Camera 4K Live OB Truck & Dual EVS Super Slow-Mo",
+  "category": "Sports",
+  "venue": "Zayed Sports City & Hazza Bin Zayed Stadiums",
+  "broadcaster": "Abu Dhabi Sports & Dubai Sports",
+  "dates": "2021 – 2026 Regular Season",
+  "role": "OB System Engineer, CCU Operator & EVS Replay Lead",
+  "summary": "Full end-to-end technical engineering for tier-1 live professional football matches, overseeing 16-camera setups, high-frame-rate super slow-mo, VAR integration, and dynamic floodlight camera matching.",
+  "cameraCount": 16,
+  "specs": {
+    "format": "1080p50 High Dynamic Range (HLG)",
+    "visionMixer": "Sony MVS-7000X (3 M/E Production Switcher)",
+    "replay": "2x EVS XT3 Max (12 Channels Total) + LSM Remote Panels",
+    "cameras": "12x Sony HDC-3500 + 4x HDC-4300 (3x/6x Super Slow-Motion)",
+    "syncRouter": "Nevion Sublime 64x64 + Evertz 7700 Frame Sync",
+    "audioIntercom": "Studer Vista 5 Digital Console + Trilogy Intercom Matrix"
+  },
+  "keyStats": [
+    { "label": "Matches Engineered", "value": "85+" },
+    { "label": "Super Slow-Mo Replays", "value": "6,000+" },
+    { "label": "VAR Turnaround Delay", "value": "< 2.5s" },
+    { "label": "Broadcast Uptime", "value": "100%" }
+  ],
+  "technicalApproach": [
+    "Rigged and verified 16 camera positions including High-Center, 18-Yard boxes, Reverse Pitch, Steadicam RF, and Super Slow-Mo goal lines.",
+    "Calibrated CCU iris and color temperature across shifting natural sunset to stadium halogen/LED floodlights in real-time.",
+    "Configured multi-angle EVS clip playlists for instant referee VAR video review and rapid halftime highlight reels."
+  ],
+  "signalFlow": [
+    { "step": "Stadium Rigging", "description": "Tactile fiber triax runs across gantry, pitch-level, and reverse towers" },
+    { "step": "CCU Live Shading", "description": "Real-time master black and knee tracking on Sony RCP-1500 panels" },
+    { "step": "EVS Ingest & Replay", "description": "Synchronized multi-angle recording on dual EVS XT3 Max with LSM controllers" },
+    { "step": "VAR Feed Distribution", "description": "Dedicated zero-latency multi-split feed sent directly to VAR referee booth" },
+    { "step": "Program Transmission", "description": "Clean and dirty PGM feeds routed to satellite uplink SNG trucks" }
+  ],
+  "challengesAndSolutions": [
+    {
+      "challenge": "A primary high-speed fiber connection to Camera 3 (Main Reverse) was severed by a stadium grounds vehicle 35 minutes before kickoff.",
+      "solution": "Rapidly switched to pre-laid dark fiber backup core and deployed a tactical SMPTE optical conversion jumper within 12 minutes.",
+      "impact": "Camera 3 was fully tested, color-matched, and on-air 20 minutes before broadcast countdown."
+    },
+    {
+      "challenge": "Sudden heavy arena floodlight flicker caused rolling banding artifacts on 6x high-speed super slow-mo channels.",
+      "solution": "Adjusted electronic shutter angle phase lock on Sony HDC-4300 CCUs to match the 50Hz LED PWM driver cycle.",
+      "impact": "Crystal-clear, flicker-free ultra slow-motion replays throughout the match."
+    }
+  ],
+  "outcomes": [
+    "Consistently achieved broadcast perfection ratings from Abu Dhabi Sports technical audit board.",
+    "Zero missed goals, fouls, or pivotal VAR referee replay demands across entire championship seasons."
+  ],
+  "improvementReflection": "Transitioning all stadium return video monitors to ultra-low-latency NDI/IP feeds helped directors cue replays 1.2 seconds faster.",
+  "tags": ["Football", "UAE Pro League", "EVS XT3 Max", "Sony HDC-4300", "VAR", "Super Slow-Mo"]
+}

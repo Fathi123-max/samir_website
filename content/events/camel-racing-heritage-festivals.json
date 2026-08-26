@@ -1,0 +1,59 @@
+{
+  "slug": "camel-racing-heritage-festivals",
+  "heroImage": "/images/events/desert-cover.jpg",
+  "gallery": ["/images/events/g-sand.jpg", "/images/events/g-studio.jpg"],
+  "videoUrl": "https://www.youtube.com/watch?v=558JWScMdcY",
+  "title": "National Camel & Desert Racing Championships",
+  "subtitle": "Extreme Desert Environment RF Wireless & High-Speed Mobile OB",
+  "category": "Heritage",
+  "venue": "Al Dhafra Festival, Al Wathbah, Muzayna, Al Labsah",
+  "broadcaster": "YAS TV / Abu Dhabi Media",
+  "dates": "2019 – 2026 Annual Seasons",
+  "role": "Senior OB Engineer & RF Wireless Signal Specialist",
+  "summary": "Pioneered specialized mobile OB operations in extreme desert conditions (45°C heat, fine sandstorms) with high-speed tracking vehicles, long-range Vislink RF camera links, and dynamic desert sun shading.",
+  "cameraCount": 22,
+  "specs": {
+    "format": "1080i50 / 1080p50 Broadcast Standard",
+    "visionMixer": "FOR-A HVS-2000 & Sony MVS-6530",
+    "replay": "EVS XT3 Max (8 Channel) with Multicam LSM",
+    "cameras": "Sony HDC-3500 + Grass Valley LDX 86N + Gyro-Stabilized Tracking Cams",
+    "syncRouter": "Vislink Wireless RF Receivers + Nevion 64x64 SDI",
+    "audioIntercom": "Midas Pro 2 Digital Audio + RTS Telex Intercom"
+  },
+  "keyStats": [
+    { "label": "Track Length Covered", "value": "10 km" },
+    { "label": "RF Range Maintained", "value": "12 km" },
+    { "label": "Ambient Temp Max", "value": "48°C" },
+    { "label": "Live Race Transmissions", "value": "240+" }
+  ],
+  "technicalApproach": [
+    "Engineered multi-node RF diversity antenna arrays across 8km–10km desert tracks with automated antenna switching.",
+    "Customized positive-pressure dust filtration and secondary cooling for OB truck server racks during desert sand conditions.",
+    "Maintained extreme dynamic range CCU shading between golden desert sand dunes and high-intensity Arabian midday sun."
+  ],
+  "signalFlow": [
+    { "step": "Mobile Tracking Cams", "description": "Gyro-stabilized cameras on 4x4 chase vehicles transmitting over Vislink RF" },
+    { "step": "RF Diversity Towers", "description": "Triple antenna receiver masts along 10km race perimeter" },
+    { "step": "Baseband Demodulation", "description": "COFDM receivers demodulating RF signals directly into OB router" },
+    { "step": "Fast-Paced EVS Clipping", "description": "LSM operators logging lead camel split times and photo-finish angles" },
+    { "step": "Master Transmission", "description": "Microwave link direct to YAS TV teleport station" }
+  ],
+  "challengesAndSolutions": [
+    {
+      "challenge": "Extreme desert heat causing RF transmitter thermal throttling on lead tracking vehicle during 10km race.",
+      "solution": "Installed custom aluminum heatsink ducted fans with quick-swap cold gel packs between race heats.",
+      "impact": "Maintained 100% RF signal power output with zero frame drops throughout all heats."
+    },
+    {
+      "challenge": "Intense sand glare blowing out camera dynamic range on standard gamma curves.",
+      "solution": "Engineered a custom S-Log/HyperGamma knee curve preset on Sony RCP-1500 paint boxes, protecting sky and sand highlights.",
+      "impact": "Rich, broadcast-award-winning visual color fidelity praised by YAS TV production team."
+    }
+  ],
+  "outcomes": [
+    "Over 240 live desert races broadcast without a single dropped race finish or signal dropout.",
+    "Recognized by Media Mania as the premier RF & OB engineering lead for Gulf heritage sports."
+  ],
+  "improvementReflection": "Implementing automated GPS-steered tracking antennas on receiver towers would further enhance signal margin on extreme 12km marathons.",
+  "tags": ["Camel Racing", "Al Dhafra", "Vislink RF", "Desert OB", "FOR-A HVS-2000", "Gyro-Cam"]
+}

@@ -39,3 +39,6 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# codegen output (generated from content/*.json by scripts/codegen.ts)
+/lib/data.ts

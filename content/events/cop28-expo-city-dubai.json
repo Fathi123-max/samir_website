@@ -1,0 +1,59 @@
+{
+  "slug": "cop28-expo-city-dubai",
+  "heroImage": "/images/events/cop28-cover.jpg",
+  "gallery": ["/images/events/g-camera.jpg", "/images/events/g-mic.jpg"],
+  "videoUrl": "https://www.youtube.com/watch?v=-UM3atf8iAI",
+  "title": "COP28 UN Climate Summit",
+  "subtitle": "Global Unilateral & Host Broadcaster Transmission Matrix",
+  "category": "Summit",
+  "venue": "Expo City Dubai, UAE",
+  "broadcaster": "Abu Dhabi TV / UNFCCC Host Broadcast",
+  "dates": "Nov 30 – Dec 13, 2023",
+  "role": "Lead OB Systems Engineer & Signal Routing Lead",
+  "summary": "Engineered zero-latency international distribution matrix across 35+ multilateral feeds, high-security presidential plenary halls, and global network unilateral cabins with 100% transmission continuity.",
+  "cameraCount": 28,
+  "specs": {
+    "format": "1080p50 HDR / 12G-SDI & SMPTE 2110 Hybrid",
+    "visionMixer": "Sony MVS-8000X (4 M/E Main Plenary + 2 M/E Side Halls)",
+    "replay": "EVS XT-VIA & XT3 (8 Channel Speech Loggers)",
+    "cameras": "18x Sony HDC-4300 + 10x Remote Robotic PTZs",
+    "syncRouter": "Evertz 5600SPG Dual Redundant Master Sync + Nevion Sublime 128x128",
+    "audioIntercom": "RTS ADAM Matrix (128 Ports) + Dante Network Bridges"
+  },
+  "keyStats": [
+    { "label": "Global Audience", "value": "1.2B+" },
+    { "label": "Unilateral Feeds", "value": "35+" },
+    { "label": "Continuous On-Air", "value": "312 Hrs" },
+    { "label": "Signal Loss Incidents", "value": "0" }
+  ],
+  "technicalApproach": [
+    "Designed a dual-ring fiber backbone connecting the Plenary Hall OB Compound to International Media Centre (IMC) distribution hubs.",
+    "Configured redundant Evertz SPG synchronizers with GPS locking to guarantee jitter-free reference across 28 multi-vendor camera channels.",
+    "Established strict CCU colorimetry matching calibrated for low-glare presidential lighting and 4K HDR projection backdrops."
+  ],
+  "signalFlow": [
+    { "step": "Optical Ingest", "description": "28 SMPTE hybrid fiber camera runs terminated at tactical patch-wall" },
+    { "step": "CCU Paint Box", "description": "Sony RCP-1500 master rack aligned to D65 color temp" },
+    { "step": "Matrix Routing", "description": "Nevion 128x128 HD-SDI router with automated fallback switching" },
+    { "step": "Vision Mixing", "description": "Sony MVS-8000X delivering 4 distinct international clean & graphic feeds" },
+    { "step": "Satellite Uplink & Fiber Tx", "description": "Dual redundant encoders routed to EBU and Abu Dhabi Media playout" }
+  ],
+  "challengesAndSolutions": [
+    {
+      "challenge": "Unannounced VIP arrival caused spontaneous room reassignment 20 minutes before world leaders address.",
+      "solution": "Triggered emergency flyaway optical multiplexer preset, re-patching 6 CCU channels and RTS intercom panels over dark fiber trunk in 8 minutes.",
+      "impact": "Zero transmission delay; world feed went live flawlessly with synchronized tally and graphics."
+    },
+    {
+      "challenge": "Severe thermal fluctuations in external outdoor fiber termination hubs reaching 42°C ambient.",
+      "solution": "Implemented active thermoelectric spot cooling and optical power margin monitoring on all tactical SMPTE cables.",
+      "impact": "Prevented optical dB attenuation drops throughout the 14-day summit."
+    }
+  ],
+  "outcomes": [
+    "Delivered flawless 24/7 world feed to 140+ accredited international television networks.",
+    "Commended by Abu Dhabi Media engineering directorate for exemplary uptime and rapid emergency re-patching."
+  ],
+  "improvementReflection": "In future mega-summits, I would deploy automated SMPTE ST 2110 NMOS IS-04/05 discovery for unilateral client trucks to cut initial patching times by another 40%.",
+  "tags": ["COP28", "World Feed", "Sony MVS-8000X", "Evertz SPG", "RTS ADAM", "SMPTE Fiber"]
+}

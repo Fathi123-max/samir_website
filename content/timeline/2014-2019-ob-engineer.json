@@ -1,0 +1,14 @@
+{
+  "period": "2014 – 2019",
+  "role": "OB Systems Engineer & CCU Specialist",
+  "company": "Media Mania Production",
+  "location": "Abu Dhabi, UAE",
+  "type": "OB & Mobile Unit",
+  "description": "Managed complete technical setup of 16-camera OB Vans, flyaway mobile production suites, long-range RF wireless links, and multi-venue sports coverage across the Gulf.",
+  "achievements": [
+    "Pioneered extreme-environment RF diversity tracking for 10km desert camel racing marathons (Al Dhafra Festival).",
+    "Designed rapid-deployment flyaway systems cutting venue setup time by 45%.",
+    "Trained and mentored junior engineering teams on CCU colorimetry and EVS highlight workflows."
+  ],
+  "technologies": ["FOR-A HVS-2000", "EVS XT3", "Grass Valley LDX", "Nevion Routers", "RTS Intercom"]
+}

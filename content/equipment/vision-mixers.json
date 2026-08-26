@@ -1,0 +1,13 @@
+{
+  "id": "vision-mixers",
+  "name": "Video Switchers & Vision Mixers",
+  "iconName": "LayoutGrid",
+  "description": "Production switchers, control panels, multi-format vision mixers, and multiviewers.",
+  "items": [
+    { "name": "Sony MVS-8000X", "model": "4 M/E 4K/3G-SDI", "manufacturer": "Sony", "role": "Flagship Production Switcher", "protocols": ["12G-SDI", "3G-SDI", "4K HDR"], "experienceYears": 14, "featured": true },
+    { "name": "Sony MVS-7000X / 6530", "model": "3 M/E & 2 M/E Compact", "manufacturer": "Sony", "role": "OB Truck Main Switcher", "protocols": ["1080p50", "3G-SDI"], "experienceYears": 12, "featured": true },
+    { "name": "Sony DVS-9000", "model": "Digital Production Switcher", "manufacturer": "Sony", "role": "Studio Playout Master", "protocols": ["HD-SDI", "SDI"], "experienceYears": 16 },
+    { "name": "FOR-A HVS-2000", "model": "2/3 M/E Multi-Format", "manufacturer": "FOR-A", "role": "Mobile Flyaway & Heritage OB", "protocols": ["3G-SDI", "12G-SDI Ready"], "experienceYears": 10, "featured": true },
+    { "name": "FOR-A HVS-390HS", "model": "Compact HD Switcher", "manufacturer": "FOR-A", "role": "Sub-Mixer & Matrix Switch", "protocols": ["HD-SDI"], "experienceYears": 8 }
+  ]
+}

@@ -1,0 +1,12 @@
+{
+  "id": "graphics-cg",
+  "name": "Graphics, CG & Virtual Sets",
+  "iconName": "Monitor",
+  "description": "Real-time 3D broadcast character generators, telestration, and virtual studio render engines.",
+  "items": [
+    { "name": "Vizrt Trio & Viz Engine", "model": "3D Real-Time Character Generator", "manufacturer": "Vizrt", "role": "Live Sports & News CG", "protocols": ["Fill & Key SDI", "Shared DB"], "experienceYears": 12, "featured": true },
+    { "name": "Brainstorm eStudio", "model": "Virtual Studio & Augmented Reality", "manufacturer": "Brainstorm", "role": "Live Primetime Augmented Sets", "protocols": ["Tracking Protocol", "3G-SDI"], "experienceYears": 9, "featured": true },
+    { "name": "WTvision Studio CG", "model": "Sports Graphics & Match Clocks", "manufacturer": "WTvision", "role": "Tournament Bracket Graphics", "protocols": ["API Data Ingest", "SDI"], "experienceYears": 7 },
+    { "name": "Piero Sports Graphics", "model": "Tactical Broadcast Analysis", "manufacturer": "Ross Video", "role": "Live Pitch Telestration", "protocols": ["Multi-Camera Tracking"], "experienceYears": 6 }
+  ]
+}

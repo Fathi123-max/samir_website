@@ -1,0 +1,54 @@
+{
+  "slug": "world-snooker-masters-ksa",
+  "heroImage": "/images/events/snooker-cover.jpg",
+  "gallery": ["/images/events/g-audio.jpg", "/images/events/g-director.jpg"],
+  "videoUrl": "https://www.youtube.com/watch?v=JXMvxICIj4w",
+  "title": "World Snooker Masters & Riyadh Season",
+  "subtitle": "Micro-Detail Lighting Calibration & Ultra-Silent Control",
+  "category": "Sports",
+  "venue": "Boulevard Riyadh City, Kingdom of Saudi Arabia",
+  "broadcaster": "Matchroom Sport / Saudi Sports Company (SSC) / Eurosport",
+  "dates": "March 2024",
+  "role": "Lead CCU Engineer & System QC Supervisor",
+  "summary": "Flawless colorimetry calibration for the high-prestige World Snooker tournament. Demanded zero acoustic noise in arena, ultra-precise baize green color matching, and macro slow-motion ball spin analysis.",
+  "cameraCount": 14,
+  "specs": {
+    "format": "1080p50 UHD/HDR Ready",
+    "visionMixer": "Sony MVS-8000X",
+    "replay": "EVS XT3 Max with SuperMotion License",
+    "cameras": "Grass Valley LDX 86N + Sony HDC-4300 Macro Overhead",
+    "syncRouter": "Evertz 5600SPG + Grass Valley NV9000 Router",
+    "audioIntercom": "RTS ADAM-M Matrix + Soundcraft Vi3000"
+  },
+  "keyStats": [
+    { "label": "Color Match Precision", "value": "ΔE < 0.8" },
+    { "label": "Macro Replay FPS", "value": "300 fps" },
+    { "label": "Noise Level in Hall", "value": "< 25 dB" },
+    { "label": "Live Matches Delivered", "value": "32" }
+  ],
+  "technicalApproach": [
+    "Calibrated green baize cloth color balance across all 14 cameras to ensure identical RGB values between tight macro ball shots and wide table views.",
+    "Integrated 300fps super slow-motion overhead camera to reveal micro ball collisions and cue contact points.",
+    "Engineered ultra-quiet sound isolation and fiber routing to guarantee zero equipment noise reached players."
+  ],
+  "signalFlow": [
+    { "step": "Table Macro Cams", "description": "Overhead 4K optical zoom focused on cue tip impact point" },
+    { "step": "CCU Shading Suite", "description": "Precision Grass Valley OCP-400 paint controllers calibrated against X-Rite ColorChecker" },
+    { "step": "SuperMotion Replay", "description": "EVS XT3 server continuous buffer capturing 300fps slow-motion cue strikes" },
+    { "step": "Live Graphics Ingest", "description": "Vizrt Trio automated ball telemetry and frame score overlays" },
+    { "step": "Host Feed Handover", "description": "Simultaneous international clean feed delivery to Matchroom and SSC" }
+  ],
+  "challengesAndSolutions": [
+    {
+      "challenge": "Slight hue variance between table spot lights caused the green cloth to appear yellowish on tight pocket cameras.",
+      "solution": "Created secondary matrix color presets on Grass Valley OCP panels, selectively shifting yellow-green hue by -4° on pocket cameras.",
+      "impact": "Uniform, broadcast-perfect baize green across every single camera angle."
+    }
+  ],
+  "outcomes": [
+    "Praised by international host directors for the cleanest snooker visual calibration of the season.",
+    "Zero technical interruptions throughout the multi-day championship."
+  ],
+  "improvementReflection": "Adding automated robotic micro-jib tracks on overhead positions will allow seamless 360-degree table orbits in future tournaments.",
+  "tags": ["Snooker", "Riyadh Season", "Grass Valley LDX", "Macro CCU", "Color Calibration", "Matchroom"]
+}

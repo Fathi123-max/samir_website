@@ -1,0 +1,134 @@
+fragment PersonalInfoParts on PersonalInfo {
+  __typename
+  name
+  title
+  subtitle
+  heroHeadline
+  tagline
+  portrait
+  showreelUrl
+  experienceYears
+  eventsCount
+  broadcastersCount
+  uptimePercentage
+  location
+  phone
+  email
+  whatsappUrl
+  workingHours
+  socials {
+    __typename
+    label
+    url
+  }
+  degree
+  degreeHonors
+  statusText
+  statusTextShort
+  statusActive
+}
+
+fragment EventParts on Event {
+  __typename
+  slug
+  title
+  subtitle
+  category
+  venue
+  broadcaster
+  dates
+  role
+  heroImage
+  gallery
+  videoUrl
+  summary
+  cameraCount
+  specs {
+    __typename
+    format
+    visionMixer
+    replay
+    cameras
+    syncRouter
+    audioIntercom
+  }
+  keyStats {
+    __typename
+    label
+    value
+  }
+  technicalApproach
+  signalFlow {
+    __typename
+    step
+    description
+  }
+  challengesAndSolutions {
+    __typename
+    challenge
+    solution
+    impact
+  }
+  outcomes
+  improvementReflection
+  tags
+}
+
+fragment ServiceParts on Service {
+  __typename
+  title
+  description
+}
+
+fragment EquipmentParts on Equipment {
+  __typename
+  name
+  iconName
+  description
+  items {
+    __typename
+    name
+    model
+    manufacturer
+    role
+    protocols
+    experienceYears
+    featured
+  }
+}
+
+fragment TimelineParts on Timeline {
+  __typename
+  period
+  role
+  company
+  location
+  type
+  description
+  achievements
+  technologies
+}
+
+fragment TestimonialParts on Testimonial {
+  __typename
+  quote
+  author
+  role
+  organization
+  event
+  avatarText
+}
+
+fragment ShowreelVideoParts on ShowreelVideo {
+  __typename
+  title
+  caption
+  thumb
+  videoUrl
+}
+
+fragment FaqParts on Faq {
+  __typename
+  question
+  answer
+}

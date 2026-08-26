@@ -1,0 +1,13 @@
+{
+  "id": "replay-servers",
+  "name": "Replay & Video Servers",
+  "iconName": "Film",
+  "description": "Live broadcast replay servers, slow-motion controllers, and ingest storage systems.",
+  "items": [
+    { "name": "EVS XT3 Max", "model": "8 / 12 Channel Live Server", "manufacturer": "EVS Broadcast", "role": "Live Sports Replay & Highlights", "protocols": ["GigE", "SDTI", "Dual Multicam"], "experienceYears": 15, "featured": true },
+    { "name": "EVS XT-VIA", "model": "12G-SDI & IP 4K Replay Server", "manufacturer": "EVS Broadcast", "role": "Ultra-HD Tier-1 Replay", "protocols": ["SMPTE 2110", "12G-SDI"], "experienceYears": 5, "featured": true },
+    { "name": "EVS LSM Remote", "model": "Jog/Shuttle Controller Panel", "manufacturer": "EVS Broadcast", "role": "Precision Slow-Mo Operation", "protocols": ["EVS Controller Interface"], "experienceYears": 15, "featured": true },
+    { "name": "Grass Valley K2 Dyno", "model": "Replay System & Summit Server", "manufacturer": "Grass Valley", "role": "Multi-Channel Clip Server", "protocols": ["iSCSI", "HD-SDI"], "experienceYears": 9 },
+    { "name": "Harris Inscriber / Nexio", "model": "Broadcast Ingest & Server", "manufacturer": "Harris / Imagine", "role": "Playout Server Storage", "protocols": ["Fibre Channel", "SDI"], "experienceYears": 12 }
+  ]
+}

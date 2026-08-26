@@ -1,0 +1,12 @@
+{
+  "id": "audio-intercom",
+  "name": "Audio Consoles & Intercom Matrix",
+  "iconName": "Volume2",
+  "description": "Digital audio mixing desks, matrix talkback, and multi-channel production party-lines.",
+  "items": [
+    { "name": "RTS ADAM & ADAM-M", "model": "128-Port Matrix Intercom", "manufacturer": "RTS / Bosch", "role": "Master Production Intercom", "protocols": ["OMNEO", "RVON VoIP", "Keypanel Bus"], "experienceYears": 14, "featured": true },
+    { "name": "Trilogy Commander", "model": "Matrix Communications System", "manufacturer": "Clear-Com / Trilogy", "role": "OB Truck Talkback System", "protocols": ["IP", "4-Wire Analog"], "experienceYears": 12 },
+    { "name": "Studer Vista 5", "model": "Digital Live Broadcast Console", "manufacturer": "Studer / Harman", "role": "Live Surround Sports Audio", "protocols": ["MADI", "D21m I/O Frames"], "experienceYears": 10, "featured": true },
+    { "name": "Midas Pro 2 / Pro X", "model": "Digital Live Mixing Desk", "manufacturer": "Midas", "role": "Live Event & Studio Audio", "protocols": ["AES50", "Dante AoIP"], "experienceYears": 11 }
+  ]
+}

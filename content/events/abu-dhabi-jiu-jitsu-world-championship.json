@@ -1,0 +1,54 @@
+{
+  "slug": "abu-dhabi-jiu-jitsu-world-championship",
+  "heroImage": "/images/events/jitsi-cover.jpg",
+  "gallery": ["/images/events/g-tech.jpg", "/images/events/g-pitch.jpg"],
+  "videoUrl": "https://www.youtube.com/watch?v=558JWScMdcY",
+  "title": "Abu Dhabi Jiu-Jitsu World Championship",
+  "subtitle": "8-Mat Simultaneous Live Feeds & Instant Referee Video Review",
+  "category": "Combat Sports",
+  "venue": "ARENA Space42, Zayed Sports City, Abu Dhabi",
+  "broadcaster": "Abu Dhabi Sports & International Combat Streams",
+  "dates": "Annual Championship 2022 – 2025",
+  "role": "Senior Broadcast Engineer & Multi-Feed Matrix Lead",
+  "summary": "Engineered an 8-mat simultaneous broadcast infrastructure delivering 8 discrete live stadium video feeds, centralized referee review video replay, and main arena show court broadcast coverage.",
+  "cameraCount": 24,
+  "specs": {
+    "format": "1080p50 HD-SDI Matrix",
+    "visionMixer": "Sony MVS-7000X + FOR-A HVS-390HS Sub-Mixers",
+    "replay": "3x EVS XT3 (18 Channels Synchronized)",
+    "cameras": "Sony HDC-3500 + Jib Crane + Wireless Steadicams",
+    "syncRouter": "Nevion Sublime 128x128 Routing Matrix",
+    "audioIntercom": "RTS ADAM Intercom + Dante AoIP Network"
+  },
+  "keyStats": [
+    { "label": "Mats Broadcast Simultaneously", "value": "8 Mats" },
+    { "label": "Total Bouts Covered", "value": "1,200+" },
+    { "label": "Referee Review Requests", "value": "450+" },
+    { "label": "Live Stream Channels", "value": "10 Feeds" }
+  ],
+  "technicalApproach": [
+    "Engineered a centralized 128x128 Nevion matrix routing all 8 competition mats to dedicated referee touchscreens and online feeds.",
+    "Configured 3 synchronized EVS XT3 servers to log and instantly cue contentious point scoring and submission attempts.",
+    "Managed RF Steadicam and 40ft Jimmy Jib cameras for the grand championship final show court."
+  ],
+  "signalFlow": [
+    { "step": "Multi-Mat Ingest", "description": "24 camera lines across 8 mats routed to central OB patch panel" },
+    { "step": "Referee Review Station", "description": "Instant touch-controlled replay distribution to mat-side referees" },
+    { "step": "Main Court Production", "description": "Sony MVS-7000X directing prime-time finals broadcast with slow-motion replays" },
+    { "step": "Graphics & Scoring", "description": "WTvision live tournament bracket and scoring integration" },
+    { "step": "OTT & TV Distribution", "description": "10 discrete streams encoded for global streaming portals and Abu Dhabi Sports TV" }
+  ],
+  "challengesAndSolutions": [
+    {
+      "challenge": "Mat 4 and Mat 7 had simultaneous contested gold-medal submissions requiring immediate video replay.",
+      "solution": "Dual-operator EVS workflow routing isolated angles to separate referee review monitors simultaneously.",
+      "impact": "Both decisions resolved in under 15 seconds; broadcast pace was maintained without delay."
+    }
+  ],
+  "outcomes": [
+    "Successfully streamed 8 simultaneous courts for 7 consecutive days with zero signal interruptions.",
+    "Earned official commendation from UAE Jiu-Jitsu Federation."
+  ],
+  "improvementReflection": "Deploying automated AI clip-tagging for athlete names will accelerate social media highlight turnaround.",
+  "tags": ["Jiu-Jitsu", "Space42 Arena", "Multi-Mat", "EVS XT3", "Nevion Matrix", "Combat Sports"]
+}

@@ -1,0 +1,14 @@
+{
+  "id": "ccu-cameras",
+  "name": "Cameras & CCU Paint Boxes",
+  "iconName": "Camera",
+  "description": "Studio, OB, and high-speed Super Slow-Mo camera channels with master remote paint boxes.",
+  "items": [
+    { "name": "Sony HDC-4300", "model": "4K / 8x Super Slow-Motion", "manufacturer": "Sony", "role": "Tier-1 Live Sports Camera", "protocols": ["SMPTE Fiber", "12G-SDI", "Rec.2020"], "experienceYears": 9, "featured": true },
+    { "name": "Sony HDC-3500", "model": "2/3-inch 4K HDR CMOS", "manufacturer": "Sony", "role": "Primary OB & Studio Camera", "protocols": ["Global Shutter", "HLG", "S-Log3"], "experienceYears": 7, "featured": true },
+    { "name": "Sony RCP-1500 / RCP-3500", "model": "Remote Control Panel", "manufacturer": "Sony", "role": "Master CCU Shading Panel", "protocols": ["Ethernet", "Serial CCA"], "experienceYears": 16, "featured": true },
+    { "name": "Grass Valley LDX 86N", "model": "Native 4K / High-Speed", "manufacturer": "Grass Valley", "role": "Premium Sports & Studio", "protocols": ["DirectIP", "SMPTE 2110 Ready"], "experienceYears": 8, "featured": true },
+    { "name": "Grass Valley OCP-400", "model": "Operational Control Panel", "manufacturer": "Grass Valley", "role": "Color & Iris Paint Box", "protocols": ["C2IP Network"], "experienceYears": 11 },
+    { "name": "Sony BRC-X1000", "model": "4K PTZ Robotic Camera", "manufacturer": "Sony", "role": "Remote Studio & Plenary", "protocols": ["VISCA over IP", "3G-SDI"], "experienceYears": 6 }
+  ]
+}

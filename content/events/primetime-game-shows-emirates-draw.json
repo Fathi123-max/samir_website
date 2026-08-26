@@ -1,0 +1,54 @@
+{
+  "slug": "primetime-game-shows-emirates-draw",
+  "heroImage": "/images/events/draw-cover.jpg",
+  "gallery": ["/images/events/g-filming.jpg", "/images/events/g-engineer.jpg"],
+  "videoUrl": "https://www.youtube.com/watch?v=GzxZcTk2HT4",
+  "title": "Emirates Draw & Primetime Live Shows",
+  "subtitle": "High-Security RNG Verification & Redundant Pebble Beach Playout",
+  "category": "Entertainment",
+  "venue": "Media City & MAP Studio Facilities, Dubai",
+  "broadcaster": "Emirates Draw / Dubai TV / Digital Streams",
+  "dates": "2021 – 2026 Weekly Live Broadcasts",
+  "role": "Lead Playout & Studio Systems Engineer",
+  "summary": "Managed high-stakes, multi-million dollar live lottery draws, game shows, and weekly primetime entertainment (Emirates Draw, Little Draw, Esaad Police, Top Chef ME) with strict regulatory compliance and dual-redundant automation.",
+  "cameraCount": 12,
+  "specs": {
+    "format": "1080p50 Full HD SDI",
+    "visionMixer": "Sony DVS-9000 & FOR-A HVS-2000",
+    "replay": "EVS XT3 & Harris Inscriber Servers",
+    "cameras": "Sony HDC-3500 & Sony BRC-X1000 4K PTZ",
+    "syncRouter": "Pebble Beach Marina Automation + Evertz SPG",
+    "audioIntercom": "Yamaha CL5 Console + RTS Intercom"
+  },
+  "keyStats": [
+    { "label": "Live Weekly Draws", "value": "180+" },
+    { "label": "Prize Pools Guaranteed", "value": "$100M+" },
+    { "label": "Playout Redundancy", "value": "Dual Hot-Standby" },
+    { "label": "Regulatory Compliance", "value": "100%" }
+  ],
+  "technicalApproach": [
+    "Configured Pebble Beach Marina automation for synchronized primary and secondary failover playout channels.",
+    "Synchronized 8 multi-angle high-speed ball machine cameras with millisecond timecode burn-in for regulatory auditing.",
+    "Integrated real-time graphics automation (Brainstorm & Vizrt) pulling verified numbers directly from air-gapped audit servers."
+  ],
+  "signalFlow": [
+    { "step": "Ball Machine Ingest", "description": "4K high-speed cameras locked onto pneumatic lottery draw chambers" },
+    { "step": "Audit Verification", "description": "Timecode burned splits routed simultaneously to government audit monitors" },
+    { "step": "Live Graphics Trigger", "description": "Brainstorm eStudio CG rendering live winning numbers in real-time" },
+    { "step": "Playout Automation", "description": "Pebble Beach Marina firing synchronized primary and backup transmission lines" },
+    { "step": "Multi-Platform Streaming", "description": "Simultaneous TV broadcast and ultra-low-latency YouTube/Facebook live streams" }
+  ],
+  "challengesAndSolutions": [
+    {
+      "challenge": "Primary graphics workstation experienced a GPU frame-buffer lock 90 seconds before live countdown.",
+      "solution": "Seamlessly toggled the video router clean-switch to the secondary mirrored Brainstorm engine without a dropped pixel.",
+      "impact": "Broadcast started precisely on schedule with 100% graphics fidelity."
+    }
+  ],
+  "outcomes": [
+    "Maintained unbroken 100% on-air compliance across over 180 consecutive live weekly draw episodes.",
+    "Awarded Certificate of Technical Excellence by Media Art Production (MAP)."
+  ],
+  "improvementReflection": "Transitioning to cloud-synchronized SRT backup streams further bolstered international streaming resilience.",
+  "tags": ["Emirates Draw", "Pebble Beach", "Brainstorm CG", "Studio Playout", "Sony DVS-9000", "Top Chef"]
+}

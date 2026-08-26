@@ -1,0 +1,14 @@
+{
+  "period": "2019 – Present",
+  "role": "Senior Broadcast & OB Engineer / CCU & EVS Lead",
+  "company": "Media Art Production (MAP) & Media Mania",
+  "location": "Dubai & Abu Dhabi, UAE",
+  "type": "Lead Broadcast Engineer",
+  "description": "Leading technical operations for tier-1 sports championships, international summits (COP28), national heritage camel races, and primetime television productions across the UAE and GCC region.",
+  "achievements": [
+    "Engineered COP28 international transmission matrix supporting 35+ global broadcaster feeds with zero signal dropouts.",
+    "Lead CCU and EVS specialist for ADNOC UAE Pro League multi-camera 4K stadium broadcasts.",
+    "Maintained 99.99% on-air uptime across 180+ consecutive live weekly primetime game show broadcasts (Emirates Draw)."
+  ],
+  "technologies": ["Sony MVS-8000X", "EVS XT3 Max", "Sony HDC-4300", "Evertz 5600SPG", "Vislink RF", "Pebble Beach"]
+}

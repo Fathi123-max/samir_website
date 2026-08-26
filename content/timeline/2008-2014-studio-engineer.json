@@ -1,0 +1,14 @@
+{
+  "period": "2008 – 2014",
+  "role": "Studio & Playout Systems Engineer",
+  "company": "EMPC (Egyptian Media Production City) & ERTU",
+  "location": "Cairo, Egypt",
+  "type": "Playout & Studio",
+  "description": "Engineered 24/7 master control rooms, satellite uplink telemetry, live news studios, and automated playout servers for national terrestrial and satellite television networks.",
+  "achievements": [
+    "Configured Pebble Beach Neptune automation and Harris Nexio playout servers for 6 continuous national channels.",
+    "Calibrated multi-camera studio sets for daily live primetime news and major political broadcasts.",
+    "Maintained zero downtime during critical national election live transmission events."
+  ],
+  "technologies": ["Pebble Beach Neptune", "Sony DVS-9000", "Harris Inscriber", "Studer Audio", "Tektronix WFM"]
+}
