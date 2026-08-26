@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useMemo } from "react";
 import { useTina } from "tinacms/dist/react";
 import { Header } from "@/components/Header";
 import { Hero } from "@/components/Hero";
@@ -61,6 +61,52 @@ export function HomeClient({
   faqVariables,
   faqData,
 }: HomeClientProps) {
+  // Memoize all Tina data objects to avoid infinite re-renders
+  const servicesTinaData = useMemo(
+    () => ({
+      serviceConnection: {
+        edges: servicesData.map((s) => ({ node: { data: s, id: `service-${s.id}` } })),
+      },
+    }),
+    [servicesData]
+  );
+
+  const eventsTinaData = useMemo(
+    () => ({
+      eventConnection: {
+        edges: eventsData.map((e) => ({ node: { data: e, id: `event-${e.slug}` } })),
+      },
+    }),
+    [eventsData]
+  );
+
+  const showreelTinaData = useMemo(
+    () => ({
+      showreelVideoConnection: {
+        edges: showreelData.map((v) => ({ node: { data: v, id: `showreel-${v.id}` } })),
+      },
+    }),
+    [showreelData]
+  );
+
+  const testimonialsTinaData = useMemo(
+    () => ({
+      testimonialConnection: {
+        edges: testimonialsData.map((t) => ({ node: { data: t, id: `testimonial-${t.id}` } })),
+      },
+    }),
+    [testimonialsData]
+  );
+
+  const faqTinaData = useMemo(
+    () => ({
+      faqConnection: {
+        edges: faqData.map((f) => ({ node: { data: f, id: `faq-${f.id}` } })),
+      },
+    }),
+    [faqData]
+  );
+
   const { data: pi } = useTina({
     query: personalInfoQuery,
     variables: personalInfoVariables,
@@ -70,51 +116,31 @@ export function HomeClient({
   const { data: svc } = useTina({
     query: servicesQuery,
     variables: servicesVariables,
-    data: {
-      serviceConnection: {
-        edges: servicesData.map((s) => ({ node: { data: s, id: `service-${s.id}` } })),
-      },
-    },
+    data: servicesTinaData,
   });
 
   const { data: ev } = useTina({
     query: eventsQuery,
     variables: eventsVariables,
-    data: {
-      eventConnection: {
-        edges: eventsData.map((e) => ({ node: { data: e, id: `event-${e.slug}` } })),
-      },
-    },
+    data: eventsTinaData,
   });
 
   const { data: sr } = useTina({
     query: showreelQuery,
     variables: showreelVariables,
-    data: {
-      showreelVideoConnection: {
-        edges: showreelData.map((v) => ({ node: { data: v, id: `showreel-${v.id}` } })),
-      },
-    },
+    data: showreelTinaData,
   });
 
   const { data: tm } = useTina({
     query: testimonialsQuery,
     variables: testimonialsVariables,
-    data: {
-      testimonialConnection: {
-        edges: testimonialsData.map((t) => ({ node: { data: t, id: `testimonial-${t.id}` } })),
-      },
-    },
+    data: testimonialsTinaData,
   });
 
   const { data: fq } = useTina({
     query: faqQuery,
     variables: faqVariables,
-    data: {
-      faqConnection: {
-        edges: faqData.map((f) => ({ node: { data: f, id: `faq-${f.id}` } })),
-      },
-    },
+    data: faqTinaData,
   });
 
   // Extract live data from Tina responses
