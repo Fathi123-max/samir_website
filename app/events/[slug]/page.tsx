@@ -1,7 +1,7 @@
 import React from "react";
 import { notFound } from "next/navigation";
 import Link from "next/link";
-import { FLAGSHIP_EVENTS } from "@/lib/data";
+import { FLAGSHIP_EVENTS, PERSONAL_INFO } from "@/lib/data";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { MediaFrame } from "@/components/MediaFrame";
@@ -53,7 +53,7 @@ export default async function EventPage({
 
   return (
     <div className="min-h-screen flex flex-col bg-canvas text-ink">
-      <Header />
+      <Header personalInfo={PERSONAL_INFO} />
 
       <main className="flex-1 w-full">
         <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-14 lg:py-20 space-y-12 sm:space-y-16">
@@ -377,7 +377,7 @@ export default async function EventPage({
         </article>
       </main>
 
-      <Footer />
+      <Footer personalInfo={PERSONAL_INFO} />
 
       {/* Floating back-to-top */}
       <BackToTop />

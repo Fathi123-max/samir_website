@@ -1,25 +1,21 @@
 import React from "react";
-import dynamic from "next/dynamic";
-import { Header } from "@/components/Header";
-import { Hero } from "@/components/Hero";
-import { BackToTop } from "@/components/BackToTop";
+import { HomeClient } from "./home-client";
 import { PERSONAL_INFO } from "@/lib/data";
-
-// Below-the-fold sections are code-split so the initial JS payload only covers
-// the above-the-fold chrome (Header, Hero). SSR stays on: full HTML is
-// still delivered for SEO/LCP, only hydration JS is deferred per section.
-const Services = dynamic(() => import("@/components/Services").then((m) => m.Services));
-const FlagshipEvents = dynamic(() =>
-  import("@/components/FlagshipEvents").then((m) => m.FlagshipEvents)
-);
-const Showreel = dynamic(() =>
-  import("@/components/Showreel").then((m) => m.Showreel)
-);
-const TestimonialBanner = dynamic(() =>
-  import("@/components/TestimonialBanner").then((m) => m.TestimonialBanner)
-);
-const Faq = dynamic(() => import("@/components/Faq").then((m) => m.Faq));
-const Footer = dynamic(() => import("@/components/Footer").then((m) => m.Footer));
+import {
+  PERSONAL_INFO_QUERY,
+  SERVICES_QUERY,
+  EVENTS_QUERY,
+  SHOWREEL_VIDEOS_QUERY,
+  TESTIMONIALS_QUERY,
+  FAQ_QUERY,
+} from "@/lib/tina-queries";
+import {
+  SERVICE_TIERS,
+  FLAGSHIP_EVENTS,
+  SHOWREEL_VIDEOS,
+  TESTIMONIALS,
+  FAQ_ITEMS,
+} from "@/lib/data";
 
 export default function HomePage() {
   const jsonLd = {
@@ -60,21 +56,26 @@ export default function HomePage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
 
-      <Header />
-
-      <main id="main" className="flex-1 w-full" tabIndex={-1}>
-        <Hero />
-        <Services />
-        <FlagshipEvents />
-        <Showreel />
-        <TestimonialBanner />
-        <Faq />
-      </main>
-
-      <Footer />
-
-      {/* Floating back-to-top */}
-      <BackToTop />
+      <HomeClient
+        personalInfoQuery={PERSONAL_INFO_QUERY}
+        personalInfoVariables={{}}
+        personalInfoData={PERSONAL_INFO}
+        servicesQuery={SERVICES_QUERY}
+        servicesVariables={{}}
+        servicesData={SERVICE_TIERS}
+        eventsQuery={EVENTS_QUERY}
+        eventsVariables={{}}
+        eventsData={FLAGSHIP_EVENTS}
+        showreelQuery={SHOWREEL_VIDEOS_QUERY}
+        showreelVariables={{}}
+        showreelData={SHOWREEL_VIDEOS}
+        testimonialsQuery={TESTIMONIALS_QUERY}
+        testimonialsVariables={{}}
+        testimonialsData={TESTIMONIALS}
+        faqQuery={FAQ_QUERY}
+        faqVariables={{}}
+        faqData={FAQ_ITEMS}
+      />
     </div>
   );
 }

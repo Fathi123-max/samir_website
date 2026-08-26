@@ -1,12 +1,16 @@
 "use client";
 
 import React from "react";
-import { FAQ_ITEMS } from "@/lib/data";
+import type { FaqItem } from "@/lib/types";
 import { Reveal } from "./Reveal";
 import { Plus, Minus } from "lucide-react";
 
-export function Faq() {
-  const [openId, setOpenId] = React.useState<string | null>(FAQ_ITEMS[0]?.id ?? null);
+interface FaqProps {
+  items: FaqItem[];
+}
+
+export function Faq({ items }: FaqProps) {
+  const [openId, setOpenId] = React.useState<string | null>(items[0]?.id ?? null);
 
   return (
     <section
@@ -39,7 +43,7 @@ export function Faq() {
           {/* Accordion */}
           <Reveal direction="up" delay={0.2} className="lg:col-span-7">
             <div className="border-t border-hairline">
-              {FAQ_ITEMS.map((item) => {
+              {items.map((item) => {
                 const isOpen = openId === item.id;
                 return (
                   <div key={item.id} className="border-b border-hairline">

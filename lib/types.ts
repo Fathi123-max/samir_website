@@ -93,6 +93,31 @@ export interface Testimonial {
   avatarText: string;
 }
 
+export interface PersonalInfo {
+  name: string;
+  title: string;
+  subtitle: string;
+  heroHeadline: string;
+  tagline: string;
+  portrait: string;
+  showreelUrl: string;
+  experienceYears: number;
+  eventsCount: number;
+  broadcastersCount: number;
+  uptimePercentage: string;
+  location: string;
+  phone: string;
+  email: string;
+  whatsappUrl: string;
+  workingHours: string;
+  socials: { label: string; url: string }[];
+  degree: string;
+  degreeHonors: string;
+  statusText: string;
+  statusTextShort: string;
+  statusActive: boolean;
+}
+
 /** One tile in the homepage showreel gallery. */
 export interface ShowcaseVideo {
   id: string;

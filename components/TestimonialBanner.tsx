@@ -1,13 +1,19 @@
 "use client";
 
 import React from "react";
-import { TESTIMONIALS } from "@/lib/data";
+import type { Testimonial } from "@/lib/types";
 import { Reveal } from "./Reveal";
 import { ArrowRight, Quote } from "lucide-react";
 
-const FEATURED = TESTIMONIALS[0];
+interface TestimonialBannerProps {
+  testimonials: Testimonial[];
+}
 
-export function TestimonialBanner() {
+export function TestimonialBanner({ testimonials }: TestimonialBannerProps) {
+  const featured = testimonials[0];
+
+  if (!featured) return null;
+
   return (
     <section aria-label="Client testimonial" className="py-20 lg:py-28 bg-canvas">
       <div className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -21,14 +27,14 @@ export function TestimonialBanner() {
               <Quote className="w-5 h-5 fill-current" />
             </span>
             <blockquote className="font-display italic font-semibold text-2xl sm:text-3xl lg:text-[2.5rem] leading-snug text-ink text-balance">
-              “{FEATURED.quote}”
+              &ldquo;{featured.quote}&rdquo;
             </blockquote>
             <figcaption className="mt-7 text-sm">
               <span className="block font-semibold text-ink">
-                {FEATURED.author}
+                {featured.author}
               </span>
               <span className="block text-zinc-500 mt-1">
-                {FEATURED.role}, {FEATURED.organization} — {FEATURED.event}
+                {featured.role}, {featured.organization} — {featured.event}
               </span>
             </figcaption>
           </figure>

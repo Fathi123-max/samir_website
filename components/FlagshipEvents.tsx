@@ -2,7 +2,7 @@
 
 import React from "react";
 import Link from "next/link";
-import { FLAGSHIP_EVENTS } from "@/lib/data";
+import type { CaseStudy } from "@/lib/types";
 import { Reveal } from "./Reveal";
 import { MediaFrame } from "./MediaFrame";
 import { ArrowRight } from "lucide-react";
@@ -37,7 +37,11 @@ function writeEventCategory(category: string) {
   window.dispatchEvent(new Event(CATEGORY_EVENT));
 }
 
-export function FlagshipEvents() {
+interface FlagshipEventsProps {
+  events: CaseStudy[];
+}
+
+export function FlagshipEvents({ events }: FlagshipEventsProps) {
   const selectedCategory = React.useSyncExternalStore(
     subscribeEventCategory,
     readEventCategory,
@@ -46,8 +50,8 @@ export function FlagshipEvents() {
 
   const filteredEvents =
     selectedCategory === "All"
-      ? FLAGSHIP_EVENTS
-      : FLAGSHIP_EVENTS.filter((e) => e.category === selectedCategory);
+      ? events
+      : events.filter((e) => e.category === selectedCategory);
 
   return (
     <section
@@ -86,8 +90,8 @@ export function FlagshipEvents() {
               {CATEGORIES.map((cat) => {
                 const count =
                   cat === "All"
-                    ? FLAGSHIP_EVENTS.length
-                    : FLAGSHIP_EVENTS.filter((e) => e.category === cat).length;
+                    ? events.length
+                    : events.filter((e) => e.category === cat).length;
                 const isActive = selectedCategory === cat;
                 return (
                   <button

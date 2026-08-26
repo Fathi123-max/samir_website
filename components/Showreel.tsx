@@ -1,18 +1,23 @@
 "use client";
 
 import React from "react";
-import { SHOWREEL_VIDEOS, PERSONAL_INFO } from "@/lib/data";
+import type { PersonalInfo, ShowcaseVideo } from "@/lib/types";
 import { Reveal } from "./Reveal";
 import { MediaFrame } from "./MediaFrame";
 import { toEmbedUrl } from "@/lib/utils";
 import { Clapperboard, Play } from "lucide-react";
 
-export function Showreel() {
+interface ShowreelProps {
+  personalInfo: PersonalInfo;
+  videos: ShowcaseVideo[];
+}
+
+export function Showreel({ personalInfo, videos }: ShowreelProps) {
   const [selectedId, setSelectedId] = React.useState(
-    () => (SHOWREEL_VIDEOS.find((v) => v.videoUrl)?.id ?? SHOWREEL_VIDEOS[0]?.id ?? "")
+    () => (videos.find((v) => v.videoUrl)?.id ?? videos[0]?.id ?? "")
   );
 
-  const selected = SHOWREEL_VIDEOS.find((v) => v.id === selectedId) ?? SHOWREEL_VIDEOS[0];
+  const selected = videos.find((v) => v.id === selectedId) ?? videos[0];
 
   return (
     <section
@@ -34,10 +39,10 @@ export function Showreel() {
               </h2>
             </Reveal>
           </div>
-          {PERSONAL_INFO.showreelUrl && (
+          {personalInfo.showreelUrl && (
             <Reveal direction="up" delay={0.12}>
               <a
-                href={PERSONAL_INFO.showreelUrl}
+                href={personalInfo.showreelUrl}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-1.5 text-sm font-semibold text-signal hover:underline underline-offset-4 focus-visible:ring-2 focus-visible:ring-signal rounded focus-visible:outline-none min-h-[44px]"
@@ -88,7 +93,7 @@ export function Showreel() {
           role="group"
           aria-label="Showreel videos — select one to play"
         >
-          {SHOWREEL_VIDEOS.map((video, index) => {
+          {videos.map((video, index) => {
             const isSelected = video.id === selectedId;
             return (
               <Reveal key={video.id} direction="up" delay={0.08 + index * 0.06}>

@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect, useRef } from "react";
 import Link from "next/link";
-import { PERSONAL_INFO } from "@/lib/data";
+import type { PersonalInfo } from "@/lib/types";
 import { Menu, X, ArrowUpRight } from "lucide-react";
 
 const NAV_ITEMS = [
@@ -14,7 +14,11 @@ const NAV_ITEMS = [
 
 const SPY_SECTIONS = ["hero", "services", "events", "showreel", "faq", "contact"];
 
-export function Header() {
+interface HeaderProps {
+  personalInfo: PersonalInfo;
+}
+
+export function Header({ personalInfo }: HeaderProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [progress, setProgress] = useState(0);
@@ -128,7 +132,7 @@ export function Header() {
             </span>
             <span className="hidden sm:flex flex-col leading-tight">
               <span className="font-display font-semibold text-[15px] text-ink tracking-tight whitespace-nowrap">
-                {PERSONAL_INFO.name}
+                {personalInfo.name}
               </span>
               <span className="eyebrow text-muted text-[10px] whitespace-nowrap">
                 Broadcast &amp; OB Engineer
@@ -260,14 +264,14 @@ export function Header() {
 
             <div className="grid grid-cols-2 gap-3 mt-5">
               <a
-                href={`tel:${PERSONAL_INFO.phone.replace(/[^+\d]/g, "")}`}
+                href={`tel:${personalInfo.phone.replace(/[^+\d]/g, "")}`}
                 onClick={closeDrawer}
                 className="flex items-center justify-center px-4 py-3.5 rounded border border-hairline bg-paper text-ink font-semibold text-sm min-h-[48px] hover:border-signal hover:text-signal transition-colors focus-visible:ring-2 focus-visible:ring-signal focus-visible:outline-none"
               >
                 Call
               </a>
               <a
-                href={PERSONAL_INFO.whatsappUrl}
+                href={personalInfo.whatsappUrl}
                 target="_blank"
                 rel="noopener noreferrer"
                 onClick={closeDrawer}

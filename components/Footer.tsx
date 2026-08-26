@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { PERSONAL_INFO } from "@/lib/data";
+import type { PersonalInfo } from "@/lib/types";
 import {
   Mail,
   PhoneCall,
@@ -31,7 +31,11 @@ const SOCIAL_ICONS: Record<string, React.ComponentType<{ className?: string }>> 
   "X (Twitter)": XIcon,
 };
 
-export function Footer() {
+interface FooterProps {
+  personalInfo: PersonalInfo;
+}
+
+export function Footer({ personalInfo }: FooterProps) {
   return (
     <footer role="contentinfo" className="bg-ink text-zinc-300">
       <div className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8 py-16 lg:py-20">
@@ -43,7 +47,7 @@ export function Footer() {
             <em className="italic text-signal">next video project</em>.
           </h2>
           <a
-            href={`mailto:${PERSONAL_INFO.email}?subject=${encodeURIComponent(
+            href={`mailto:${personalInfo.email}?subject=${encodeURIComponent(
               "New video project inquiry"
             )}`}
             className="mt-7 inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded bg-signal hover:bg-signal-bright text-white font-semibold transition-colors min-h-[48px] focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-ink focus-visible:outline-none"
@@ -60,7 +64,7 @@ export function Footer() {
             <h3 className="eyebrow text-zinc-500 mb-4">Location</h3>
             <p className="flex items-start gap-2.5 text-sm leading-relaxed">
               <MapPin className="w-4 h-4 shrink-0 mt-0.5 text-signal" aria-hidden="true" />
-              <span>{PERSONAL_INFO.location}</span>
+              <span>{personalInfo.location}</span>
             </p>
           </div>
 
@@ -69,7 +73,7 @@ export function Footer() {
             <h3 className="eyebrow text-zinc-500 mb-4">Working hours</h3>
             <p className="flex items-start gap-2.5 text-sm leading-relaxed">
               <Clock3 className="w-4 h-4 shrink-0 mt-0.5 text-signal" aria-hidden="true" />
-              <span>{PERSONAL_INFO.workingHours}</span>
+              <span>{personalInfo.workingHours}</span>
             </p>
           </div>
 
@@ -79,20 +83,20 @@ export function Footer() {
             <ul className="space-y-3 text-sm">
               <li>
                 <a
-                  href={`tel:${PERSONAL_INFO.phone.replace(/[^+\d]/g, "")}`}
+                  href={`tel:${personalInfo.phone.replace(/[^+\d]/g, "")}`}
                   className="inline-flex items-center gap-2.5 hover:text-signal transition-colors focus-visible:ring-2 focus-visible:ring-signal rounded outline-none"
                 >
                   <PhoneCall className="w-4 h-4 shrink-0 text-signal" aria-hidden="true" />
-                  <span>{PERSONAL_INFO.phone}</span>
+                  <span>{personalInfo.phone}</span>
                 </a>
               </li>
               <li>
                 <a
-                  href={`mailto:${PERSONAL_INFO.email}`}
+                  href={`mailto:${personalInfo.email}`}
                   className="inline-flex items-start gap-2.5 hover:text-signal transition-colors break-all focus-visible:ring-2 focus-visible:ring-signal rounded outline-none"
                 >
                   <Mail className="w-4 h-4 shrink-0 mt-0.5 text-signal" aria-hidden="true" />
-                  <span className="break-all">{PERSONAL_INFO.email}</span>
+                  <span className="break-all">{personalInfo.email}</span>
                 </a>
               </li>
             </ul>
@@ -102,7 +106,7 @@ export function Footer() {
           <div>
             <h3 className="eyebrow text-zinc-500 mb-4">Follow Samir Elgammal</h3>
             <ul className="flex flex-wrap items-center gap-3">
-              {PERSONAL_INFO.socials.map((social) => {
+              {personalInfo.socials.map((social) => {
                 const Icon = SOCIAL_ICONS[social.label] ?? null;
                 const content = (
                   <>
@@ -138,8 +142,8 @@ export function Footer() {
 
         {/* Bottom bar */}
         <div className="pt-8 mt-12 border-t border-white/10 flex flex-wrap items-center justify-between gap-4 text-xs text-zinc-400">
-          <p>© {new Date().getFullYear()} {PERSONAL_INFO.name}. All rights reserved.</p>
-          <p>Broadcast &amp; Video Production — {PERSONAL_INFO.location}</p>
+          <p>© {new Date().getFullYear()} {personalInfo.name}. All rights reserved.</p>
+          <p>Broadcast &amp; Video Production — {personalInfo.location}</p>
         </div>
       </div>
     </footer>

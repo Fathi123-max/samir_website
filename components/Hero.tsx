@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { PERSONAL_INFO } from "@/lib/data";
+import type { PersonalInfo } from "@/lib/types";
 import { Reveal } from "./Reveal";
 import { MediaFrame } from "./MediaFrame";
 import { ArrowRight, ArrowUpRight } from "lucide-react";
@@ -13,7 +13,11 @@ const STATS = [
   { value: "99.99%", label: "Transmission uptime" },
 ];
 
-export function Hero() {
+interface HeroProps {
+  personalInfo: PersonalInfo;
+}
+
+export function Hero({ personalInfo }: HeroProps) {
   return (
     <section
       id="hero"
@@ -42,7 +46,7 @@ export function Hero() {
                     <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-500 opacity-60" />
                     <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500" />
                   </span>
-                  {PERSONAL_INFO.statusTextShort} — Available
+                  {personalInfo.statusTextShort} — Available
                 </span>
               </div>
             </Reveal>
@@ -58,7 +62,7 @@ export function Hero() {
             {/* Subline */}
             <Reveal direction="up" delay={0.16}>
               <p className="text-base sm:text-lg text-zinc-600 leading-relaxed mt-6 max-w-xl fluid-body">
-                {PERSONAL_INFO.tagline}
+                {personalInfo.tagline}
               </p>
             </Reveal>
 
@@ -87,10 +91,10 @@ export function Hero() {
           <Reveal direction="up" delay={0.2} className="lg:col-span-5">
             <figure className="relative max-w-sm sm:max-w-md lg:max-w-none mx-auto">
               <MediaFrame
-                src={PERSONAL_INFO.portrait || undefined}
-                alt={`Portrait of ${PERSONAL_INFO.name}`}
+                src={personalInfo.portrait || undefined}
+                alt={`Portrait of ${personalInfo.name}`}
                 ratio="square"
-                label={`${PERSONAL_INFO.name.toUpperCase()} — PORTRAIT`}
+                label={`${personalInfo.name.toUpperCase()} — PORTRAIT`}
                 priority
                 sizes="(min-width: 1024px) 40vw, (min-width: 640px) 28rem, 100vw"
                 className="rounded-lg ring-1 ring-black/5 shadow-[0_24px_60px_-24px_rgba(26,43,50,0.3)]"
@@ -98,7 +102,7 @@ export function Hero() {
               {/* Floating experience chip */}
               <figcaption className="absolute -bottom-4 -left-3 sm:-left-6 rounded bg-white border border-hairline shadow-[0_12px_32px_-8px_rgba(26,43,50,0.18)] px-4 py-3 flex items-baseline gap-1.5">
                 <span className="font-display italic font-semibold text-2xl text-signal leading-none tabular-nums">
-                  18+
+                  {personalInfo.experienceYears}+
                 </span>
                 <span className="text-[11px] text-zinc-500 whitespace-nowrap">years on-air</span>
               </figcaption>

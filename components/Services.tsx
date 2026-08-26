@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { SERVICE_TIERS } from "@/lib/data";
+import type { ServiceTier } from "@/lib/types";
 import { Reveal } from "./Reveal";
 import {
   Clapperboard,
@@ -13,7 +13,11 @@ import {
 
 const TIER_ICONS = [Clapperboard, Film, Briefcase, Building2];
 
-export function Services() {
+interface ServicesProps {
+  services: ServiceTier[];
+}
+
+export function Services({ services }: ServicesProps) {
   return (
     <section
       id="services"
@@ -43,7 +47,7 @@ export function Services() {
 
         {/* Tier cards */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 lg:gap-6">
-          {SERVICE_TIERS.map((tier, index) => {
+          {services.map((tier, index) => {
             const Icon = TIER_ICONS[index % TIER_ICONS.length];
             return (
               <Reveal key={tier.id} direction="up" delay={0.08 + index * 0.06} className="h-full">
