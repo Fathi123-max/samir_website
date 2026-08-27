@@ -55,6 +55,11 @@ var config_default = defineConfig({
                 name: "socials",
                 label: "Social Profiles",
                 list: true,
+                ui: {
+                  itemProps: (item) => ({
+                    label: item?.label || "Social Profile"
+                  })
+                },
                 fields: [
                   { type: "string", name: "label", label: "Platform" },
                   { type: "string", name: "url", label: "URL" }
