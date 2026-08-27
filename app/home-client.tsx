@@ -22,7 +22,7 @@ import type {
 import type { TinaTuple } from "@/lib/cms";
 
 type TinaNode = {
-  _sys?: { filename?: string };
+  _sys?: { filename?: string; path?: string };
   __typename?: string;
   id?: string;
 } & Record<string, unknown>;
@@ -30,6 +30,11 @@ type TinaNode = {
 const flatten = (root: unknown): TinaNode[] => {
   const edges = (root as { edges?: { node?: TinaNode }[] })?.edges ?? [];
   return edges.map((e) => e.node).filter((n): n is TinaNode => !!n);
+};
+
+const firstNodeFormId = (root: unknown): string | undefined => {
+  const first = flatten(root)[0];
+  return first?._sys?.path;
 };
 
 export interface HomeClientProps {
@@ -48,12 +53,38 @@ export interface HomeClientProps {
 }
 
 export function HomeClient(props: HomeClientProps) {
-  const personalInfoTina = useTina(props.personalInfo);
-  const servicesTina = useTina(props.services);
-  const eventsTina = useTina(props.events);
-  const showreelTina = useTina(props.showreel);
-  const testimonialsTina = useTina(props.testimonials);
-  const faqTina = useTina(props.faq);
+  const personalInfoTina = useTina({
+    ...props.personalInfo,
+    experimental___selectFormByFormId: () => "content/personalInfo.json",
+  });
+  const servicesTina = useTina({
+    ...props.services,
+    experimental___selectFormByFormId: () =>
+      firstNodeFormId(props.services.data?.serviceConnection) ??
+      "content/services",
+  });
+  const eventsTina = useTina({
+    ...props.events,
+    experimental___selectFormByFormId: () =>
+      firstNodeFormId(props.events.data?.eventConnection) ?? "content/events",
+  });
+  const showreelTina = useTina({
+    ...props.showreel,
+    experimental___selectFormByFormId: () =>
+      firstNodeFormId(props.showreel.data?.showreelVideoConnection) ??
+      "content/showreel",
+  });
+  const testimonialsTina = useTina({
+    ...props.testimonials,
+    experimental___selectFormByFormId: () =>
+      firstNodeFormId(props.testimonials.data?.testimonialConnection) ??
+      "content/testimonials",
+  });
+  const faqTina = useTina({
+    ...props.faq,
+    experimental___selectFormByFormId: () =>
+      firstNodeFormId(props.faq.data?.faqConnection) ?? "content/faq",
+  });
 
   const personalInfo: PersonalInfo =
     personalInfoTina.data?.personalInfo ?? props.personalInfoValue;

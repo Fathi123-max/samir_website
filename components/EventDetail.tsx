@@ -41,7 +41,15 @@ export function EventDetail({
   personalInfoValue,
   events,
 }: EventDetailProps) {
-  const eventTina = useTina(eventTuple);
+  const eventTina = useTina({
+    ...eventTuple,
+    experimental___selectFormByFormId: () => {
+      const raw = eventTuple.data?.event as unknown as {
+        _sys?: { path?: string };
+      } | undefined;
+      return raw?._sys?.path ?? "content/events";
+    },
+  });
   const personalInfo = useTina(personalInfoTuple).data?.personalInfo ?? personalInfoValue;
 
   const eventNode =
