@@ -15,6 +15,8 @@ const eslintConfig = defineConfig([
     // Build tooling
     "scripts/**",
     "tina/__generated__/**",
+    // TinaCMS admin bundle (huge, generated)
+    "public/admin/**",
   ]),
 ]);
 

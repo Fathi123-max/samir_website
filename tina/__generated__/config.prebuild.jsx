@@ -8,6 +8,9 @@ var config_default = defineConfig({
     publicFolder: "public",
     outputFolder: "admin"
   },
+  ui: {
+    previewUrl: () => "http://localhost:3000"
+  },
   media: {
     tina: {
       publicFolder: "public",

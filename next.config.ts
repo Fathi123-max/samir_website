@@ -1,7 +1,11 @@
 import type { NextConfig } from "next";
 
+// When running via `tinacms dev`, Tina's wrapper server needs SSR.
+// Only enable static export for production builds (GitHub Pages).
+const isTinaDev = process.env.TINA_DEV === "true";
+
 const nextConfig: NextConfig = {
-  output: "export",
+  ...(isTinaDev ? {} : { output: "export" }),
   images: {
     unoptimized: true,
   },
