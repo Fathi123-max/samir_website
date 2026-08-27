@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "tinacms dev -c \"next dev\"",
+    "dev": "tinacms dev -c \"next dev --webpack\"",
     "codegen": "npx tsx scripts/codegen.ts",
     "prebuild": "npm run codegen",
     "build": "next build",
