@@ -2,19 +2,17 @@
 
 import React from "react";
 import Link from "next/link";
-import type { CaseStudy } from "@/lib/types";
+import type { EventsSection } from "@/lib/types";
 import { Reveal } from "./Reveal";
 import { MediaFrame } from "./MediaFrame";
 import { ArrowRight } from "lucide-react";
 
-const CATEGORIES = ["All", "Sports", "Summit", "Heritage", "Entertainment", "Combat Sports"];
-
 const CATEGORY_EVENT = "samir:event-category-change";
 
-function readEventCategory(): string {
+function readEventCategory(categories: string[]): string {
   if (typeof window === "undefined") return "All";
   const param = new URLSearchParams(window.location.search).get("eventCategory");
-  return param && CATEGORIES.includes(param) ? param : "All";
+  return param && categories.includes(param) ? param : "All";
 }
 
 function subscribeEventCategory(callback: () => void): () => void {
@@ -38,13 +36,16 @@ function writeEventCategory(category: string) {
 }
 
 interface FlagshipEventsProps {
-  events: CaseStudy[];
+  eventsSection: EventsSection;
 }
 
-export function FlagshipEvents({ events }: FlagshipEventsProps) {
+export function FlagshipEvents({ eventsSection }: FlagshipEventsProps) {
+  const categories = eventsSection.categories;
+  const events = eventsSection.featuredEvents;
+
   const selectedCategory = React.useSyncExternalStore(
     subscribeEventCategory,
-    readEventCategory,
+    () => readEventCategory(categories),
     () => "All"
   );
 
@@ -64,18 +65,17 @@ export function FlagshipEvents({ events }: FlagshipEventsProps) {
         <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-8 mb-12 lg:mb-16">
           <div className="max-w-2xl">
             <Reveal direction="up">
-              <p className="eyebrow text-signal mb-4">02 · Portfolio</p>
+              <p className="eyebrow text-signal mb-4">{eventsSection.eyebrow}</p>
             </Reveal>
             <Reveal direction="up" delay={0.08}>
               <h2 className="fluid-h2 font-display font-semibold text-ink">
-                Flagship productions,{" "}
-                <em className="italic text-signal">documented</em>.
+                {eventsSection.heading}{" "}
+                <em className="italic text-signal">{eventsSection.headingAccent}</em>.
               </h2>
             </Reveal>
             <Reveal direction="up" delay={0.16}>
               <p className="text-zinc-600 fluid-body mt-5">
-                Behind-the-scenes deep dives into major sporting leagues,
-                global summits, and primetime entertainment across the UAE and GCC.
+                {eventsSection.body}
               </p>
             </Reveal>
           </div>
@@ -87,7 +87,7 @@ export function FlagshipEvents({ events }: FlagshipEventsProps) {
               role="group"
               aria-label="Filter case studies by category"
             >
-              {CATEGORIES.map((cat) => {
+              {categories.map((cat) => {
                 const count =
                   cat === "All"
                     ? events.length

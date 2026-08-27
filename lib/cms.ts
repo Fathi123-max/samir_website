@@ -1,11 +1,11 @@
 import client from "@/tina/__generated__/client";
 import type {
-  PersonalInfo,
-  ServiceTier,
+  Homepage,
   CaseStudy,
   ShowcaseVideo,
   Testimonial,
   FaqItem,
+  ServiceTier,
 } from "@/lib/types";
 
 type TinaNode = {
@@ -22,56 +22,76 @@ function ownData<T>(node: TinaNode): T {
   return copy as T;
 }
 
-function connectionNodes(root: unknown): TinaNode[] {
-  const edges = (root as { edges?: { node?: TinaNode }[] })?.edges ?? [];
-  return edges.map((e) => e.node).filter((n): n is TinaNode => !!n);
-}
-
 export type TinaTuple<TData> = {
   query: string;
   variables: Record<string, unknown>;
   data: TData;
 };
 
+/** Strip graphql metadata from a referenced event node into a CaseStudy. */
+function cleanEvent(node: TinaNode): CaseStudy {
+  const copy: Record<string, unknown> = { ...node };
+  delete copy._sys;
+  delete copy.__typename;
+  delete copy.id;
+  return copy as unknown as CaseStudy;
+}
+
+/** Map a raw referenced-event node (may be a string path or a node) to a CaseStudy. */
+function mapReferencedEvent(node: unknown): CaseStudy | null {
+  if (!node || typeof node !== "object") return null;
+  const n = node as TinaNode;
+  if (!n.slug) return null;
+  return cleanEvent(n);
+}
+
+/** Resolve a featured reference (string file path or node) against the event list. */
+function resolveFeatured(
+  ref: unknown,
+  events: CaseStudy[]
+): CaseStudy | null {
+  if (!ref) return null;
+  if (typeof ref === "string") {
+    const slug = ref.split("/").pop()?.replace(/\.json$/, "") ?? "";
+    return events.find((e) => e.slug === slug) ?? null;
+  }
+  return mapReferencedEvent(ref);
+}
+
+/** Flatten nested-list items that carry _sys metadata (index-based, no per-item id). */
 export interface CmsData {
-  personalInfo: TinaTuple<{ personalInfo: PersonalInfo }>;
-  services: TinaTuple<{ serviceConnection: unknown }>;
-  events: TinaTuple<{ eventConnection: unknown }>;
-  showreel: TinaTuple<{ showreelVideoConnection: unknown }>;
-  testimonials: TinaTuple<{ testimonialConnection: unknown }>;
-  faq: TinaTuple<{ faqConnection: unknown }>;
-  personalInfoValue: PersonalInfo;
-  servicesValue: ServiceTier[];
-  eventsValue: CaseStudy[];
-  showreelValue: ShowcaseVideo[];
-  testimonialsValue: Testimonial[];
-  faqValue: FaqItem[];
+  homepage: TinaTuple<{ homepage: Homepage }>;
+  homepageValue: Homepage;
 }
 
 export async function getEventSlugs(): Promise<string[]> {
   const ev = await client.queries.eventConnection();
-  return connectionNodes(ev.data?.eventConnection).map((n) => String(n.slug ?? ""));
+  const nodes = (ev.data?.eventConnection as { edges?: { node?: TinaNode }[] } | undefined)
+    ?.edges ?? [];
+  return nodes.map((e) => String(e.node?.slug ?? "")).filter(Boolean);
 }
 
 export async function getEvents(): Promise<CaseStudy[]> {
   const ev = await client.queries.eventConnection();
-  return connectionNodes(ev.data?.eventConnection).map((n) => ownData<CaseStudy>(n));
+  const nodes = (ev.data?.eventConnection as { edges?: { node?: TinaNode }[] } | undefined)
+    ?.edges ?? [];
+  return nodes.map((e) => cleanEvent(e.node as TinaNode)).filter((e) => e.slug);
 }
 
 export async function getEventBySlug(slug: string): Promise<{
   tuple: TinaTuple<{ event: CaseStudy }>;
-  personalInfo: TinaTuple<{ personalInfo: PersonalInfo }>;
-  personalInfoValue: PersonalInfo;
+  homepage: TinaTuple<{ homepage: Homepage }>;
+  homepageValue: Homepage;
 } | null> {
-  const [ev, pi] = await Promise.all([
+  const [ev, hp, allEventsRes] = await Promise.all([
     client.queries.event({ relativePath: `${slug}.json` }),
-    client.queries.personalInfo({ relativePath: "personalInfo.json" }),
+    client.queries.homepage({ relativePath: "home.json" }),
+    getEvents(),
   ]);
   const raw = ev.data?.event as TinaNode | undefined;
   if (!raw) return null;
 
-  const personalInfoRaw = pi.data?.personalInfo as TinaNode;
-  const personalInfo = ownData<PersonalInfo>(personalInfoRaw);
+  const homepage = flattenHomepage(hp.data?.homepage, allEventsRes);
 
   return {
     tuple: {
@@ -79,59 +99,161 @@ export async function getEventBySlug(slug: string): Promise<{
       variables: ev.variables ?? { relativePath: `${slug}.json` },
       data: { event: raw as unknown as CaseStudy },
     },
-    personalInfo: {
-      query: pi.query,
-      variables: pi.variables ?? { relativePath: "personalInfo.json" },
-      data: { personalInfo },
+    homepage: {
+      query: hp.query,
+      variables: hp.variables ?? { relativePath: "home.json" },
+      data: { homepage: hp.data?.homepage as unknown as Homepage },
     },
-    personalInfoValue: personalInfo,
+    homepageValue: homepage,
   };
 }
 
-export async function getCmsData(): Promise<CmsData> {
-  const [pi, svc, ev, sr, tm, fq] = await Promise.all([
-    client.queries.personalInfo({ relativePath: "personalInfo.json" }),
-    client.queries.serviceConnection(),
-    client.queries.eventConnection(),
-    client.queries.showreelVideoConnection(),
-    client.queries.testimonialConnection(),
-    client.queries.faqConnection(),
-  ]);
+/** Flatten the raw homepage node (with _sys + referenced event nodes) into the typed Homepage.
+ *  `events` is the full case-study list used to resolve `featuredEvents` path references. */
+export function flattenHomepage(
+  raw: unknown,
+  events: CaseStudy[] = []
+): Homepage {
+  const node = (raw ?? {}) as TinaNode;
 
-  const personalInfoRaw = pi.data?.personalInfo as TinaNode;
-  const servicesRaw = svc.data?.serviceConnection;
-  const eventsRaw = ev.data?.eventConnection;
-  const showreelRaw = sr.data?.showreelVideoConnection;
-  const testimonialsRaw = tm.data?.testimonialConnection;
-  const faqRaw = fq.data?.faqConnection;
+  const identity = ownData<{
+    name: string;
+    title: string;
+    subtitle: string;
+    tagline: string;
+    portrait: string;
+    showreelUrl: string;
+    experienceYears: number;
+    uptimePercentage: string;
+    location: string;
+    phone: string;
+    email: string;
+    whatsappUrl: string;
+    workingHours: string;
+    socials: { label: string; url: string }[];
+    degree: string;
+    degreeHonors: string;
+    statusText: string;
+    statusTextShort: string;
+    statusActive: boolean;
+  }>(node.identity as TinaNode);
 
-  const personalInfo = ownData<PersonalInfo>(personalInfoRaw);
-  const services = connectionNodes(servicesRaw).map(
-    (n) => ({ id: n._sys.filename ?? "", ...ownData<Omit<ServiceTier, "id">>(n) }) as ServiceTier
-  );
-  const events = connectionNodes(eventsRaw).map((n) => ownData<CaseStudy>(n));
-  const showreel = connectionNodes(showreelRaw).map(
-    (n) => ({ id: n._sys.filename ?? "", ...ownData<Omit<ShowcaseVideo, "id">>(n) }) as ShowcaseVideo
-  );
-  const testimonials = connectionNodes(testimonialsRaw).map(
-    (n) => ({ id: n._sys.filename ?? "", ...ownData<Omit<Testimonial, "id">>(n) }) as Testimonial
-  );
-  const faq = connectionNodes(faqRaw).map(
-    (n) => ({ id: n._sys.filename ?? "", ...ownData<Omit<FaqItem, "id">>(n) }) as FaqItem
-  );
+  const hero = ownData<{
+    eyebrow: string;
+    headline: string;
+    headlineAccent: string;
+    ctaPrimaryLabel: string;
+    ctaPrimaryHref: string;
+    ctaSecondaryLabel: string;
+    ctaSecondaryHref: string;
+    stats: { value: string; label: string }[];
+  }>(node.hero as TinaNode);
+
+  const navigation = ownData<{
+    items: { label: string; href: string; id: string; index: string }[];
+  }>(node.navigation as TinaNode);
+
+  const servicesSection = ownData<{
+    eyebrow: string;
+    heading: string;
+    headingAccent: string;
+    body: string;
+    items: ServiceTier[];
+  }>(node.servicesSection as TinaNode);
+
+  const eventsSection = ownData<{
+    eyebrow: string;
+    heading: string;
+    headingAccent: string;
+    body: string;
+    categories: string[];
+    featuredEvents: unknown;
+  }>(node.eventsSection as TinaNode);
+
+  const showreelSection = ownData<{
+    eyebrow: string;
+    heading: string;
+    headingAccent: string;
+    openLabel: string;
+    videos: ShowcaseVideo[];
+  }>(node.showreelSection as TinaNode);
+
+  const testimonialSection = ownData<{
+    testimonials: Testimonial[];
+    ctaHeading: string;
+    ctaBody: string;
+    ctaLabel: string;
+    ctaHref: string;
+  }>(node.testimonialSection as TinaNode);
+
+  const faqSection = ownData<{
+    eyebrow: string;
+    heading: string;
+    headingAccent: string;
+    body: string;
+    items: FaqItem[];
+  }>(node.faqSection as TinaNode);
+
+  const footerSection = ownData<{
+    eyebrow: string;
+    heading: string;
+    headingAccent: string;
+    ctaLabel: string;
+  }>(node.footerSection as TinaNode);
+
+  // Featured events arrive either via a `reference` field (node objects) or as plain string paths.
+  const featured: CaseStudy[] = Array.isArray(eventsSection.featuredEvents)
+    ? eventsSection.featuredEvents
+        .map((ref) => resolveFeatured(ref, events))
+        .filter((e): e is CaseStudy => !!e)
+    : [];
 
   return {
-    personalInfo: { query: pi.query, variables: pi.variables ?? {}, data: { personalInfo } },
-    services: { query: svc.query, variables: svc.variables ?? {}, data: { serviceConnection: servicesRaw } },
-    events: { query: ev.query, variables: ev.variables ?? {}, data: { eventConnection: eventsRaw } },
-    showreel: { query: sr.query, variables: sr.variables ?? {}, data: { showreelVideoConnection: showreelRaw } },
-    testimonials: { query: tm.query, variables: tm.variables ?? {}, data: { testimonialConnection: testimonialsRaw } },
-    faq: { query: fq.query, variables: fq.variables ?? {}, data: { faqConnection: faqRaw } },
-    personalInfoValue: personalInfo,
-    servicesValue: services,
-    eventsValue: events,
-    showreelValue: showreel,
-    testimonialsValue: testimonials,
-    faqValue: faq,
+    identity,
+    hero: {
+      ...hero,
+      stats: hero.stats ?? [],
+    },
+    navigation: {
+      items: navigation?.items ?? [],
+    },
+    servicesSection: {
+      ...servicesSection,
+      items: servicesSection.items ?? [],
+    },
+    eventsSection: {
+      ...eventsSection,
+      categories: eventsSection.categories ?? [],
+      featuredEvents: featured,
+    },
+    showreelSection: {
+      ...showreelSection,
+      videos: showreelSection.videos ?? [],
+    },
+    testimonialSection: {
+      ...testimonialSection,
+      testimonials: testimonialSection.testimonials ?? [],
+    },
+    faqSection: {
+      ...faqSection,
+      items: faqSection.items ?? [],
+    },
+    footerSection: footerSection ?? {},
+  } as Homepage;
+}
+
+export async function getCmsData(): Promise<CmsData> {
+  const [hp, eventsRes] = await Promise.all([
+    client.queries.homepage({ relativePath: "home.json" }),
+    getEvents(),
+  ]);
+  const homepage = flattenHomepage(hp.data?.homepage, eventsRes);
+  return {
+    homepage: {
+      query: hp.query,
+      variables: hp.variables ?? { relativePath: "home.json" },
+      data: { homepage: hp.data?.homepage as unknown as Homepage },
+    },
+    homepageValue: homepage,
   };
 }

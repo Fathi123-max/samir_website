@@ -5,35 +5,130 @@ export function gql(strings, ...args) {
   });
   return str;
 }
-export const PersonalInfoPartsFragmentDoc = gql`
-    fragment PersonalInfoParts on PersonalInfo {
+export const HomepagePartsFragmentDoc = gql`
+    fragment HomepageParts on Homepage {
   __typename
-  name
-  title
-  subtitle
-  heroHeadline
-  tagline
-  portrait
-  showreelUrl
-  experienceYears
-  eventsCount
-  broadcastersCount
-  uptimePercentage
-  location
-  phone
-  email
-  whatsappUrl
-  workingHours
-  socials {
+  identity {
     __typename
-    label
-    url
+    name
+    title
+    subtitle
+    tagline
+    portrait
+    showreelUrl
+    experienceYears
+    uptimePercentage
+    location
+    phone
+    email
+    whatsappUrl
+    workingHours
+    socials {
+      __typename
+      label
+      url
+    }
+    degree
+    degreeHonors
+    statusText
+    statusTextShort
+    statusActive
   }
-  degree
-  degreeHonors
-  statusText
-  statusTextShort
-  statusActive
+  hero {
+    __typename
+    eyebrow
+    headline
+    headlineAccent
+    ctaPrimaryLabel
+    ctaPrimaryHref
+    ctaSecondaryLabel
+    ctaSecondaryHref
+    stats {
+      __typename
+      value
+      label
+    }
+  }
+  navigation {
+    __typename
+    items {
+      __typename
+      label
+      href
+      id
+      index
+    }
+  }
+  servicesSection {
+    __typename
+    eyebrow
+    heading
+    headingAccent
+    body
+    items {
+      __typename
+      title
+      description
+    }
+  }
+  eventsSection {
+    __typename
+    eyebrow
+    heading
+    headingAccent
+    body
+    categories
+    featuredEvents
+  }
+  showreelSection {
+    __typename
+    eyebrow
+    heading
+    headingAccent
+    openLabel
+    videos {
+      __typename
+      title
+      caption
+      thumb
+      videoUrl
+    }
+  }
+  testimonialSection {
+    __typename
+    testimonials {
+      __typename
+      quote
+      author
+      role
+      organization
+      event
+      avatarText
+    }
+    ctaHeading
+    ctaBody
+    ctaLabel
+    ctaHref
+  }
+  faqSection {
+    __typename
+    eyebrow
+    heading
+    headingAccent
+    body
+    items {
+      __typename
+      question
+      answer
+    }
+  }
+  footerSection {
+    __typename
+    eyebrow
+    heading
+    headingAccent
+    ctaLabel
+  }
 }
     `;
 export const EventPartsFragmentDoc = gql`
@@ -83,13 +178,6 @@ export const EventPartsFragmentDoc = gql`
   tags
 }
     `;
-export const ServicePartsFragmentDoc = gql`
-    fragment ServiceParts on Service {
-  __typename
-  title
-  description
-}
-    `;
 export const EquipmentPartsFragmentDoc = gql`
     fragment EquipmentParts on Equipment {
   __typename
@@ -121,36 +209,9 @@ export const TimelinePartsFragmentDoc = gql`
   technologies
 }
     `;
-export const TestimonialPartsFragmentDoc = gql`
-    fragment TestimonialParts on Testimonial {
-  __typename
-  quote
-  author
-  role
-  organization
-  event
-  avatarText
-}
-    `;
-export const ShowreelVideoPartsFragmentDoc = gql`
-    fragment ShowreelVideoParts on ShowreelVideo {
-  __typename
-  title
-  caption
-  thumb
-  videoUrl
-}
-    `;
-export const FaqPartsFragmentDoc = gql`
-    fragment FaqParts on Faq {
-  __typename
-  question
-  answer
-}
-    `;
-export const PersonalInfoDocument = gql`
-    query personalInfo($relativePath: String!) {
-  personalInfo(relativePath: $relativePath) {
+export const HomepageDocument = gql`
+    query homepage($relativePath: String!) {
+  homepage(relativePath: $relativePath) {
     ... on Document {
       _sys {
         filename
@@ -163,13 +224,13 @@ export const PersonalInfoDocument = gql`
       }
       id
     }
-    ...PersonalInfoParts
+    ...HomepageParts
   }
 }
-    ${PersonalInfoPartsFragmentDoc}`;
-export const PersonalInfoConnectionDocument = gql`
-    query personalInfoConnection($before: String, $after: String, $first: Float, $last: Float, $sort: String, $filter: PersonalInfoFilter) {
-  personalInfoConnection(
+    ${HomepagePartsFragmentDoc}`;
+export const HomepageConnectionDocument = gql`
+    query homepageConnection($before: String, $after: String, $first: Float, $last: Float, $sort: String, $filter: HomepageFilter) {
+  homepageConnection(
     before: $before
     after: $after
     first: $first
@@ -199,12 +260,12 @@ export const PersonalInfoConnectionDocument = gql`
           }
           id
         }
-        ...PersonalInfoParts
+        ...HomepageParts
       }
     }
   }
 }
-    ${PersonalInfoPartsFragmentDoc}`;
+    ${HomepagePartsFragmentDoc}`;
 export const EventDocument = gql`
     query event($relativePath: String!) {
   event(relativePath: $relativePath) {
@@ -262,63 +323,6 @@ export const EventConnectionDocument = gql`
   }
 }
     ${EventPartsFragmentDoc}`;
-export const ServiceDocument = gql`
-    query service($relativePath: String!) {
-  service(relativePath: $relativePath) {
-    ... on Document {
-      _sys {
-        filename
-        basename
-        hasReferences
-        breadcrumbs
-        path
-        relativePath
-        extension
-      }
-      id
-    }
-    ...ServiceParts
-  }
-}
-    ${ServicePartsFragmentDoc}`;
-export const ServiceConnectionDocument = gql`
-    query serviceConnection($before: String, $after: String, $first: Float, $last: Float, $sort: String, $filter: ServiceFilter) {
-  serviceConnection(
-    before: $before
-    after: $after
-    first: $first
-    last: $last
-    sort: $sort
-    filter: $filter
-  ) {
-    pageInfo {
-      hasPreviousPage
-      hasNextPage
-      startCursor
-      endCursor
-    }
-    totalCount
-    edges {
-      cursor
-      node {
-        ... on Document {
-          _sys {
-            filename
-            basename
-            hasReferences
-            breadcrumbs
-            path
-            relativePath
-            extension
-          }
-          id
-        }
-        ...ServiceParts
-      }
-    }
-  }
-}
-    ${ServicePartsFragmentDoc}`;
 export const EquipmentDocument = gql`
     query equipment($relativePath: String!) {
   equipment(relativePath: $relativePath) {
@@ -433,196 +437,19 @@ export const TimelineConnectionDocument = gql`
   }
 }
     ${TimelinePartsFragmentDoc}`;
-export const TestimonialDocument = gql`
-    query testimonial($relativePath: String!) {
-  testimonial(relativePath: $relativePath) {
-    ... on Document {
-      _sys {
-        filename
-        basename
-        hasReferences
-        breadcrumbs
-        path
-        relativePath
-        extension
-      }
-      id
-    }
-    ...TestimonialParts
-  }
-}
-    ${TestimonialPartsFragmentDoc}`;
-export const TestimonialConnectionDocument = gql`
-    query testimonialConnection($before: String, $after: String, $first: Float, $last: Float, $sort: String, $filter: TestimonialFilter) {
-  testimonialConnection(
-    before: $before
-    after: $after
-    first: $first
-    last: $last
-    sort: $sort
-    filter: $filter
-  ) {
-    pageInfo {
-      hasPreviousPage
-      hasNextPage
-      startCursor
-      endCursor
-    }
-    totalCount
-    edges {
-      cursor
-      node {
-        ... on Document {
-          _sys {
-            filename
-            basename
-            hasReferences
-            breadcrumbs
-            path
-            relativePath
-            extension
-          }
-          id
-        }
-        ...TestimonialParts
-      }
-    }
-  }
-}
-    ${TestimonialPartsFragmentDoc}`;
-export const ShowreelVideoDocument = gql`
-    query showreelVideo($relativePath: String!) {
-  showreelVideo(relativePath: $relativePath) {
-    ... on Document {
-      _sys {
-        filename
-        basename
-        hasReferences
-        breadcrumbs
-        path
-        relativePath
-        extension
-      }
-      id
-    }
-    ...ShowreelVideoParts
-  }
-}
-    ${ShowreelVideoPartsFragmentDoc}`;
-export const ShowreelVideoConnectionDocument = gql`
-    query showreelVideoConnection($before: String, $after: String, $first: Float, $last: Float, $sort: String, $filter: ShowreelVideoFilter) {
-  showreelVideoConnection(
-    before: $before
-    after: $after
-    first: $first
-    last: $last
-    sort: $sort
-    filter: $filter
-  ) {
-    pageInfo {
-      hasPreviousPage
-      hasNextPage
-      startCursor
-      endCursor
-    }
-    totalCount
-    edges {
-      cursor
-      node {
-        ... on Document {
-          _sys {
-            filename
-            basename
-            hasReferences
-            breadcrumbs
-            path
-            relativePath
-            extension
-          }
-          id
-        }
-        ...ShowreelVideoParts
-      }
-    }
-  }
-}
-    ${ShowreelVideoPartsFragmentDoc}`;
-export const FaqDocument = gql`
-    query faq($relativePath: String!) {
-  faq(relativePath: $relativePath) {
-    ... on Document {
-      _sys {
-        filename
-        basename
-        hasReferences
-        breadcrumbs
-        path
-        relativePath
-        extension
-      }
-      id
-    }
-    ...FaqParts
-  }
-}
-    ${FaqPartsFragmentDoc}`;
-export const FaqConnectionDocument = gql`
-    query faqConnection($before: String, $after: String, $first: Float, $last: Float, $sort: String, $filter: FaqFilter) {
-  faqConnection(
-    before: $before
-    after: $after
-    first: $first
-    last: $last
-    sort: $sort
-    filter: $filter
-  ) {
-    pageInfo {
-      hasPreviousPage
-      hasNextPage
-      startCursor
-      endCursor
-    }
-    totalCount
-    edges {
-      cursor
-      node {
-        ... on Document {
-          _sys {
-            filename
-            basename
-            hasReferences
-            breadcrumbs
-            path
-            relativePath
-            extension
-          }
-          id
-        }
-        ...FaqParts
-      }
-    }
-  }
-}
-    ${FaqPartsFragmentDoc}`;
 export function getSdk(requester) {
   return {
-    personalInfo(variables, options) {
-      return requester(PersonalInfoDocument, variables, options);
+    homepage(variables, options) {
+      return requester(HomepageDocument, variables, options);
     },
-    personalInfoConnection(variables, options) {
-      return requester(PersonalInfoConnectionDocument, variables, options);
+    homepageConnection(variables, options) {
+      return requester(HomepageConnectionDocument, variables, options);
     },
     event(variables, options) {
       return requester(EventDocument, variables, options);
     },
     eventConnection(variables, options) {
       return requester(EventConnectionDocument, variables, options);
-    },
-    service(variables, options) {
-      return requester(ServiceDocument, variables, options);
-    },
-    serviceConnection(variables, options) {
-      return requester(ServiceConnectionDocument, variables, options);
     },
     equipment(variables, options) {
       return requester(EquipmentDocument, variables, options);
@@ -635,24 +462,6 @@ export function getSdk(requester) {
     },
     timelineConnection(variables, options) {
       return requester(TimelineConnectionDocument, variables, options);
-    },
-    testimonial(variables, options) {
-      return requester(TestimonialDocument, variables, options);
-    },
-    testimonialConnection(variables, options) {
-      return requester(TestimonialConnectionDocument, variables, options);
-    },
-    showreelVideo(variables, options) {
-      return requester(ShowreelVideoDocument, variables, options);
-    },
-    showreelVideoConnection(variables, options) {
-      return requester(ShowreelVideoConnectionDocument, variables, options);
-    },
-    faq(variables, options) {
-      return requester(FaqDocument, variables, options);
-    },
-    faqConnection(variables, options) {
-      return requester(FaqConnectionDocument, variables, options);
     }
   };
 }

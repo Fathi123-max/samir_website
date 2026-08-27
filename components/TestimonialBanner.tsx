@@ -1,16 +1,16 @@
 "use client";
 
 import React from "react";
-import type { Testimonial } from "@/lib/types";
+import type { TestimonialSection } from "@/lib/types";
 import { Reveal } from "./Reveal";
 import { ArrowRight, Quote } from "lucide-react";
 
 interface TestimonialBannerProps {
-  testimonials: Testimonial[];
+  testimonials: TestimonialSection;
 }
 
 export function TestimonialBanner({ testimonials }: TestimonialBannerProps) {
-  const featured = testimonials[0];
+  const featured = testimonials.testimonials[0];
 
   if (!featured) return null;
 
@@ -56,20 +56,18 @@ export function TestimonialBanner({ testimonials }: TestimonialBannerProps) {
             <div className="relative grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
               <div className="lg:col-span-8">
                 <h2 className="fluid-h3 font-display font-semibold text-balance">
-                  Ready to create a video that gets noticed?
+                  {testimonials.ctaHeading}
                 </h2>
                 <p className="mt-4 text-white/85 leading-relaxed max-w-xl fluid-body">
-                  Tell Samir Elgammal about your idea, campaign, or upcoming
-                  project. Together, you can shape a video production approach
-                  that suits your objectives in Dubai and beyond.
+                  {testimonials.ctaBody}
                 </p>
               </div>
               <div className="lg:col-span-4 flex lg:justify-end">
                 <a
-                  href="#events"
+                  href={testimonials.ctaHref}
                   className="inline-flex items-center justify-center gap-2 px-7 py-4 rounded bg-white text-signal-deep hover:bg-signal-tint font-semibold transition-colors min-h-[52px] focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-signal focus-visible:outline-none w-full sm:w-auto"
                 >
-                  See our work
+                  {testimonials.ctaLabel}
                   <ArrowRight className="w-4 h-4 shrink-0" aria-hidden="true" />
                 </a>
               </div>
@@ -80,3 +78,4 @@ export function TestimonialBanner({ testimonials }: TestimonialBannerProps) {
     </section>
   );
 }
+

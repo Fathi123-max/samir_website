@@ -1,0 +1,224 @@
+{
+  "identity": {
+    "name": "Samir Elgammal",
+    "title": "System Broadcast & OB Engineer",
+    "subtitle": "CCU & EVS Replay Specialist",
+    "tagline": "System Broadcast and OB Engineer with more than 18 years of experience in OBs, broadcasting studios, playout engineering, CCU operator and EVS operator and guarantee. Specialized in sports studios with strong problem-solving skills and a creative approach to designing and implementing studio schematics and playout centers.",
+    "portrait": "/images/samir-portrait.jpg",
+    "showreelUrl": "https://www.youtube.com/watch?v=-UM3atf8iAI",
+    "experienceYears": 18,
+    "uptimePercentage": "99.99%",
+    "location": "Dubai, United Arab Emirates",
+    "phone": "+971 50 563 9015",
+    "email": "s.elgammal12@gmail.com",
+    "whatsappUrl": "https://wa.me/971505639015?text=Hello%20Samir,%20I%20would%20like%20to%20inquire%20about%20your%20broadcast%20engineering%20services.",
+    "workingHours": "Sat – Thu · 09:00 – 18:00 (GST)",
+    "socials": [
+      {
+        "label": "Facebook",
+        "url": ""
+      },
+      {
+        "label": "X (Twitter)",
+        "url": ""
+      }
+    ],
+    "degree": "Bachelor of Electrical Engineering – Communication & Electronics",
+    "degreeHonors": "Very Good with Honors (B.Sc. Eng)",
+    "statusText": "AVAILABLE FOR UAE, GCC & INTERNATIONAL FLYAWAY",
+    "statusTextShort": "UAE, GCC & FLYAWAY",
+    "statusActive": true
+  },
+  "hero": {
+    "eyebrow": "System Broadcast & OB Engineer",
+    "headline": "Video production that brings",
+    "headlineAccent": "your story into focus",
+    "ctaPrimaryLabel": "Explore our services",
+    "ctaPrimaryHref": "#services",
+    "ctaSecondaryLabel": "View the portfolio",
+    "ctaSecondaryHref": "#events",
+    "stats": [
+      {
+        "value": "18+",
+        "label": "Years on live broadcast"
+      },
+      {
+        "value": "150+",
+        "label": "Events engineered"
+      },
+      {
+        "value": "22",
+        "label": "Broadcasters served"
+      },
+      {
+        "value": "99.99%",
+        "label": "Transmission uptime"
+      }
+    ]
+  },
+  "navigation": {
+    "items": [
+      {
+        "label": "Services",
+        "href": "#services",
+        "id": "services",
+        "index": "01"
+      },
+      {
+        "label": "Portfolio",
+        "href": "#events",
+        "id": "events",
+        "index": "02"
+      },
+      {
+        "label": "Showreel",
+        "href": "#showreel",
+        "id": "showreel",
+        "index": "03"
+      },
+      {
+        "label": "FAQ",
+        "href": "#faq",
+        "id": "faq",
+        "index": "04"
+      }
+    ]
+  },
+  "servicesSection": {
+    "eyebrow": "01 · Services",
+    "heading": "Video production services",
+    "headingAccent": "for every vision",
+    "body": "From focused personal projects to full-scale commercial productions, choose a level of creative support that fits your goals, timeline, and audience.",
+    "items": [
+      {
+        "title": "Basic video production",
+        "description": "A straightforward production option for personal videos, social content, and concise visual stories. Get professional guidance and a refined final edit designed to make your message clear."
+      },
+      {
+        "title": "Business video production",
+        "description": "Engaging corporate videos, promotional content, customer stories, and social media assets produced for your brand and audience."
+      },
+      {
+        "title": "Enterprise video production",
+        "description": "Plan and deliver larger video initiatives with end-to-end creative support. This flexible option is built for organizations that need consistent, high-quality video at scale."
+      },
+      {
+        "title": "Professional video production",
+        "description": "Elevate your project with a tailored production approach, from creative planning through filming and post-production. Ideal for polished campaigns, profiles, and branded content."
+      }
+    ]
+  },
+  "eventsSection": {
+    "eyebrow": "02 · Portfolio",
+    "heading": "Flagship productions,",
+    "headingAccent": "documented",
+    "body": "Behind-the-scenes deep dives into major sporting leagues, global summits, and primetime entertainment across the UAE and GCC.",
+    "categories": ["All", "Sports", "Summit", "Heritage", "Entertainment", "Combat Sports"],
+    "featuredEvents": [
+      "content/events/cop28-expo-city-dubai.json",
+      "content/events/uae-pro-league-adnoc.json",
+      "content/events/world-snooker-masters-ksa.json",
+      "content/events/camel-racing-heritage-festivals.json",
+      "content/events/primetime-game-shows-emirates-draw.json",
+      "content/events/abu-dhabi-jiu-jitsu-world-championship.json"
+    ]
+  },
+  "showreelSection": {
+    "eyebrow": "03 · Showreel",
+    "heading": "The control room,",
+    "headingAccent": "on the record",
+    "openLabel": "Open full showreel",
+    "videos": [
+      {
+        "title": "COP28 — World Feed Operations",
+        "caption": "Plenary hall matrix & 35+ unilateral feeds",
+        "thumb": "/images/showreel/cop28-world-feed.jpg",
+        "videoUrl": "https://www.youtube.com/watch?v=-UM3atf8iAI"
+      },
+      {
+        "title": "Desert Racing — RF Tracking",
+        "caption": "12 km Vislink chase-cam coverage",
+        "thumb": "/images/showreel/desert-racing-rf.jpg",
+        "videoUrl": "https://www.youtube.com/watch?v=558JWScMdcY"
+      },
+      {
+        "title": "World Snooker Masters — Macro",
+        "caption": "300 fps cue-ball replay engineering",
+        "thumb": "/images/showreel/snooker-macro.jpg",
+        "videoUrl": "https://www.youtube.com/watch?v=JXMvxICIj4w"
+      },
+      {
+        "title": "UAE Pro League — Super Slow-Mo",
+        "caption": "16-camera 4K truck & EVS replay workflow",
+        "thumb": "/images/showreel/uae-pro-league.jpg",
+        "videoUrl": "https://www.youtube.com/watch?v=GzxZcTk2HT4"
+      }
+    ]
+  },
+  "testimonialSection": {
+    "testimonials": [
+      {
+        "quote": "Samir is the definition of calm under extreme live television pressure. When our main fiber trunk was damaged 30 minutes before the presidential world address at COP28, Samir re-routed 6 CCU channels and our entire intercom matrix in under 8 minutes without a single frame dropped.",
+        "author": "Khaled Al-Mansouri",
+        "role": "Director of Broadcast Technical Operations",
+        "organization": "Abu Dhabi Media & Host Broadcast",
+        "event": "COP28 World Climate Summit",
+        "avatarText": "KM"
+      },
+      {
+        "quote": "Desert racing in 45-degree heat and sandstorms destroys standard broadcast gear. Samir engineered an RF wireless tracking setup that maintained flawless 10km link margins for 7 consecutive days. He is our first call for any high-stakes mobile OB in the GCC.",
+        "author": "Markus Visser",
+        "role": "Head of Mobile OB Productions",
+        "organization": "Media Mania Production UAE",
+        "event": "Al Dhafra National Camel Festival",
+        "avatarText": "MV"
+      },
+      {
+        "quote": "In 15 years of directing UAE Pro League football, I have never seen a CCU engineer match 16 camera angles across shifting desert stadium floodlights with the precision Samir delivers. His EVS highlight packages are cued before the referee even blows the whistle.",
+        "author": "Tariq Ben Humaid",
+        "role": "Senior Live Sports TV Director",
+        "organization": "Abu Dhabi Sports Channel",
+        "event": "UAE Pro League (ADNOC)",
+        "avatarText": "TB"
+      }
+    ],
+    "ctaHeading": "Ready to create a video that gets noticed?",
+    "ctaBody": "Tell Samir Elgammal about your idea, campaign, or upcoming project. Together, you can shape a video production approach that suits your objectives in Dubai and beyond.",
+    "ctaLabel": "See our work",
+    "ctaHref": "#events"
+  },
+  "faqSection": {
+    "eyebrow": "04 · FAQ",
+    "heading": "Frequently asked",
+    "headingAccent": "questions",
+    "body": "Find helpful answers about the video production process, project planning, timelines, and working with Samir Elgammal in Dubai, United Arab Emirates.",
+    "items": [
+      {
+        "question": "Another question your visitors may have",
+        "answer": "Example answer to the question. Feel free to customize this content with the actual information you want to provide."
+      },
+      {
+        "question": "Something your customers often wonder about",
+        "answer": "Example answer to the question. Feel free to customize this content with the actual information you want to provide."
+      },
+      {
+        "question": "Or add sub-headings to create an overview",
+        "answer": "Example answer to the question. Feel free to customize this content with the actual information you want to provide."
+      },
+      {
+        "question": "A title for the service you provide",
+        "answer": "Example answer to the question. Feel free to customize this content with the actual information you want to provide."
+      },
+      {
+        "question": "A question about your products or services",
+        "answer": "Example answer to the question. Feel free to customize this content with the actual information you want to provide."
+      }
+    ]
+  },
+  "footerSection": {
+    "eyebrow": "05 · Contact",
+    "heading": "Let's discuss your",
+    "headingAccent": "next video project",
+    "ctaLabel": "Start a conversation"
+  }
+}

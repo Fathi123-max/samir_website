@@ -1,31 +1,126 @@
-fragment PersonalInfoParts on PersonalInfo {
+fragment HomepageParts on Homepage {
   __typename
-  name
-  title
-  subtitle
-  heroHeadline
-  tagline
-  portrait
-  showreelUrl
-  experienceYears
-  eventsCount
-  broadcastersCount
-  uptimePercentage
-  location
-  phone
-  email
-  whatsappUrl
-  workingHours
-  socials {
+  identity {
     __typename
-    label
-    url
+    name
+    title
+    subtitle
+    tagline
+    portrait
+    showreelUrl
+    experienceYears
+    uptimePercentage
+    location
+    phone
+    email
+    whatsappUrl
+    workingHours
+    socials {
+      __typename
+      label
+      url
+    }
+    degree
+    degreeHonors
+    statusText
+    statusTextShort
+    statusActive
   }
-  degree
-  degreeHonors
-  statusText
-  statusTextShort
-  statusActive
+  hero {
+    __typename
+    eyebrow
+    headline
+    headlineAccent
+    ctaPrimaryLabel
+    ctaPrimaryHref
+    ctaSecondaryLabel
+    ctaSecondaryHref
+    stats {
+      __typename
+      value
+      label
+    }
+  }
+  navigation {
+    __typename
+    items {
+      __typename
+      label
+      href
+      id
+      index
+    }
+  }
+  servicesSection {
+    __typename
+    eyebrow
+    heading
+    headingAccent
+    body
+    items {
+      __typename
+      title
+      description
+    }
+  }
+  eventsSection {
+    __typename
+    eyebrow
+    heading
+    headingAccent
+    body
+    categories
+    featuredEvents
+  }
+  showreelSection {
+    __typename
+    eyebrow
+    heading
+    headingAccent
+    openLabel
+    videos {
+      __typename
+      title
+      caption
+      thumb
+      videoUrl
+    }
+  }
+  testimonialSection {
+    __typename
+    testimonials {
+      __typename
+      quote
+      author
+      role
+      organization
+      event
+      avatarText
+    }
+    ctaHeading
+    ctaBody
+    ctaLabel
+    ctaHref
+  }
+  faqSection {
+    __typename
+    eyebrow
+    heading
+    headingAccent
+    body
+    items {
+      __typename
+      question
+      answer
+    }
+  }
+  footerSection {
+    __typename
+    eyebrow
+    heading
+    headingAccent
+    ctaLabel
+  }
 }
 
 fragment EventParts on Event {
@@ -74,12 +169,6 @@ fragment EventParts on Event {
   tags
 }
 
-fragment ServiceParts on Service {
-  __typename
-  title
-  description
-}
-
 fragment EquipmentParts on Equipment {
   __typename
   name
@@ -107,28 +196,4 @@ fragment TimelineParts on Timeline {
   description
   achievements
   technologies
-}
-
-fragment TestimonialParts on Testimonial {
-  __typename
-  quote
-  author
-  role
-  organization
-  event
-  avatarText
-}
-
-fragment ShowreelVideoParts on ShowreelVideo {
-  __typename
-  title
-  caption
-  thumb
-  videoUrl
-}
-
-fragment FaqParts on Faq {
-  __typename
-  question
-  answer
 }

@@ -11,138 +11,57 @@ import { Showreel } from "@/components/Showreel";
 import { TestimonialBanner } from "@/components/TestimonialBanner";
 import { Faq } from "@/components/Faq";
 import { Footer } from "@/components/Footer";
-import type {
-  PersonalInfo,
-  ServiceTier,
-  CaseStudy,
-  ShowcaseVideo,
-  Testimonial,
-  FaqItem,
-} from "@/lib/types";
+import type { Homepage } from "@/lib/types";
 import type { TinaTuple } from "@/lib/cms";
 
-type TinaNode = {
-  _sys?: { filename?: string; path?: string };
-  __typename?: string;
-  id?: string;
-} & Record<string, unknown>;
-
-const flatten = (root: unknown): TinaNode[] => {
-  const edges = (root as { edges?: { node?: TinaNode }[] })?.edges ?? [];
-  return edges.map((e) => e.node).filter((n): n is TinaNode => !!n);
-};
-
-const firstNodeFormId = (root: unknown): string | undefined => {
-  const first = flatten(root)[0];
-  return first?._sys?.path;
-};
-
 export interface HomeClientProps {
-  personalInfo: TinaTuple<{ personalInfo: PersonalInfo }>;
-  services: TinaTuple<{ serviceConnection: unknown }>;
-  events: TinaTuple<{ eventConnection: unknown }>;
-  showreel: TinaTuple<{ showreelVideoConnection: unknown }>;
-  testimonials: TinaTuple<{ testimonialConnection: unknown }>;
-  faq: TinaTuple<{ faqConnection: unknown }>;
-  personalInfoValue: PersonalInfo;
-  servicesValue: ServiceTier[];
-  eventsValue: CaseStudy[];
-  showreelValue: ShowcaseVideo[];
-  testimonialsValue: Testimonial[];
-  faqValue: FaqItem[];
+  homepage: TinaTuple<{ homepage: Homepage }>;
+  homepageValue: Homepage;
 }
 
 export function HomeClient(props: HomeClientProps) {
-  const personalInfoTina = useTina({
-    ...props.personalInfo,
-    experimental___selectFormByFormId: () => "content/personalInfo.json",
-  });
-  const servicesTina = useTina({
-    ...props.services,
-    experimental___selectFormByFormId: () =>
-      firstNodeFormId(props.services.data?.serviceConnection) ??
-      "content/services",
-  });
-  const eventsTina = useTina({
-    ...props.events,
-    experimental___selectFormByFormId: () =>
-      firstNodeFormId(props.events.data?.eventConnection) ?? "content/events",
-  });
-  const showreelTina = useTina({
-    ...props.showreel,
-    experimental___selectFormByFormId: () =>
-      firstNodeFormId(props.showreel.data?.showreelVideoConnection) ??
-      "content/showreel",
-  });
-  const testimonialsTina = useTina({
-    ...props.testimonials,
-    experimental___selectFormByFormId: () =>
-      firstNodeFormId(props.testimonials.data?.testimonialConnection) ??
-      "content/testimonials",
-  });
-  const faqTina = useTina({
-    ...props.faq,
-    experimental___selectFormByFormId: () =>
-      firstNodeFormId(props.faq.data?.faqConnection) ?? "content/faq",
+  const homepageTina = useTina({
+    ...props.homepage,
+    experimental___selectFormByFormId: () => "content/pages/home.json",
   });
 
-  const personalInfo: PersonalInfo =
-    personalInfoTina.data?.personalInfo ?? props.personalInfoValue;
+  const rawHome = homepageTina.data?.homepage ?? props.homepageValue;
+  const base = props.homepageValue;
 
-  const services: ServiceTier[] = flatten(servicesTina.data?.serviceConnection).map((n) => ({
-    id: n._sys?.filename ?? "",
-    title: String(n.title ?? ""),
-    description: String(n.description ?? ""),
-  }));
+  // `featuredEvents` on the raw data is a plain list of event file paths; the server-resolved
+  // CaseStudy[] (base) is authoritative and preserved so re-hydration never wipes it.
+  const homepage: Homepage = {
+    ...base,
+    ...(rawHome as Homepage),
+    eventsSection: {
+      ...base.eventsSection,
+      ...(rawHome.eventsSection as Homepage["eventsSection"] | undefined),
+      featuredEvents: base.eventsSection.featuredEvents,
+    },
+  };
 
-  const events: CaseStudy[] = flatten(eventsTina.data?.eventConnection).map((n) => {
-    const copy = { ...n };
-    delete copy._sys;
-    delete copy.__typename;
-    delete copy.id;
-    return copy as unknown as CaseStudy;
-  });
-
-  const showreelVideos: ShowcaseVideo[] = flatten(showreelTina.data?.showreelVideoConnection).map(
-    (n) => ({
-      id: n._sys?.filename ?? "",
-      title: String(n.title ?? ""),
-      caption: String(n.caption ?? ""),
-      thumb: (n.thumb as string | undefined) ?? "",
-      videoUrl: (n.videoUrl as string | undefined) ?? "",
-    })
-  );
-
-  const testimonials: Testimonial[] = flatten(
-    testimonialsTina.data?.testimonialConnection
-  ).map((n) => ({
-    id: n._sys?.filename ?? "",
-    quote: String(n.quote ?? ""),
-    author: String(n.author ?? ""),
-    role: String(n.role ?? ""),
-    organization: String(n.organization ?? ""),
-    event: String(n.event ?? ""),
-    avatarText: String(n.avatarText ?? ""),
-  }));
-
-  const faqItems: FaqItem[] = flatten(faqTina.data?.faqConnection).map((n) => ({
-    id: n._sys?.filename ?? "",
-    question: String(n.question ?? ""),
-    answer: String(n.answer ?? ""),
-  }));
+  const identity = homepage.identity;
+  const hero = homepage.hero;
+  const navItems = homepage.navigation.items;
+  const services = homepage.servicesSection;
+  const eventsSection = homepage.eventsSection;
+  const showreel = homepage.showreelSection;
+  const testimonials = homepage.testimonialSection;
+  const faq = homepage.faqSection;
+  const footerSection = homepage.footerSection;
 
   return (
     <>
-      <Header personalInfo={personalInfo} />
+      <Header identity={identity} navItems={navItems} />
       <main id="main" className="flex-1 w-full" tabIndex={-1}>
-        <Hero personalInfo={personalInfo} />
+        <Hero identity={identity} hero={hero} />
         <Services services={services} />
-        <FlagshipEvents events={events} />
-        <Showreel personalInfo={personalInfo} videos={showreelVideos} />
+        <FlagshipEvents eventsSection={eventsSection} />
+        <Showreel identity={identity} showreel={showreel} />
         <TestimonialBanner testimonials={testimonials} />
-        <Faq items={faqItems} />
+        <Faq faq={faq} />
       </main>
-      <Footer personalInfo={personalInfo} />
+      <Footer identity={identity} footerSection={footerSection} />
       <BackToTop />
     </>
   );

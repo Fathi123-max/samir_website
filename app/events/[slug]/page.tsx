@@ -44,8 +44,8 @@ export default async function EventPage({
   return (
     <EventDetail
       eventTuple={data.tuple}
-      personalInfoTuple={data.personalInfo}
-      personalInfoValue={data.personalInfoValue}
+      homepageTuple={data.homepage}
+      homepageValue={data.homepageValue}
       events={events}
     />
   );

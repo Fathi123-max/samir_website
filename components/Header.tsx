@@ -2,23 +2,17 @@
 
 import React, { useState, useEffect, useRef } from "react";
 import Link from "next/link";
-import type { PersonalInfo } from "@/lib/types";
+import type { Identity, NavItem } from "@/lib/types";
 import { Menu, X, ArrowUpRight } from "lucide-react";
-
-const NAV_ITEMS = [
-  { label: "Services", href: "#services", id: "services", index: "01" },
-  { label: "Portfolio", href: "#events", id: "events", index: "02" },
-  { label: "Showreel", href: "#showreel", id: "showreel", index: "03" },
-  { label: "FAQ", href: "#faq", id: "faq", index: "04" },
-];
 
 const SPY_SECTIONS = ["hero", "services", "events", "showreel", "faq", "contact"];
 
 interface HeaderProps {
-  personalInfo: PersonalInfo;
+  identity: Identity;
+  navItems: NavItem[];
 }
 
-export function Header({ personalInfo }: HeaderProps) {
+export function Header({ identity, navItems }: HeaderProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [progress, setProgress] = useState(0);
@@ -132,7 +126,7 @@ export function Header({ personalInfo }: HeaderProps) {
             </span>
             <span className="hidden sm:flex flex-col leading-tight">
               <span className="font-display font-semibold text-[15px] text-ink tracking-tight whitespace-nowrap">
-                {personalInfo.name}
+                {identity.name}
               </span>
               <span className="eyebrow text-muted text-[10px] whitespace-nowrap">
                 Broadcast &amp; OB Engineer
@@ -142,7 +136,7 @@ export function Header({ personalInfo }: HeaderProps) {
 
           {/* Desktop Navigation */}
           <nav aria-label="Main navigation" className="hidden lg:flex items-center gap-1 text-sm">
-            {NAV_ITEMS.map((item) => {
+            {navItems.map((item) => {
               const isActive = activeSection === item.id;
               return (
                 <a
@@ -223,7 +217,7 @@ export function Header({ personalInfo }: HeaderProps) {
           <nav aria-label="Mobile navigation" className="flex flex-col text-sm">
             <p className="eyebrow text-muted pb-3">Sections</p>
             <ul className="divide-y divide-hairline">
-              {NAV_ITEMS.map((item) => {
+              {navItems.map((item) => {
                 const isActive = activeSection === item.id;
                 return (
                   <li key={item.id}>
@@ -264,14 +258,14 @@ export function Header({ personalInfo }: HeaderProps) {
 
             <div className="grid grid-cols-2 gap-3 mt-5">
               <a
-                href={`tel:${personalInfo.phone.replace(/[^+\d]/g, "")}`}
+                href={`tel:${identity.phone.replace(/[^+\d]/g, "")}`}
                 onClick={closeDrawer}
                 className="flex items-center justify-center px-4 py-3.5 rounded border border-hairline bg-paper text-ink font-semibold text-sm min-h-[48px] hover:border-signal hover:text-signal transition-colors focus-visible:ring-2 focus-visible:ring-signal focus-visible:outline-none"
               >
                 Call
               </a>
               <a
-                href={personalInfo.whatsappUrl}
+                href={identity.whatsappUrl}
                 target="_blank"
                 rel="noopener noreferrer"
                 onClick={closeDrawer}

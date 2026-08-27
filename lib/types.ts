@@ -43,13 +43,11 @@ export interface CaseStudy {
 }
 
 export interface ServiceTier {
-  id: string;
   title: string;
   description: string;
 }
 
 export interface FaqItem {
-  id: string;
   question: string;
   answer: string;
 }
@@ -84,7 +82,6 @@ export interface TimelineNode {
 }
 
 export interface Testimonial {
-  id: string;
   quote: string;
   author: string;
   role: string;
@@ -93,24 +90,27 @@ export interface Testimonial {
   avatarText: string;
 }
 
-export interface PersonalInfo {
+export interface SocialLink {
+  label: string;
+  url: string;
+}
+
+/** Identity — used by Header, Hero, Showreel, Footer, and JSON-LD. */
+export interface Identity {
   name: string;
   title: string;
   subtitle: string;
-  heroHeadline: string;
   tagline: string;
   portrait: string;
   showreelUrl: string;
   experienceYears: number;
-  eventsCount: number;
-  broadcastersCount: number;
   uptimePercentage: string;
   location: string;
   phone: string;
   email: string;
   whatsappUrl: string;
   workingHours: string;
-  socials: { label: string; url: string }[];
+  socials: SocialLink[];
   degree: string;
   degreeHonors: string;
   statusText: string;
@@ -118,15 +118,101 @@ export interface PersonalInfo {
   statusActive: boolean;
 }
 
+export interface HomeStat {
+  value: string;
+  label: string;
+}
+
+/** Hero section data. */
+export interface Hero {
+  eyebrow: string;
+  headline: string;
+  headlineAccent: string;
+  ctaPrimaryLabel: string;
+  ctaPrimaryHref: string;
+  ctaSecondaryLabel: string;
+  ctaSecondaryHref: string;
+  stats: HomeStat[];
+}
+
+export interface NavItem {
+  label: string;
+  href: string;
+  id: string;
+  index: string;
+}
+
 /** One tile in the homepage showreel gallery. */
 export interface ShowcaseVideo {
-  id: string;
   title: string;
   caption: string;
   /** Poster frame path under /public (e.g. "/images/showreel/cop28.jpg"). Empty = styled placeholder. */
   thumb?: string;
   /** YouTube/Vimeo URL. Empty = placeholder player slot. */
   videoUrl?: string;
+}
+
+export interface ServicesSection {
+  eyebrow: string;
+  heading: string;
+  headingAccent: string;
+  body: string;
+  items: ServiceTier[];
+}
+
+export interface EventsSection {
+  eyebrow: string;
+  heading: string;
+  headingAccent: string;
+  body: string;
+  categories: string[];
+  featuredEvents: CaseStudy[];
+}
+
+export interface ShowreelSection {
+  eyebrow: string;
+  heading: string;
+  headingAccent: string;
+  openLabel: string;
+  videos: ShowcaseVideo[];
+}
+
+export interface TestimonialSection {
+  testimonials: Testimonial[];
+  ctaHeading: string;
+  ctaBody: string;
+  ctaLabel: string;
+  ctaHref: string;
+}
+
+export interface FaqSection {
+  eyebrow: string;
+  heading: string;
+  headingAccent: string;
+  body: string;
+  items: FaqItem[];
+}
+
+export interface FooterSection {
+  eyebrow: string;
+  heading: string;
+  headingAccent: string;
+  ctaLabel: string;
+}
+
+/** The single homepage document — the runtime source of truth. */
+export interface Homepage {
+  identity: Identity;
+  hero: Hero;
+  navigation: {
+    items: NavItem[];
+  };
+  servicesSection: ServicesSection;
+  eventsSection: EventsSection;
+  showreelSection: ShowreelSection;
+  testimonialSection: TestimonialSection;
+  faqSection: FaqSection;
+  footerSection: FooterSection;
 }
 
 export interface BookingFormData {

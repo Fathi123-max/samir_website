@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import type { PersonalInfo } from "@/lib/types";
+import type { Identity, FooterSection } from "@/lib/types";
 import {
   Mail,
   PhoneCall,
@@ -32,27 +32,28 @@ const SOCIAL_ICONS: Record<string, React.ComponentType<{ className?: string }>> 
 };
 
 interface FooterProps {
-  personalInfo: PersonalInfo;
+  identity: Identity;
+  footerSection: FooterSection;
 }
 
-export function Footer({ personalInfo }: FooterProps) {
+export function Footer({ identity, footerSection }: FooterProps) {
   return (
     <footer role="contentinfo" className="bg-ink text-zinc-300">
       <div className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8 py-16 lg:py-20">
         {/* Heading */}
         <div className="max-w-2xl mb-12 lg:mb-14">
-          <p className="eyebrow text-signal mb-4">05 · Contact</p>
+          <p className="eyebrow text-signal mb-4">{footerSection.eyebrow}</p>
           <h2 className="fluid-h2 font-display font-semibold text-white">
-            Let&apos;s discuss your{" "}
-            <em className="italic text-signal">next video project</em>.
+            {footerSection.heading}{" "}
+            <em className="italic text-signal">{footerSection.headingAccent}</em>.
           </h2>
           <a
-            href={`mailto:${personalInfo.email}?subject=${encodeURIComponent(
+            href={`mailto:${identity.email}?subject=${encodeURIComponent(
               "New video project inquiry"
             )}`}
             className="mt-7 inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded bg-signal hover:bg-signal-bright text-white font-semibold transition-colors min-h-[48px] focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-ink focus-visible:outline-none"
           >
-            Start a conversation
+            {footerSection.ctaLabel}
             <ArrowUpRight className="w-4 h-4 shrink-0" aria-hidden="true" />
           </a>
         </div>
@@ -64,7 +65,7 @@ export function Footer({ personalInfo }: FooterProps) {
             <h3 className="eyebrow text-zinc-500 mb-4">Location</h3>
             <p className="flex items-start gap-2.5 text-sm leading-relaxed">
               <MapPin className="w-4 h-4 shrink-0 mt-0.5 text-signal" aria-hidden="true" />
-              <span>{personalInfo.location}</span>
+              <span>{identity.location}</span>
             </p>
           </div>
 
@@ -73,7 +74,7 @@ export function Footer({ personalInfo }: FooterProps) {
             <h3 className="eyebrow text-zinc-500 mb-4">Working hours</h3>
             <p className="flex items-start gap-2.5 text-sm leading-relaxed">
               <Clock3 className="w-4 h-4 shrink-0 mt-0.5 text-signal" aria-hidden="true" />
-              <span>{personalInfo.workingHours}</span>
+              <span>{identity.workingHours}</span>
             </p>
           </div>
 
@@ -83,20 +84,20 @@ export function Footer({ personalInfo }: FooterProps) {
             <ul className="space-y-3 text-sm">
               <li>
                 <a
-                  href={`tel:${personalInfo.phone.replace(/[^+\d]/g, "")}`}
+                  href={`tel:${identity.phone.replace(/[^+\d]/g, "")}`}
                   className="inline-flex items-center gap-2.5 hover:text-signal transition-colors focus-visible:ring-2 focus-visible:ring-signal rounded outline-none"
                 >
                   <PhoneCall className="w-4 h-4 shrink-0 text-signal" aria-hidden="true" />
-                  <span>{personalInfo.phone}</span>
+                  <span>{identity.phone}</span>
                 </a>
               </li>
               <li>
                 <a
-                  href={`mailto:${personalInfo.email}`}
+                  href={`mailto:${identity.email}`}
                   className="inline-flex items-start gap-2.5 hover:text-signal transition-colors break-all focus-visible:ring-2 focus-visible:ring-signal rounded outline-none"
                 >
                   <Mail className="w-4 h-4 shrink-0 mt-0.5 text-signal" aria-hidden="true" />
-                  <span className="break-all">{personalInfo.email}</span>
+                  <span className="break-all">{identity.email}</span>
                 </a>
               </li>
             </ul>
@@ -106,7 +107,7 @@ export function Footer({ personalInfo }: FooterProps) {
           <div>
             <h3 className="eyebrow text-zinc-500 mb-4">Follow Samir Elgammal</h3>
             <ul className="flex flex-wrap items-center gap-3">
-              {personalInfo.socials.map((social) => {
+              {identity.socials.map((social) => {
                 const Icon = SOCIAL_ICONS[social.label] ?? null;
                 const content = (
                   <>
@@ -142,8 +143,8 @@ export function Footer({ personalInfo }: FooterProps) {
 
         {/* Bottom bar */}
         <div className="pt-8 mt-12 border-t border-white/10 flex flex-wrap items-center justify-between gap-4 text-xs text-zinc-400">
-          <p>© {new Date().getFullYear()} {personalInfo.name}. All rights reserved.</p>
-          <p>Broadcast &amp; Video Production — {personalInfo.location}</p>
+          <p>© {new Date().getFullYear()} {identity.name}. All rights reserved.</p>
+          <p>Broadcast &amp; Video Production — {identity.location}</p>
         </div>
       </div>
     </footer>

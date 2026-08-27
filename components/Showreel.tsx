@@ -1,23 +1,25 @@
 "use client";
 
 import React from "react";
-import type { PersonalInfo, ShowcaseVideo } from "@/lib/types";
+import type { Identity, ShowreelSection } from "@/lib/types";
 import { Reveal } from "./Reveal";
 import { MediaFrame } from "./MediaFrame";
 import { toEmbedUrl } from "@/lib/utils";
 import { Clapperboard, Play } from "lucide-react";
 
 interface ShowreelProps {
-  personalInfo: PersonalInfo;
-  videos: ShowcaseVideo[];
+  identity: Identity;
+  showreel: ShowreelSection;
 }
 
-export function Showreel({ personalInfo, videos }: ShowreelProps) {
-  const [selectedId, setSelectedId] = React.useState(
-    () => (videos.find((v) => v.videoUrl)?.id ?? videos[0]?.id ?? "")
-  );
+export function Showreel({ identity, showreel }: ShowreelProps) {
+  const videos = showreel.videos;
+  const [selectedIndex, setSelectedIndex] = React.useState(() => {
+    const firstWithUrl = videos.findIndex((v) => v.videoUrl);
+    return firstWithUrl >= 0 ? firstWithUrl : 0;
+  });
 
-  const selected = videos.find((v) => v.id === selectedId) ?? videos[0];
+  const selected = videos[selectedIndex];
 
   return (
     <section
@@ -30,24 +32,24 @@ export function Showreel({ personalInfo, videos }: ShowreelProps) {
         <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 mb-10 lg:mb-14">
           <div className="max-w-2xl">
             <Reveal direction="up">
-              <p className="eyebrow text-signal mb-4">03 · Showreel</p>
+              <p className="eyebrow text-signal mb-4">{showreel.eyebrow}</p>
             </Reveal>
             <Reveal direction="up" delay={0.08}>
               <h2 className="fluid-h2 font-display font-semibold text-ink">
-                The control room,{" "}
-                <em className="italic text-signal">on the record</em>.
+                {showreel.heading}{" "}
+                <em className="italic text-signal">{showreel.headingAccent}</em>.
               </h2>
             </Reveal>
           </div>
-          {personalInfo.showreelUrl && (
+          {identity.showreelUrl && (
             <Reveal direction="up" delay={0.12}>
               <a
-                href={personalInfo.showreelUrl}
+                href={identity.showreelUrl}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-1.5 text-sm font-semibold text-signal hover:underline underline-offset-4 focus-visible:ring-2 focus-visible:ring-signal rounded focus-visible:outline-none min-h-[44px]"
               >
-                Open full showreel ↗
+                {showreel.openLabel} ↗
               </a>
             </Reveal>
           )}
@@ -58,7 +60,7 @@ export function Showreel({ personalInfo, videos }: ShowreelProps) {
           {selected?.videoUrl ? (
             <figure className="relative aspect-video rounded-lg overflow-hidden bg-ink ring-1 ring-black/5 shadow-[0_32px_80px_-32px_rgba(26,43,50,0.35)]">
               <iframe
-                key={selected.id}
+                key={selectedIndex}
                 src={toEmbedUrl(selected.videoUrl)}
                 title={`${selected.title} — broadcast footage`}
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
@@ -79,9 +81,9 @@ export function Showreel({ personalInfo, videos }: ShowreelProps) {
               <p className="text-xs text-zinc-500 max-w-sm leading-relaxed">
                 Add the YouTube/Vimeo link to{" "}
                 <code className="font-mono bg-white border border-hairline rounded px-1.5 py-0.5">
-                  SHOWREEL_VIDEOS
+                  showreelSection.videos
                 </code>{" "}
-                in <code className="font-mono">lib/data.ts</code> and it plays right here.
+                in the homepage content and it plays right here.
               </p>
             </div>
           )}
@@ -94,12 +96,12 @@ export function Showreel({ personalInfo, videos }: ShowreelProps) {
           aria-label="Showreel videos — select one to play"
         >
           {videos.map((video, index) => {
-            const isSelected = video.id === selectedId;
+            const isSelected = index === selectedIndex;
             return (
-              <Reveal key={video.id} direction="up" delay={0.08 + index * 0.06}>
+              <Reveal key={index} direction="up" delay={0.08 + index * 0.06}>
                 <button
                   type="button"
-                  onClick={() => setSelectedId(video.id)}
+                  onClick={() => setSelectedIndex(index)}
                   aria-pressed={isSelected}
                   aria-label={`Play video: ${video.title}`}
                   className={`group w-full text-left rounded overflow-hidden border transition-all focus-visible:ring-2 focus-visible:ring-signal focus-visible:outline-none ${

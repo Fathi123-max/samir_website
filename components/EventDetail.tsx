@@ -17,7 +17,7 @@ import {
   CheckCircle2,
   Clapperboard,
 } from "lucide-react";
-import type { PersonalInfo, CaseStudy } from "@/lib/types";
+import type { Homepage, CaseStudy } from "@/lib/types";
 import type { TinaTuple } from "@/lib/cms";
 
 function cleanEvent(node: Record<string, unknown>): CaseStudy {
@@ -30,17 +30,18 @@ function cleanEvent(node: Record<string, unknown>): CaseStudy {
 
 export interface EventDetailProps {
   eventTuple: TinaTuple<{ event: CaseStudy }>;
-  personalInfoTuple: TinaTuple<{ personalInfo: PersonalInfo }>;
-  personalInfoValue: PersonalInfo;
+  homepageTuple: TinaTuple<{ homepage: Homepage }>;
+  homepageValue: Homepage;
   events: CaseStudy[];
 }
 
 export function EventDetail({
   eventTuple,
-  personalInfoTuple,
-  personalInfoValue,
+  homepageValue,
   events,
 }: EventDetailProps) {
+  const identity = homepageValue.identity;
+  const navItems = homepageValue.navigation.items;
   const eventTina = useTina({
     ...eventTuple,
     experimental___selectFormByFormId: () => {
@@ -50,7 +51,6 @@ export function EventDetail({
       return raw?._sys?.path ?? "content/events";
     },
   });
-  const personalInfo = useTina(personalInfoTuple).data?.personalInfo ?? personalInfoValue;
 
   const eventNode =
     (eventTina.data?.event as unknown as Record<string, unknown> | undefined) ?? null;
@@ -61,11 +61,11 @@ export function EventDetail({
   if (!event) {
     return (
       <div className="min-h-screen flex flex-col bg-canvas text-ink">
-        <Header personalInfo={personalInfo} />
+        <Header identity={identity} navItems={navItems} />
         <main className="flex-1 w-full flex items-center justify-center py-32">
           <p className="eyebrow text-muted">Event not found</p>
         </main>
-        <Footer personalInfo={personalInfo} />
+        <Footer identity={identity} footerSection={homepageValue.footerSection} />
       </div>
     );
   }
@@ -76,7 +76,7 @@ export function EventDetail({
 
   return (
     <div className="min-h-screen flex flex-col bg-canvas text-ink">
-      <Header personalInfo={personalInfo} />
+      <Header identity={identity} navItems={navItems} />
 
       <main className="flex-1 w-full">
         <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-14 lg:py-20 space-y-12 sm:space-y-16">
@@ -382,7 +382,7 @@ export function EventDetail({
         </article>
       </main>
 
-      <Footer personalInfo={personalInfo} />
+      <Footer identity={identity} footerSection={homepageValue.footerSection} />
 
       {/* Floating back-to-top */}
       <BackToTop />

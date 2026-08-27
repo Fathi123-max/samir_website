@@ -81,22 +81,14 @@ export type Query = {
   collections: Array<Collection>;
   node: Node;
   document: DocumentNode;
-  personalInfo: PersonalInfo;
-  personalInfoConnection: PersonalInfoConnection;
+  homepage: Homepage;
+  homepageConnection: HomepageConnection;
   event: Event;
   eventConnection: EventConnection;
-  service: Service;
-  serviceConnection: ServiceConnection;
   equipment: Equipment;
   equipmentConnection: EquipmentConnection;
   timeline: Timeline;
   timelineConnection: TimelineConnection;
-  testimonial: Testimonial;
-  testimonialConnection: TestimonialConnection;
-  showreelVideo: ShowreelVideo;
-  showreelVideoConnection: ShowreelVideoConnection;
-  faq: Faq;
-  faqConnection: FaqConnection;
 };
 
 
@@ -121,18 +113,18 @@ export type QueryDocumentArgs = {
 };
 
 
-export type QueryPersonalInfoArgs = {
+export type QueryHomepageArgs = {
   relativePath?: InputMaybe<Scalars['String']['input']>;
 };
 
 
-export type QueryPersonalInfoConnectionArgs = {
+export type QueryHomepageConnectionArgs = {
   before?: InputMaybe<Scalars['String']['input']>;
   after?: InputMaybe<Scalars['String']['input']>;
   first?: InputMaybe<Scalars['Float']['input']>;
   last?: InputMaybe<Scalars['Float']['input']>;
   sort?: InputMaybe<Scalars['String']['input']>;
-  filter?: InputMaybe<PersonalInfoFilter>;
+  filter?: InputMaybe<HomepageFilter>;
 };
 
 
@@ -148,21 +140,6 @@ export type QueryEventConnectionArgs = {
   last?: InputMaybe<Scalars['Float']['input']>;
   sort?: InputMaybe<Scalars['String']['input']>;
   filter?: InputMaybe<EventFilter>;
-};
-
-
-export type QueryServiceArgs = {
-  relativePath?: InputMaybe<Scalars['String']['input']>;
-};
-
-
-export type QueryServiceConnectionArgs = {
-  before?: InputMaybe<Scalars['String']['input']>;
-  after?: InputMaybe<Scalars['String']['input']>;
-  first?: InputMaybe<Scalars['Float']['input']>;
-  last?: InputMaybe<Scalars['Float']['input']>;
-  sort?: InputMaybe<Scalars['String']['input']>;
-  filter?: InputMaybe<ServiceFilter>;
 };
 
 
@@ -195,60 +172,11 @@ export type QueryTimelineConnectionArgs = {
   filter?: InputMaybe<TimelineFilter>;
 };
 
-
-export type QueryTestimonialArgs = {
-  relativePath?: InputMaybe<Scalars['String']['input']>;
-};
-
-
-export type QueryTestimonialConnectionArgs = {
-  before?: InputMaybe<Scalars['String']['input']>;
-  after?: InputMaybe<Scalars['String']['input']>;
-  first?: InputMaybe<Scalars['Float']['input']>;
-  last?: InputMaybe<Scalars['Float']['input']>;
-  sort?: InputMaybe<Scalars['String']['input']>;
-  filter?: InputMaybe<TestimonialFilter>;
-};
-
-
-export type QueryShowreelVideoArgs = {
-  relativePath?: InputMaybe<Scalars['String']['input']>;
-};
-
-
-export type QueryShowreelVideoConnectionArgs = {
-  before?: InputMaybe<Scalars['String']['input']>;
-  after?: InputMaybe<Scalars['String']['input']>;
-  first?: InputMaybe<Scalars['Float']['input']>;
-  last?: InputMaybe<Scalars['Float']['input']>;
-  sort?: InputMaybe<Scalars['String']['input']>;
-  filter?: InputMaybe<ShowreelVideoFilter>;
-};
-
-
-export type QueryFaqArgs = {
-  relativePath?: InputMaybe<Scalars['String']['input']>;
-};
-
-
-export type QueryFaqConnectionArgs = {
-  before?: InputMaybe<Scalars['String']['input']>;
-  after?: InputMaybe<Scalars['String']['input']>;
-  first?: InputMaybe<Scalars['Float']['input']>;
-  last?: InputMaybe<Scalars['Float']['input']>;
-  sort?: InputMaybe<Scalars['String']['input']>;
-  filter?: InputMaybe<FaqFilter>;
-};
-
 export type DocumentFilter = {
-  personalInfo?: InputMaybe<PersonalInfoFilter>;
+  homepage?: InputMaybe<HomepageFilter>;
   event?: InputMaybe<EventFilter>;
-  service?: InputMaybe<ServiceFilter>;
   equipment?: InputMaybe<EquipmentFilter>;
   timeline?: InputMaybe<TimelineFilter>;
-  testimonial?: InputMaybe<TestimonialFilter>;
-  showreelVideo?: InputMaybe<ShowreelVideoFilter>;
-  faq?: InputMaybe<FaqFilter>;
 };
 
 export type DocumentConnectionEdges = {
@@ -288,38 +216,163 @@ export type CollectionDocumentsArgs = {
   folder?: InputMaybe<Scalars['String']['input']>;
 };
 
-export type DocumentNode = PersonalInfo | Event | Service | Equipment | Timeline | Testimonial | ShowreelVideo | Faq | Folder;
+export type DocumentNode = Homepage | Event | Equipment | Timeline | Folder;
 
-export type PersonalInfoSocials = {
-  __typename?: 'PersonalInfoSocials';
+export type HomepageIdentitySocials = {
+  __typename?: 'HomepageIdentitySocials';
   label?: Maybe<Scalars['String']['output']>;
   url?: Maybe<Scalars['String']['output']>;
 };
 
-export type PersonalInfo = Node & Document & {
-  __typename?: 'PersonalInfo';
-  name?: Maybe<Scalars['String']['output']>;
+export type HomepageIdentity = {
+  __typename?: 'HomepageIdentity';
+  name: Scalars['String']['output'];
   title?: Maybe<Scalars['String']['output']>;
   subtitle?: Maybe<Scalars['String']['output']>;
-  heroHeadline?: Maybe<Scalars['String']['output']>;
   tagline?: Maybe<Scalars['String']['output']>;
   portrait?: Maybe<Scalars['String']['output']>;
   showreelUrl?: Maybe<Scalars['String']['output']>;
   experienceYears?: Maybe<Scalars['Float']['output']>;
-  eventsCount?: Maybe<Scalars['Float']['output']>;
-  broadcastersCount?: Maybe<Scalars['Float']['output']>;
   uptimePercentage?: Maybe<Scalars['String']['output']>;
   location?: Maybe<Scalars['String']['output']>;
   phone?: Maybe<Scalars['String']['output']>;
   email?: Maybe<Scalars['String']['output']>;
   whatsappUrl?: Maybe<Scalars['String']['output']>;
   workingHours?: Maybe<Scalars['String']['output']>;
-  socials?: Maybe<Array<Maybe<PersonalInfoSocials>>>;
+  socials?: Maybe<Array<Maybe<HomepageIdentitySocials>>>;
   degree?: Maybe<Scalars['String']['output']>;
   degreeHonors?: Maybe<Scalars['String']['output']>;
   statusText?: Maybe<Scalars['String']['output']>;
   statusTextShort?: Maybe<Scalars['String']['output']>;
   statusActive?: Maybe<Scalars['Boolean']['output']>;
+};
+
+export type HomepageHeroStats = {
+  __typename?: 'HomepageHeroStats';
+  value?: Maybe<Scalars['String']['output']>;
+  label?: Maybe<Scalars['String']['output']>;
+};
+
+export type HomepageHero = {
+  __typename?: 'HomepageHero';
+  eyebrow?: Maybe<Scalars['String']['output']>;
+  headline?: Maybe<Scalars['String']['output']>;
+  headlineAccent?: Maybe<Scalars['String']['output']>;
+  ctaPrimaryLabel?: Maybe<Scalars['String']['output']>;
+  ctaPrimaryHref?: Maybe<Scalars['String']['output']>;
+  ctaSecondaryLabel?: Maybe<Scalars['String']['output']>;
+  ctaSecondaryHref?: Maybe<Scalars['String']['output']>;
+  stats?: Maybe<Array<Maybe<HomepageHeroStats>>>;
+};
+
+export type HomepageNavigationItems = {
+  __typename?: 'HomepageNavigationItems';
+  label?: Maybe<Scalars['String']['output']>;
+  href?: Maybe<Scalars['String']['output']>;
+  id?: Maybe<Scalars['String']['output']>;
+  index?: Maybe<Scalars['String']['output']>;
+};
+
+export type HomepageNavigation = {
+  __typename?: 'HomepageNavigation';
+  items?: Maybe<Array<Maybe<HomepageNavigationItems>>>;
+};
+
+export type HomepageServicesSectionItems = {
+  __typename?: 'HomepageServicesSectionItems';
+  title?: Maybe<Scalars['String']['output']>;
+  description?: Maybe<Scalars['String']['output']>;
+};
+
+export type HomepageServicesSection = {
+  __typename?: 'HomepageServicesSection';
+  eyebrow?: Maybe<Scalars['String']['output']>;
+  heading?: Maybe<Scalars['String']['output']>;
+  headingAccent?: Maybe<Scalars['String']['output']>;
+  body?: Maybe<Scalars['String']['output']>;
+  items?: Maybe<Array<Maybe<HomepageServicesSectionItems>>>;
+};
+
+export type HomepageEventsSection = {
+  __typename?: 'HomepageEventsSection';
+  eyebrow?: Maybe<Scalars['String']['output']>;
+  heading?: Maybe<Scalars['String']['output']>;
+  headingAccent?: Maybe<Scalars['String']['output']>;
+  body?: Maybe<Scalars['String']['output']>;
+  categories?: Maybe<Array<Maybe<Scalars['String']['output']>>>;
+  featuredEvents?: Maybe<Array<Maybe<Scalars['String']['output']>>>;
+};
+
+export type HomepageShowreelSectionVideos = {
+  __typename?: 'HomepageShowreelSectionVideos';
+  title: Scalars['String']['output'];
+  caption?: Maybe<Scalars['String']['output']>;
+  thumb?: Maybe<Scalars['String']['output']>;
+  videoUrl?: Maybe<Scalars['String']['output']>;
+};
+
+export type HomepageShowreelSection = {
+  __typename?: 'HomepageShowreelSection';
+  eyebrow?: Maybe<Scalars['String']['output']>;
+  heading?: Maybe<Scalars['String']['output']>;
+  headingAccent?: Maybe<Scalars['String']['output']>;
+  openLabel?: Maybe<Scalars['String']['output']>;
+  videos?: Maybe<Array<Maybe<HomepageShowreelSectionVideos>>>;
+};
+
+export type HomepageTestimonialSectionTestimonials = {
+  __typename?: 'HomepageTestimonialSectionTestimonials';
+  quote?: Maybe<Scalars['String']['output']>;
+  author?: Maybe<Scalars['String']['output']>;
+  role?: Maybe<Scalars['String']['output']>;
+  organization?: Maybe<Scalars['String']['output']>;
+  event?: Maybe<Scalars['String']['output']>;
+  avatarText?: Maybe<Scalars['String']['output']>;
+};
+
+export type HomepageTestimonialSection = {
+  __typename?: 'HomepageTestimonialSection';
+  testimonials?: Maybe<Array<Maybe<HomepageTestimonialSectionTestimonials>>>;
+  ctaHeading?: Maybe<Scalars['String']['output']>;
+  ctaBody?: Maybe<Scalars['String']['output']>;
+  ctaLabel?: Maybe<Scalars['String']['output']>;
+  ctaHref?: Maybe<Scalars['String']['output']>;
+};
+
+export type HomepageFaqSectionItems = {
+  __typename?: 'HomepageFaqSectionItems';
+  question: Scalars['String']['output'];
+  answer?: Maybe<Scalars['String']['output']>;
+};
+
+export type HomepageFaqSection = {
+  __typename?: 'HomepageFaqSection';
+  eyebrow?: Maybe<Scalars['String']['output']>;
+  heading?: Maybe<Scalars['String']['output']>;
+  headingAccent?: Maybe<Scalars['String']['output']>;
+  body?: Maybe<Scalars['String']['output']>;
+  items?: Maybe<Array<Maybe<HomepageFaqSectionItems>>>;
+};
+
+export type HomepageFooterSection = {
+  __typename?: 'HomepageFooterSection';
+  eyebrow?: Maybe<Scalars['String']['output']>;
+  heading?: Maybe<Scalars['String']['output']>;
+  headingAccent?: Maybe<Scalars['String']['output']>;
+  ctaLabel?: Maybe<Scalars['String']['output']>;
+};
+
+export type Homepage = Node & Document & {
+  __typename?: 'Homepage';
+  identity?: Maybe<HomepageIdentity>;
+  hero?: Maybe<HomepageHero>;
+  navigation?: Maybe<HomepageNavigation>;
+  servicesSection?: Maybe<HomepageServicesSection>;
+  eventsSection?: Maybe<HomepageEventsSection>;
+  showreelSection?: Maybe<HomepageShowreelSection>;
+  testimonialSection?: Maybe<HomepageTestimonialSection>;
+  faqSection?: Maybe<HomepageFaqSection>;
+  footerSection?: Maybe<HomepageFooterSection>;
   id: Scalars['ID']['output'];
   _sys: SystemInfo;
   _values: Scalars['JSON']['output'];
@@ -342,7 +395,7 @@ export type NumberFilter = {
   in?: InputMaybe<Array<InputMaybe<Scalars['Float']['input']>>>;
 };
 
-export type PersonalInfoSocialsFilter = {
+export type HomepageIdentitySocialsFilter = {
   label?: InputMaybe<StringFilter>;
   url?: InputMaybe<StringFilter>;
 };
@@ -352,24 +405,21 @@ export type BooleanFilter = {
   exists?: InputMaybe<Scalars['Boolean']['input']>;
 };
 
-export type PersonalInfoFilter = {
+export type HomepageIdentityFilter = {
   name?: InputMaybe<StringFilter>;
   title?: InputMaybe<StringFilter>;
   subtitle?: InputMaybe<StringFilter>;
-  heroHeadline?: InputMaybe<StringFilter>;
   tagline?: InputMaybe<StringFilter>;
   portrait?: InputMaybe<StringFilter>;
   showreelUrl?: InputMaybe<StringFilter>;
   experienceYears?: InputMaybe<NumberFilter>;
-  eventsCount?: InputMaybe<NumberFilter>;
-  broadcastersCount?: InputMaybe<NumberFilter>;
   uptimePercentage?: InputMaybe<StringFilter>;
   location?: InputMaybe<StringFilter>;
   phone?: InputMaybe<StringFilter>;
   email?: InputMaybe<StringFilter>;
   whatsappUrl?: InputMaybe<StringFilter>;
   workingHours?: InputMaybe<StringFilter>;
-  socials?: InputMaybe<PersonalInfoSocialsFilter>;
+  socials?: InputMaybe<HomepageIdentitySocialsFilter>;
   degree?: InputMaybe<StringFilter>;
   degreeHonors?: InputMaybe<StringFilter>;
   statusText?: InputMaybe<StringFilter>;
@@ -377,17 +427,130 @@ export type PersonalInfoFilter = {
   statusActive?: InputMaybe<BooleanFilter>;
 };
 
-export type PersonalInfoConnectionEdges = {
-  __typename?: 'PersonalInfoConnectionEdges';
-  cursor: Scalars['String']['output'];
-  node?: Maybe<PersonalInfo>;
+export type HomepageHeroStatsFilter = {
+  value?: InputMaybe<StringFilter>;
+  label?: InputMaybe<StringFilter>;
 };
 
-export type PersonalInfoConnection = Connection & {
-  __typename?: 'PersonalInfoConnection';
+export type HomepageHeroFilter = {
+  eyebrow?: InputMaybe<StringFilter>;
+  headline?: InputMaybe<StringFilter>;
+  headlineAccent?: InputMaybe<StringFilter>;
+  ctaPrimaryLabel?: InputMaybe<StringFilter>;
+  ctaPrimaryHref?: InputMaybe<StringFilter>;
+  ctaSecondaryLabel?: InputMaybe<StringFilter>;
+  ctaSecondaryHref?: InputMaybe<StringFilter>;
+  stats?: InputMaybe<HomepageHeroStatsFilter>;
+};
+
+export type HomepageNavigationItemsFilter = {
+  label?: InputMaybe<StringFilter>;
+  href?: InputMaybe<StringFilter>;
+  id?: InputMaybe<StringFilter>;
+  index?: InputMaybe<StringFilter>;
+};
+
+export type HomepageNavigationFilter = {
+  items?: InputMaybe<HomepageNavigationItemsFilter>;
+};
+
+export type HomepageServicesSectionItemsFilter = {
+  title?: InputMaybe<StringFilter>;
+  description?: InputMaybe<StringFilter>;
+};
+
+export type HomepageServicesSectionFilter = {
+  eyebrow?: InputMaybe<StringFilter>;
+  heading?: InputMaybe<StringFilter>;
+  headingAccent?: InputMaybe<StringFilter>;
+  body?: InputMaybe<StringFilter>;
+  items?: InputMaybe<HomepageServicesSectionItemsFilter>;
+};
+
+export type HomepageEventsSectionFilter = {
+  eyebrow?: InputMaybe<StringFilter>;
+  heading?: InputMaybe<StringFilter>;
+  headingAccent?: InputMaybe<StringFilter>;
+  body?: InputMaybe<StringFilter>;
+  categories?: InputMaybe<StringFilter>;
+  featuredEvents?: InputMaybe<StringFilter>;
+};
+
+export type HomepageShowreelSectionVideosFilter = {
+  title?: InputMaybe<StringFilter>;
+  caption?: InputMaybe<StringFilter>;
+  thumb?: InputMaybe<StringFilter>;
+  videoUrl?: InputMaybe<StringFilter>;
+};
+
+export type HomepageShowreelSectionFilter = {
+  eyebrow?: InputMaybe<StringFilter>;
+  heading?: InputMaybe<StringFilter>;
+  headingAccent?: InputMaybe<StringFilter>;
+  openLabel?: InputMaybe<StringFilter>;
+  videos?: InputMaybe<HomepageShowreelSectionVideosFilter>;
+};
+
+export type HomepageTestimonialSectionTestimonialsFilter = {
+  quote?: InputMaybe<StringFilter>;
+  author?: InputMaybe<StringFilter>;
+  role?: InputMaybe<StringFilter>;
+  organization?: InputMaybe<StringFilter>;
+  event?: InputMaybe<StringFilter>;
+  avatarText?: InputMaybe<StringFilter>;
+};
+
+export type HomepageTestimonialSectionFilter = {
+  testimonials?: InputMaybe<HomepageTestimonialSectionTestimonialsFilter>;
+  ctaHeading?: InputMaybe<StringFilter>;
+  ctaBody?: InputMaybe<StringFilter>;
+  ctaLabel?: InputMaybe<StringFilter>;
+  ctaHref?: InputMaybe<StringFilter>;
+};
+
+export type HomepageFaqSectionItemsFilter = {
+  question?: InputMaybe<StringFilter>;
+  answer?: InputMaybe<StringFilter>;
+};
+
+export type HomepageFaqSectionFilter = {
+  eyebrow?: InputMaybe<StringFilter>;
+  heading?: InputMaybe<StringFilter>;
+  headingAccent?: InputMaybe<StringFilter>;
+  body?: InputMaybe<StringFilter>;
+  items?: InputMaybe<HomepageFaqSectionItemsFilter>;
+};
+
+export type HomepageFooterSectionFilter = {
+  eyebrow?: InputMaybe<StringFilter>;
+  heading?: InputMaybe<StringFilter>;
+  headingAccent?: InputMaybe<StringFilter>;
+  ctaLabel?: InputMaybe<StringFilter>;
+};
+
+export type HomepageFilter = {
+  identity?: InputMaybe<HomepageIdentityFilter>;
+  hero?: InputMaybe<HomepageHeroFilter>;
+  navigation?: InputMaybe<HomepageNavigationFilter>;
+  servicesSection?: InputMaybe<HomepageServicesSectionFilter>;
+  eventsSection?: InputMaybe<HomepageEventsSectionFilter>;
+  showreelSection?: InputMaybe<HomepageShowreelSectionFilter>;
+  testimonialSection?: InputMaybe<HomepageTestimonialSectionFilter>;
+  faqSection?: InputMaybe<HomepageFaqSectionFilter>;
+  footerSection?: InputMaybe<HomepageFooterSectionFilter>;
+};
+
+export type HomepageConnectionEdges = {
+  __typename?: 'HomepageConnectionEdges';
+  cursor: Scalars['String']['output'];
+  node?: Maybe<Homepage>;
+};
+
+export type HomepageConnection = Connection & {
+  __typename?: 'HomepageConnection';
   pageInfo: PageInfo;
   totalCount: Scalars['Float']['output'];
-  edges?: Maybe<Array<Maybe<PersonalInfoConnectionEdges>>>;
+  edges?: Maybe<Array<Maybe<HomepageConnectionEdges>>>;
 };
 
 export type EventSpecs = {
@@ -509,33 +672,6 @@ export type EventConnection = Connection & {
   edges?: Maybe<Array<Maybe<EventConnectionEdges>>>;
 };
 
-export type Service = Node & Document & {
-  __typename?: 'Service';
-  title: Scalars['String']['output'];
-  description?: Maybe<Scalars['String']['output']>;
-  id: Scalars['ID']['output'];
-  _sys: SystemInfo;
-  _values: Scalars['JSON']['output'];
-};
-
-export type ServiceFilter = {
-  title?: InputMaybe<StringFilter>;
-  description?: InputMaybe<StringFilter>;
-};
-
-export type ServiceConnectionEdges = {
-  __typename?: 'ServiceConnectionEdges';
-  cursor: Scalars['String']['output'];
-  node?: Maybe<Service>;
-};
-
-export type ServiceConnection = Connection & {
-  __typename?: 'ServiceConnection';
-  pageInfo: PageInfo;
-  totalCount: Scalars['Float']['output'];
-  edges?: Maybe<Array<Maybe<ServiceConnectionEdges>>>;
-};
-
 export type EquipmentItems = {
   __typename?: 'EquipmentItems';
   name?: Maybe<Scalars['String']['output']>;
@@ -627,99 +763,6 @@ export type TimelineConnection = Connection & {
   edges?: Maybe<Array<Maybe<TimelineConnectionEdges>>>;
 };
 
-export type Testimonial = Node & Document & {
-  __typename?: 'Testimonial';
-  quote: Scalars['String']['output'];
-  author?: Maybe<Scalars['String']['output']>;
-  role?: Maybe<Scalars['String']['output']>;
-  organization?: Maybe<Scalars['String']['output']>;
-  event?: Maybe<Scalars['String']['output']>;
-  avatarText?: Maybe<Scalars['String']['output']>;
-  id: Scalars['ID']['output'];
-  _sys: SystemInfo;
-  _values: Scalars['JSON']['output'];
-};
-
-export type TestimonialFilter = {
-  quote?: InputMaybe<StringFilter>;
-  author?: InputMaybe<StringFilter>;
-  role?: InputMaybe<StringFilter>;
-  organization?: InputMaybe<StringFilter>;
-  event?: InputMaybe<StringFilter>;
-  avatarText?: InputMaybe<StringFilter>;
-};
-
-export type TestimonialConnectionEdges = {
-  __typename?: 'TestimonialConnectionEdges';
-  cursor: Scalars['String']['output'];
-  node?: Maybe<Testimonial>;
-};
-
-export type TestimonialConnection = Connection & {
-  __typename?: 'TestimonialConnection';
-  pageInfo: PageInfo;
-  totalCount: Scalars['Float']['output'];
-  edges?: Maybe<Array<Maybe<TestimonialConnectionEdges>>>;
-};
-
-export type ShowreelVideo = Node & Document & {
-  __typename?: 'ShowreelVideo';
-  title: Scalars['String']['output'];
-  caption?: Maybe<Scalars['String']['output']>;
-  thumb?: Maybe<Scalars['String']['output']>;
-  videoUrl?: Maybe<Scalars['String']['output']>;
-  id: Scalars['ID']['output'];
-  _sys: SystemInfo;
-  _values: Scalars['JSON']['output'];
-};
-
-export type ShowreelVideoFilter = {
-  title?: InputMaybe<StringFilter>;
-  caption?: InputMaybe<StringFilter>;
-  thumb?: InputMaybe<StringFilter>;
-  videoUrl?: InputMaybe<StringFilter>;
-};
-
-export type ShowreelVideoConnectionEdges = {
-  __typename?: 'ShowreelVideoConnectionEdges';
-  cursor: Scalars['String']['output'];
-  node?: Maybe<ShowreelVideo>;
-};
-
-export type ShowreelVideoConnection = Connection & {
-  __typename?: 'ShowreelVideoConnection';
-  pageInfo: PageInfo;
-  totalCount: Scalars['Float']['output'];
-  edges?: Maybe<Array<Maybe<ShowreelVideoConnectionEdges>>>;
-};
-
-export type Faq = Node & Document & {
-  __typename?: 'Faq';
-  question: Scalars['String']['output'];
-  answer?: Maybe<Scalars['String']['output']>;
-  id: Scalars['ID']['output'];
-  _sys: SystemInfo;
-  _values: Scalars['JSON']['output'];
-};
-
-export type FaqFilter = {
-  question?: InputMaybe<StringFilter>;
-  answer?: InputMaybe<StringFilter>;
-};
-
-export type FaqConnectionEdges = {
-  __typename?: 'FaqConnectionEdges';
-  cursor: Scalars['String']['output'];
-  node?: Maybe<Faq>;
-};
-
-export type FaqConnection = Connection & {
-  __typename?: 'FaqConnection';
-  pageInfo: PageInfo;
-  totalCount: Scalars['Float']['output'];
-  edges?: Maybe<Array<Maybe<FaqConnectionEdges>>>;
-};
-
 export type Mutation = {
   __typename?: 'Mutation';
   addPendingDocument: DocumentNode;
@@ -727,22 +770,14 @@ export type Mutation = {
   deleteDocument: DocumentNode;
   createDocument: DocumentNode;
   createFolder: DocumentNode;
-  updatePersonalInfo: PersonalInfo;
-  createPersonalInfo: PersonalInfo;
+  updateHomepage: Homepage;
+  createHomepage: Homepage;
   updateEvent: Event;
   createEvent: Event;
-  updateService: Service;
-  createService: Service;
   updateEquipment: Equipment;
   createEquipment: Equipment;
   updateTimeline: Timeline;
   createTimeline: Timeline;
-  updateTestimonial: Testimonial;
-  createTestimonial: Testimonial;
-  updateShowreelVideo: ShowreelVideo;
-  createShowreelVideo: ShowreelVideo;
-  updateFaq: Faq;
-  createFaq: Faq;
 };
 
 
@@ -779,15 +814,15 @@ export type MutationCreateFolderArgs = {
 };
 
 
-export type MutationUpdatePersonalInfoArgs = {
+export type MutationUpdateHomepageArgs = {
   relativePath: Scalars['String']['input'];
-  params: PersonalInfoMutation;
+  params: HomepageMutation;
 };
 
 
-export type MutationCreatePersonalInfoArgs = {
+export type MutationCreateHomepageArgs = {
   relativePath: Scalars['String']['input'];
-  params: PersonalInfoMutation;
+  params: HomepageMutation;
 };
 
 
@@ -800,18 +835,6 @@ export type MutationUpdateEventArgs = {
 export type MutationCreateEventArgs = {
   relativePath: Scalars['String']['input'];
   params: EventMutation;
-};
-
-
-export type MutationUpdateServiceArgs = {
-  relativePath: Scalars['String']['input'];
-  params: ServiceMutation;
-};
-
-
-export type MutationCreateServiceArgs = {
-  relativePath: Scalars['String']['input'];
-  params: ServiceMutation;
 };
 
 
@@ -838,93 +861,159 @@ export type MutationCreateTimelineArgs = {
   params: TimelineMutation;
 };
 
-
-export type MutationUpdateTestimonialArgs = {
-  relativePath: Scalars['String']['input'];
-  params: TestimonialMutation;
-};
-
-
-export type MutationCreateTestimonialArgs = {
-  relativePath: Scalars['String']['input'];
-  params: TestimonialMutation;
-};
-
-
-export type MutationUpdateShowreelVideoArgs = {
-  relativePath: Scalars['String']['input'];
-  params: ShowreelVideoMutation;
-};
-
-
-export type MutationCreateShowreelVideoArgs = {
-  relativePath: Scalars['String']['input'];
-  params: ShowreelVideoMutation;
-};
-
-
-export type MutationUpdateFaqArgs = {
-  relativePath: Scalars['String']['input'];
-  params: FaqMutation;
-};
-
-
-export type MutationCreateFaqArgs = {
-  relativePath: Scalars['String']['input'];
-  params: FaqMutation;
-};
-
 export type DocumentUpdateMutation = {
-  personalInfo?: InputMaybe<PersonalInfoMutation>;
+  homepage?: InputMaybe<HomepageMutation>;
   event?: InputMaybe<EventMutation>;
-  service?: InputMaybe<ServiceMutation>;
   equipment?: InputMaybe<EquipmentMutation>;
   timeline?: InputMaybe<TimelineMutation>;
-  testimonial?: InputMaybe<TestimonialMutation>;
-  showreelVideo?: InputMaybe<ShowreelVideoMutation>;
-  faq?: InputMaybe<FaqMutation>;
   relativePath?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type DocumentMutation = {
-  personalInfo?: InputMaybe<PersonalInfoMutation>;
+  homepage?: InputMaybe<HomepageMutation>;
   event?: InputMaybe<EventMutation>;
-  service?: InputMaybe<ServiceMutation>;
   equipment?: InputMaybe<EquipmentMutation>;
   timeline?: InputMaybe<TimelineMutation>;
-  testimonial?: InputMaybe<TestimonialMutation>;
-  showreelVideo?: InputMaybe<ShowreelVideoMutation>;
-  faq?: InputMaybe<FaqMutation>;
 };
 
-export type PersonalInfoSocialsMutation = {
+export type HomepageIdentitySocialsMutation = {
   label?: InputMaybe<Scalars['String']['input']>;
   url?: InputMaybe<Scalars['String']['input']>;
 };
 
-export type PersonalInfoMutation = {
+export type HomepageIdentityMutation = {
   name?: InputMaybe<Scalars['String']['input']>;
   title?: InputMaybe<Scalars['String']['input']>;
   subtitle?: InputMaybe<Scalars['String']['input']>;
-  heroHeadline?: InputMaybe<Scalars['String']['input']>;
   tagline?: InputMaybe<Scalars['String']['input']>;
   portrait?: InputMaybe<Scalars['String']['input']>;
   showreelUrl?: InputMaybe<Scalars['String']['input']>;
   experienceYears?: InputMaybe<Scalars['Float']['input']>;
-  eventsCount?: InputMaybe<Scalars['Float']['input']>;
-  broadcastersCount?: InputMaybe<Scalars['Float']['input']>;
   uptimePercentage?: InputMaybe<Scalars['String']['input']>;
   location?: InputMaybe<Scalars['String']['input']>;
   phone?: InputMaybe<Scalars['String']['input']>;
   email?: InputMaybe<Scalars['String']['input']>;
   whatsappUrl?: InputMaybe<Scalars['String']['input']>;
   workingHours?: InputMaybe<Scalars['String']['input']>;
-  socials?: InputMaybe<Array<InputMaybe<PersonalInfoSocialsMutation>>>;
+  socials?: InputMaybe<Array<InputMaybe<HomepageIdentitySocialsMutation>>>;
   degree?: InputMaybe<Scalars['String']['input']>;
   degreeHonors?: InputMaybe<Scalars['String']['input']>;
   statusText?: InputMaybe<Scalars['String']['input']>;
   statusTextShort?: InputMaybe<Scalars['String']['input']>;
   statusActive?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+export type HomepageHeroStatsMutation = {
+  value?: InputMaybe<Scalars['String']['input']>;
+  label?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type HomepageHeroMutation = {
+  eyebrow?: InputMaybe<Scalars['String']['input']>;
+  headline?: InputMaybe<Scalars['String']['input']>;
+  headlineAccent?: InputMaybe<Scalars['String']['input']>;
+  ctaPrimaryLabel?: InputMaybe<Scalars['String']['input']>;
+  ctaPrimaryHref?: InputMaybe<Scalars['String']['input']>;
+  ctaSecondaryLabel?: InputMaybe<Scalars['String']['input']>;
+  ctaSecondaryHref?: InputMaybe<Scalars['String']['input']>;
+  stats?: InputMaybe<Array<InputMaybe<HomepageHeroStatsMutation>>>;
+};
+
+export type HomepageNavigationItemsMutation = {
+  label?: InputMaybe<Scalars['String']['input']>;
+  href?: InputMaybe<Scalars['String']['input']>;
+  id?: InputMaybe<Scalars['String']['input']>;
+  index?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type HomepageNavigationMutation = {
+  items?: InputMaybe<Array<InputMaybe<HomepageNavigationItemsMutation>>>;
+};
+
+export type HomepageServicesSectionItemsMutation = {
+  title?: InputMaybe<Scalars['String']['input']>;
+  description?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type HomepageServicesSectionMutation = {
+  eyebrow?: InputMaybe<Scalars['String']['input']>;
+  heading?: InputMaybe<Scalars['String']['input']>;
+  headingAccent?: InputMaybe<Scalars['String']['input']>;
+  body?: InputMaybe<Scalars['String']['input']>;
+  items?: InputMaybe<Array<InputMaybe<HomepageServicesSectionItemsMutation>>>;
+};
+
+export type HomepageEventsSectionMutation = {
+  eyebrow?: InputMaybe<Scalars['String']['input']>;
+  heading?: InputMaybe<Scalars['String']['input']>;
+  headingAccent?: InputMaybe<Scalars['String']['input']>;
+  body?: InputMaybe<Scalars['String']['input']>;
+  categories?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  featuredEvents?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
+export type HomepageShowreelSectionVideosMutation = {
+  title?: InputMaybe<Scalars['String']['input']>;
+  caption?: InputMaybe<Scalars['String']['input']>;
+  thumb?: InputMaybe<Scalars['String']['input']>;
+  videoUrl?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type HomepageShowreelSectionMutation = {
+  eyebrow?: InputMaybe<Scalars['String']['input']>;
+  heading?: InputMaybe<Scalars['String']['input']>;
+  headingAccent?: InputMaybe<Scalars['String']['input']>;
+  openLabel?: InputMaybe<Scalars['String']['input']>;
+  videos?: InputMaybe<Array<InputMaybe<HomepageShowreelSectionVideosMutation>>>;
+};
+
+export type HomepageTestimonialSectionTestimonialsMutation = {
+  quote?: InputMaybe<Scalars['String']['input']>;
+  author?: InputMaybe<Scalars['String']['input']>;
+  role?: InputMaybe<Scalars['String']['input']>;
+  organization?: InputMaybe<Scalars['String']['input']>;
+  event?: InputMaybe<Scalars['String']['input']>;
+  avatarText?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type HomepageTestimonialSectionMutation = {
+  testimonials?: InputMaybe<Array<InputMaybe<HomepageTestimonialSectionTestimonialsMutation>>>;
+  ctaHeading?: InputMaybe<Scalars['String']['input']>;
+  ctaBody?: InputMaybe<Scalars['String']['input']>;
+  ctaLabel?: InputMaybe<Scalars['String']['input']>;
+  ctaHref?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type HomepageFaqSectionItemsMutation = {
+  question?: InputMaybe<Scalars['String']['input']>;
+  answer?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type HomepageFaqSectionMutation = {
+  eyebrow?: InputMaybe<Scalars['String']['input']>;
+  heading?: InputMaybe<Scalars['String']['input']>;
+  headingAccent?: InputMaybe<Scalars['String']['input']>;
+  body?: InputMaybe<Scalars['String']['input']>;
+  items?: InputMaybe<Array<InputMaybe<HomepageFaqSectionItemsMutation>>>;
+};
+
+export type HomepageFooterSectionMutation = {
+  eyebrow?: InputMaybe<Scalars['String']['input']>;
+  heading?: InputMaybe<Scalars['String']['input']>;
+  headingAccent?: InputMaybe<Scalars['String']['input']>;
+  ctaLabel?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type HomepageMutation = {
+  identity?: InputMaybe<HomepageIdentityMutation>;
+  hero?: InputMaybe<HomepageHeroMutation>;
+  navigation?: InputMaybe<HomepageNavigationMutation>;
+  servicesSection?: InputMaybe<HomepageServicesSectionMutation>;
+  eventsSection?: InputMaybe<HomepageEventsSectionMutation>;
+  showreelSection?: InputMaybe<HomepageShowreelSectionMutation>;
+  testimonialSection?: InputMaybe<HomepageTestimonialSectionMutation>;
+  faqSection?: InputMaybe<HomepageFaqSectionMutation>;
+  footerSection?: InputMaybe<HomepageFooterSectionMutation>;
 };
 
 export type EventSpecsMutation = {
@@ -976,11 +1065,6 @@ export type EventMutation = {
   tags?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
 };
 
-export type ServiceMutation = {
-  title?: InputMaybe<Scalars['String']['input']>;
-  description?: InputMaybe<Scalars['String']['input']>;
-};
-
 export type EquipmentItemsMutation = {
   name?: InputMaybe<Scalars['String']['input']>;
   model?: InputMaybe<Scalars['String']['input']>;
@@ -1009,27 +1093,6 @@ export type TimelineMutation = {
   technologies?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
 };
 
-export type TestimonialMutation = {
-  quote?: InputMaybe<Scalars['String']['input']>;
-  author?: InputMaybe<Scalars['String']['input']>;
-  role?: InputMaybe<Scalars['String']['input']>;
-  organization?: InputMaybe<Scalars['String']['input']>;
-  event?: InputMaybe<Scalars['String']['input']>;
-  avatarText?: InputMaybe<Scalars['String']['input']>;
-};
-
-export type ShowreelVideoMutation = {
-  title?: InputMaybe<Scalars['String']['input']>;
-  caption?: InputMaybe<Scalars['String']['input']>;
-  thumb?: InputMaybe<Scalars['String']['input']>;
-  videoUrl?: InputMaybe<Scalars['String']['input']>;
-};
-
-export type FaqMutation = {
-  question?: InputMaybe<Scalars['String']['input']>;
-  answer?: InputMaybe<Scalars['String']['input']>;
-};
-
 export type StringFilter = {
   startsWith?: string | null | undefined;
   eq?: string | null | undefined;
@@ -1047,7 +1110,7 @@ export type NumberFilter = {
   in?: Array<number | null | undefined> | null | undefined;
 };
 
-export type PersonalInfoSocialsFilter = {
+export type HomepageIdentitySocialsFilter = {
   label?: StringFilter | null | undefined;
   url?: StringFilter | null | undefined;
 };
@@ -1057,29 +1120,139 @@ export type BooleanFilter = {
   exists?: boolean | null | undefined;
 };
 
-export type PersonalInfoFilter = {
+export type HomepageIdentityFilter = {
   name?: StringFilter | null | undefined;
   title?: StringFilter | null | undefined;
   subtitle?: StringFilter | null | undefined;
-  heroHeadline?: StringFilter | null | undefined;
   tagline?: StringFilter | null | undefined;
   portrait?: StringFilter | null | undefined;
   showreelUrl?: StringFilter | null | undefined;
   experienceYears?: NumberFilter | null | undefined;
-  eventsCount?: NumberFilter | null | undefined;
-  broadcastersCount?: NumberFilter | null | undefined;
   uptimePercentage?: StringFilter | null | undefined;
   location?: StringFilter | null | undefined;
   phone?: StringFilter | null | undefined;
   email?: StringFilter | null | undefined;
   whatsappUrl?: StringFilter | null | undefined;
   workingHours?: StringFilter | null | undefined;
-  socials?: PersonalInfoSocialsFilter | null | undefined;
+  socials?: HomepageIdentitySocialsFilter | null | undefined;
   degree?: StringFilter | null | undefined;
   degreeHonors?: StringFilter | null | undefined;
   statusText?: StringFilter | null | undefined;
   statusTextShort?: StringFilter | null | undefined;
   statusActive?: BooleanFilter | null | undefined;
+};
+
+export type HomepageHeroStatsFilter = {
+  value?: StringFilter | null | undefined;
+  label?: StringFilter | null | undefined;
+};
+
+export type HomepageHeroFilter = {
+  eyebrow?: StringFilter | null | undefined;
+  headline?: StringFilter | null | undefined;
+  headlineAccent?: StringFilter | null | undefined;
+  ctaPrimaryLabel?: StringFilter | null | undefined;
+  ctaPrimaryHref?: StringFilter | null | undefined;
+  ctaSecondaryLabel?: StringFilter | null | undefined;
+  ctaSecondaryHref?: StringFilter | null | undefined;
+  stats?: HomepageHeroStatsFilter | null | undefined;
+};
+
+export type HomepageNavigationItemsFilter = {
+  label?: StringFilter | null | undefined;
+  href?: StringFilter | null | undefined;
+  id?: StringFilter | null | undefined;
+  index?: StringFilter | null | undefined;
+};
+
+export type HomepageNavigationFilter = {
+  items?: HomepageNavigationItemsFilter | null | undefined;
+};
+
+export type HomepageServicesSectionItemsFilter = {
+  title?: StringFilter | null | undefined;
+  description?: StringFilter | null | undefined;
+};
+
+export type HomepageServicesSectionFilter = {
+  eyebrow?: StringFilter | null | undefined;
+  heading?: StringFilter | null | undefined;
+  headingAccent?: StringFilter | null | undefined;
+  body?: StringFilter | null | undefined;
+  items?: HomepageServicesSectionItemsFilter | null | undefined;
+};
+
+export type HomepageEventsSectionFilter = {
+  eyebrow?: StringFilter | null | undefined;
+  heading?: StringFilter | null | undefined;
+  headingAccent?: StringFilter | null | undefined;
+  body?: StringFilter | null | undefined;
+  categories?: StringFilter | null | undefined;
+  featuredEvents?: StringFilter | null | undefined;
+};
+
+export type HomepageShowreelSectionVideosFilter = {
+  title?: StringFilter | null | undefined;
+  caption?: StringFilter | null | undefined;
+  thumb?: StringFilter | null | undefined;
+  videoUrl?: StringFilter | null | undefined;
+};
+
+export type HomepageShowreelSectionFilter = {
+  eyebrow?: StringFilter | null | undefined;
+  heading?: StringFilter | null | undefined;
+  headingAccent?: StringFilter | null | undefined;
+  openLabel?: StringFilter | null | undefined;
+  videos?: HomepageShowreelSectionVideosFilter | null | undefined;
+};
+
+export type HomepageTestimonialSectionTestimonialsFilter = {
+  quote?: StringFilter | null | undefined;
+  author?: StringFilter | null | undefined;
+  role?: StringFilter | null | undefined;
+  organization?: StringFilter | null | undefined;
+  event?: StringFilter | null | undefined;
+  avatarText?: StringFilter | null | undefined;
+};
+
+export type HomepageTestimonialSectionFilter = {
+  testimonials?: HomepageTestimonialSectionTestimonialsFilter | null | undefined;
+  ctaHeading?: StringFilter | null | undefined;
+  ctaBody?: StringFilter | null | undefined;
+  ctaLabel?: StringFilter | null | undefined;
+  ctaHref?: StringFilter | null | undefined;
+};
+
+export type HomepageFaqSectionItemsFilter = {
+  question?: StringFilter | null | undefined;
+  answer?: StringFilter | null | undefined;
+};
+
+export type HomepageFaqSectionFilter = {
+  eyebrow?: StringFilter | null | undefined;
+  heading?: StringFilter | null | undefined;
+  headingAccent?: StringFilter | null | undefined;
+  body?: StringFilter | null | undefined;
+  items?: HomepageFaqSectionItemsFilter | null | undefined;
+};
+
+export type HomepageFooterSectionFilter = {
+  eyebrow?: StringFilter | null | undefined;
+  heading?: StringFilter | null | undefined;
+  headingAccent?: StringFilter | null | undefined;
+  ctaLabel?: StringFilter | null | undefined;
+};
+
+export type HomepageFilter = {
+  identity?: HomepageIdentityFilter | null | undefined;
+  hero?: HomepageHeroFilter | null | undefined;
+  navigation?: HomepageNavigationFilter | null | undefined;
+  servicesSection?: HomepageServicesSectionFilter | null | undefined;
+  eventsSection?: HomepageEventsSectionFilter | null | undefined;
+  showreelSection?: HomepageShowreelSectionFilter | null | undefined;
+  testimonialSection?: HomepageTestimonialSectionFilter | null | undefined;
+  faqSection?: HomepageFaqSectionFilter | null | undefined;
+  footerSection?: HomepageFooterSectionFilter | null | undefined;
 };
 
 export type EventSpecsFilter = {
@@ -1131,11 +1304,6 @@ export type EventFilter = {
   tags?: StringFilter | null | undefined;
 };
 
-export type ServiceFilter = {
-  title?: StringFilter | null | undefined;
-  description?: StringFilter | null | undefined;
-};
-
 export type EquipmentItemsFilter = {
   name?: StringFilter | null | undefined;
   model?: StringFilter | null | undefined;
@@ -1164,61 +1332,32 @@ export type TimelineFilter = {
   technologies?: StringFilter | null | undefined;
 };
 
-export type TestimonialFilter = {
-  quote?: StringFilter | null | undefined;
-  author?: StringFilter | null | undefined;
-  role?: StringFilter | null | undefined;
-  organization?: StringFilter | null | undefined;
-  event?: StringFilter | null | undefined;
-  avatarText?: StringFilter | null | undefined;
-};
-
-export type ShowreelVideoFilter = {
-  title?: StringFilter | null | undefined;
-  caption?: StringFilter | null | undefined;
-  thumb?: StringFilter | null | undefined;
-  videoUrl?: StringFilter | null | undefined;
-};
-
-export type FaqFilter = {
-  question?: StringFilter | null | undefined;
-  answer?: StringFilter | null | undefined;
-};
-
-export type PersonalInfoPartsFragment = { __typename: 'PersonalInfo', name: string | null, title: string | null, subtitle: string | null, heroHeadline: string | null, tagline: string | null, portrait: string | null, showreelUrl: string | null, experienceYears: number | null, eventsCount: number | null, broadcastersCount: number | null, uptimePercentage: string | null, location: string | null, phone: string | null, email: string | null, whatsappUrl: string | null, workingHours: string | null, degree: string | null, degreeHonors: string | null, statusText: string | null, statusTextShort: string | null, statusActive: boolean | null, socials: Array<{ __typename: 'PersonalInfoSocials', label: string | null, url: string | null } | null> | null };
+export type HomepagePartsFragment = { __typename: 'Homepage', identity: { __typename: 'HomepageIdentity', name: string, title: string | null, subtitle: string | null, tagline: string | null, portrait: string | null, showreelUrl: string | null, experienceYears: number | null, uptimePercentage: string | null, location: string | null, phone: string | null, email: string | null, whatsappUrl: string | null, workingHours: string | null, degree: string | null, degreeHonors: string | null, statusText: string | null, statusTextShort: string | null, statusActive: boolean | null, socials: Array<{ __typename: 'HomepageIdentitySocials', label: string | null, url: string | null } | null> | null } | null, hero: { __typename: 'HomepageHero', eyebrow: string | null, headline: string | null, headlineAccent: string | null, ctaPrimaryLabel: string | null, ctaPrimaryHref: string | null, ctaSecondaryLabel: string | null, ctaSecondaryHref: string | null, stats: Array<{ __typename: 'HomepageHeroStats', value: string | null, label: string | null } | null> | null } | null, navigation: { __typename: 'HomepageNavigation', items: Array<{ __typename: 'HomepageNavigationItems', label: string | null, href: string | null, id: string | null, index: string | null } | null> | null } | null, servicesSection: { __typename: 'HomepageServicesSection', eyebrow: string | null, heading: string | null, headingAccent: string | null, body: string | null, items: Array<{ __typename: 'HomepageServicesSectionItems', title: string | null, description: string | null } | null> | null } | null, eventsSection: { __typename: 'HomepageEventsSection', eyebrow: string | null, heading: string | null, headingAccent: string | null, body: string | null, categories: Array<string | null> | null, featuredEvents: Array<string | null> | null } | null, showreelSection: { __typename: 'HomepageShowreelSection', eyebrow: string | null, heading: string | null, headingAccent: string | null, openLabel: string | null, videos: Array<{ __typename: 'HomepageShowreelSectionVideos', title: string, caption: string | null, thumb: string | null, videoUrl: string | null } | null> | null } | null, testimonialSection: { __typename: 'HomepageTestimonialSection', ctaHeading: string | null, ctaBody: string | null, ctaLabel: string | null, ctaHref: string | null, testimonials: Array<{ __typename: 'HomepageTestimonialSectionTestimonials', quote: string | null, author: string | null, role: string | null, organization: string | null, event: string | null, avatarText: string | null } | null> | null } | null, faqSection: { __typename: 'HomepageFaqSection', eyebrow: string | null, heading: string | null, headingAccent: string | null, body: string | null, items: Array<{ __typename: 'HomepageFaqSectionItems', question: string, answer: string | null } | null> | null } | null, footerSection: { __typename: 'HomepageFooterSection', eyebrow: string | null, heading: string | null, headingAccent: string | null, ctaLabel: string | null } | null };
 
 export type EventPartsFragment = { __typename: 'Event', slug: string, title: string | null, subtitle: string | null, category: string | null, venue: string | null, broadcaster: string | null, dates: string | null, role: string | null, heroImage: string | null, gallery: Array<string | null> | null, videoUrl: string | null, summary: string | null, cameraCount: number | null, technicalApproach: Array<string | null> | null, outcomes: Array<string | null> | null, improvementReflection: string | null, tags: Array<string | null> | null, specs: { __typename: 'EventSpecs', format: string | null, visionMixer: string | null, replay: string | null, cameras: string | null, syncRouter: string | null, audioIntercom: string | null } | null, keyStats: Array<{ __typename: 'EventKeyStats', label: string | null, value: string | null } | null> | null, signalFlow: Array<{ __typename: 'EventSignalFlow', step: string | null, description: string | null } | null> | null, challengesAndSolutions: Array<{ __typename: 'EventChallengesAndSolutions', challenge: string | null, solution: string | null, impact: string | null } | null> | null };
-
-export type ServicePartsFragment = { __typename: 'Service', title: string, description: string | null };
 
 export type EquipmentPartsFragment = { __typename: 'Equipment', name: string, iconName: string | null, description: string | null, items: Array<{ __typename: 'EquipmentItems', name: string | null, model: string | null, manufacturer: string | null, role: string | null, protocols: Array<string | null> | null, experienceYears: number | null, featured: boolean | null } | null> | null };
 
 export type TimelinePartsFragment = { __typename: 'Timeline', period: string, role: string | null, company: string | null, location: string | null, type: string | null, description: string | null, achievements: Array<string | null> | null, technologies: Array<string | null> | null };
 
-export type TestimonialPartsFragment = { __typename: 'Testimonial', quote: string, author: string | null, role: string | null, organization: string | null, event: string | null, avatarText: string | null };
-
-export type ShowreelVideoPartsFragment = { __typename: 'ShowreelVideo', title: string, caption: string | null, thumb: string | null, videoUrl: string | null };
-
-export type FaqPartsFragment = { __typename: 'Faq', question: string, answer: string | null };
-
-export type PersonalInfoQueryVariables = Exact<{
+export type HomepageQueryVariables = Exact<{
   relativePath: string;
 }>;
 
 
-export type PersonalInfoQuery = { personalInfo: { __typename: 'PersonalInfo', id: string, name: string | null, title: string | null, subtitle: string | null, heroHeadline: string | null, tagline: string | null, portrait: string | null, showreelUrl: string | null, experienceYears: number | null, eventsCount: number | null, broadcastersCount: number | null, uptimePercentage: string | null, location: string | null, phone: string | null, email: string | null, whatsappUrl: string | null, workingHours: string | null, degree: string | null, degreeHonors: string | null, statusText: string | null, statusTextShort: string | null, statusActive: boolean | null, _sys: { filename: string, basename: string, hasReferences: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, socials: Array<{ __typename: 'PersonalInfoSocials', label: string | null, url: string | null } | null> | null } };
+export type HomepageQuery = { homepage: { __typename: 'Homepage', id: string, _sys: { filename: string, basename: string, hasReferences: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, identity: { __typename: 'HomepageIdentity', name: string, title: string | null, subtitle: string | null, tagline: string | null, portrait: string | null, showreelUrl: string | null, experienceYears: number | null, uptimePercentage: string | null, location: string | null, phone: string | null, email: string | null, whatsappUrl: string | null, workingHours: string | null, degree: string | null, degreeHonors: string | null, statusText: string | null, statusTextShort: string | null, statusActive: boolean | null, socials: Array<{ __typename: 'HomepageIdentitySocials', label: string | null, url: string | null } | null> | null } | null, hero: { __typename: 'HomepageHero', eyebrow: string | null, headline: string | null, headlineAccent: string | null, ctaPrimaryLabel: string | null, ctaPrimaryHref: string | null, ctaSecondaryLabel: string | null, ctaSecondaryHref: string | null, stats: Array<{ __typename: 'HomepageHeroStats', value: string | null, label: string | null } | null> | null } | null, navigation: { __typename: 'HomepageNavigation', items: Array<{ __typename: 'HomepageNavigationItems', label: string | null, href: string | null, id: string | null, index: string | null } | null> | null } | null, servicesSection: { __typename: 'HomepageServicesSection', eyebrow: string | null, heading: string | null, headingAccent: string | null, body: string | null, items: Array<{ __typename: 'HomepageServicesSectionItems', title: string | null, description: string | null } | null> | null } | null, eventsSection: { __typename: 'HomepageEventsSection', eyebrow: string | null, heading: string | null, headingAccent: string | null, body: string | null, categories: Array<string | null> | null, featuredEvents: Array<string | null> | null } | null, showreelSection: { __typename: 'HomepageShowreelSection', eyebrow: string | null, heading: string | null, headingAccent: string | null, openLabel: string | null, videos: Array<{ __typename: 'HomepageShowreelSectionVideos', title: string, caption: string | null, thumb: string | null, videoUrl: string | null } | null> | null } | null, testimonialSection: { __typename: 'HomepageTestimonialSection', ctaHeading: string | null, ctaBody: string | null, ctaLabel: string | null, ctaHref: string | null, testimonials: Array<{ __typename: 'HomepageTestimonialSectionTestimonials', quote: string | null, author: string | null, role: string | null, organization: string | null, event: string | null, avatarText: string | null } | null> | null } | null, faqSection: { __typename: 'HomepageFaqSection', eyebrow: string | null, heading: string | null, headingAccent: string | null, body: string | null, items: Array<{ __typename: 'HomepageFaqSectionItems', question: string, answer: string | null } | null> | null } | null, footerSection: { __typename: 'HomepageFooterSection', eyebrow: string | null, heading: string | null, headingAccent: string | null, ctaLabel: string | null } | null } };
 
-export type PersonalInfoConnectionQueryVariables = Exact<{
+export type HomepageConnectionQueryVariables = Exact<{
   before?: string | null | undefined;
   after?: string | null | undefined;
   first?: number | null | undefined;
   last?: number | null | undefined;
   sort?: string | null | undefined;
-  filter?: PersonalInfoFilter | null | undefined;
+  filter?: HomepageFilter | null | undefined;
 }>;
 
 
-export type PersonalInfoConnectionQuery = { personalInfoConnection: { totalCount: number, pageInfo: { hasPreviousPage: boolean, hasNextPage: boolean, startCursor: string, endCursor: string }, edges: Array<{ cursor: string, node: { __typename: 'PersonalInfo', id: string, name: string | null, title: string | null, subtitle: string | null, heroHeadline: string | null, tagline: string | null, portrait: string | null, showreelUrl: string | null, experienceYears: number | null, eventsCount: number | null, broadcastersCount: number | null, uptimePercentage: string | null, location: string | null, phone: string | null, email: string | null, whatsappUrl: string | null, workingHours: string | null, degree: string | null, degreeHonors: string | null, statusText: string | null, statusTextShort: string | null, statusActive: boolean | null, _sys: { filename: string, basename: string, hasReferences: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, socials: Array<{ __typename: 'PersonalInfoSocials', label: string | null, url: string | null } | null> | null } | null } | null> | null } };
+export type HomepageConnectionQuery = { homepageConnection: { totalCount: number, pageInfo: { hasPreviousPage: boolean, hasNextPage: boolean, startCursor: string, endCursor: string }, edges: Array<{ cursor: string, node: { __typename: 'Homepage', id: string, _sys: { filename: string, basename: string, hasReferences: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, identity: { __typename: 'HomepageIdentity', name: string, title: string | null, subtitle: string | null, tagline: string | null, portrait: string | null, showreelUrl: string | null, experienceYears: number | null, uptimePercentage: string | null, location: string | null, phone: string | null, email: string | null, whatsappUrl: string | null, workingHours: string | null, degree: string | null, degreeHonors: string | null, statusText: string | null, statusTextShort: string | null, statusActive: boolean | null, socials: Array<{ __typename: 'HomepageIdentitySocials', label: string | null, url: string | null } | null> | null } | null, hero: { __typename: 'HomepageHero', eyebrow: string | null, headline: string | null, headlineAccent: string | null, ctaPrimaryLabel: string | null, ctaPrimaryHref: string | null, ctaSecondaryLabel: string | null, ctaSecondaryHref: string | null, stats: Array<{ __typename: 'HomepageHeroStats', value: string | null, label: string | null } | null> | null } | null, navigation: { __typename: 'HomepageNavigation', items: Array<{ __typename: 'HomepageNavigationItems', label: string | null, href: string | null, id: string | null, index: string | null } | null> | null } | null, servicesSection: { __typename: 'HomepageServicesSection', eyebrow: string | null, heading: string | null, headingAccent: string | null, body: string | null, items: Array<{ __typename: 'HomepageServicesSectionItems', title: string | null, description: string | null } | null> | null } | null, eventsSection: { __typename: 'HomepageEventsSection', eyebrow: string | null, heading: string | null, headingAccent: string | null, body: string | null, categories: Array<string | null> | null, featuredEvents: Array<string | null> | null } | null, showreelSection: { __typename: 'HomepageShowreelSection', eyebrow: string | null, heading: string | null, headingAccent: string | null, openLabel: string | null, videos: Array<{ __typename: 'HomepageShowreelSectionVideos', title: string, caption: string | null, thumb: string | null, videoUrl: string | null } | null> | null } | null, testimonialSection: { __typename: 'HomepageTestimonialSection', ctaHeading: string | null, ctaBody: string | null, ctaLabel: string | null, ctaHref: string | null, testimonials: Array<{ __typename: 'HomepageTestimonialSectionTestimonials', quote: string | null, author: string | null, role: string | null, organization: string | null, event: string | null, avatarText: string | null } | null> | null } | null, faqSection: { __typename: 'HomepageFaqSection', eyebrow: string | null, heading: string | null, headingAccent: string | null, body: string | null, items: Array<{ __typename: 'HomepageFaqSectionItems', question: string, answer: string | null } | null> | null } | null, footerSection: { __typename: 'HomepageFooterSection', eyebrow: string | null, heading: string | null, headingAccent: string | null, ctaLabel: string | null } | null } | null } | null> | null } };
 
 export type EventQueryVariables = Exact<{
   relativePath: string;
@@ -1238,25 +1377,6 @@ export type EventConnectionQueryVariables = Exact<{
 
 
 export type EventConnectionQuery = { eventConnection: { totalCount: number, pageInfo: { hasPreviousPage: boolean, hasNextPage: boolean, startCursor: string, endCursor: string }, edges: Array<{ cursor: string, node: { __typename: 'Event', id: string, slug: string, title: string | null, subtitle: string | null, category: string | null, venue: string | null, broadcaster: string | null, dates: string | null, role: string | null, heroImage: string | null, gallery: Array<string | null> | null, videoUrl: string | null, summary: string | null, cameraCount: number | null, technicalApproach: Array<string | null> | null, outcomes: Array<string | null> | null, improvementReflection: string | null, tags: Array<string | null> | null, _sys: { filename: string, basename: string, hasReferences: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, specs: { __typename: 'EventSpecs', format: string | null, visionMixer: string | null, replay: string | null, cameras: string | null, syncRouter: string | null, audioIntercom: string | null } | null, keyStats: Array<{ __typename: 'EventKeyStats', label: string | null, value: string | null } | null> | null, signalFlow: Array<{ __typename: 'EventSignalFlow', step: string | null, description: string | null } | null> | null, challengesAndSolutions: Array<{ __typename: 'EventChallengesAndSolutions', challenge: string | null, solution: string | null, impact: string | null } | null> | null } | null } | null> | null } };
-
-export type ServiceQueryVariables = Exact<{
-  relativePath: string;
-}>;
-
-
-export type ServiceQuery = { service: { __typename: 'Service', id: string, title: string, description: string | null, _sys: { filename: string, basename: string, hasReferences: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string } } };
-
-export type ServiceConnectionQueryVariables = Exact<{
-  before?: string | null | undefined;
-  after?: string | null | undefined;
-  first?: number | null | undefined;
-  last?: number | null | undefined;
-  sort?: string | null | undefined;
-  filter?: ServiceFilter | null | undefined;
-}>;
-
-
-export type ServiceConnectionQuery = { serviceConnection: { totalCount: number, pageInfo: { hasPreviousPage: boolean, hasNextPage: boolean, startCursor: string, endCursor: string }, edges: Array<{ cursor: string, node: { __typename: 'Service', id: string, title: string, description: string | null, _sys: { filename: string, basename: string, hasReferences: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string } } | null } | null> | null } };
 
 export type EquipmentQueryVariables = Exact<{
   relativePath: string;
@@ -1296,92 +1416,130 @@ export type TimelineConnectionQueryVariables = Exact<{
 
 export type TimelineConnectionQuery = { timelineConnection: { totalCount: number, pageInfo: { hasPreviousPage: boolean, hasNextPage: boolean, startCursor: string, endCursor: string }, edges: Array<{ cursor: string, node: { __typename: 'Timeline', id: string, period: string, role: string | null, company: string | null, location: string | null, type: string | null, description: string | null, achievements: Array<string | null> | null, technologies: Array<string | null> | null, _sys: { filename: string, basename: string, hasReferences: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string } } | null } | null> | null } };
 
-export type TestimonialQueryVariables = Exact<{
-  relativePath: string;
-}>;
-
-
-export type TestimonialQuery = { testimonial: { __typename: 'Testimonial', id: string, quote: string, author: string | null, role: string | null, organization: string | null, event: string | null, avatarText: string | null, _sys: { filename: string, basename: string, hasReferences: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string } } };
-
-export type TestimonialConnectionQueryVariables = Exact<{
-  before?: string | null | undefined;
-  after?: string | null | undefined;
-  first?: number | null | undefined;
-  last?: number | null | undefined;
-  sort?: string | null | undefined;
-  filter?: TestimonialFilter | null | undefined;
-}>;
-
-
-export type TestimonialConnectionQuery = { testimonialConnection: { totalCount: number, pageInfo: { hasPreviousPage: boolean, hasNextPage: boolean, startCursor: string, endCursor: string }, edges: Array<{ cursor: string, node: { __typename: 'Testimonial', id: string, quote: string, author: string | null, role: string | null, organization: string | null, event: string | null, avatarText: string | null, _sys: { filename: string, basename: string, hasReferences: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string } } | null } | null> | null } };
-
-export type ShowreelVideoQueryVariables = Exact<{
-  relativePath: string;
-}>;
-
-
-export type ShowreelVideoQuery = { showreelVideo: { __typename: 'ShowreelVideo', id: string, title: string, caption: string | null, thumb: string | null, videoUrl: string | null, _sys: { filename: string, basename: string, hasReferences: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string } } };
-
-export type ShowreelVideoConnectionQueryVariables = Exact<{
-  before?: string | null | undefined;
-  after?: string | null | undefined;
-  first?: number | null | undefined;
-  last?: number | null | undefined;
-  sort?: string | null | undefined;
-  filter?: ShowreelVideoFilter | null | undefined;
-}>;
-
-
-export type ShowreelVideoConnectionQuery = { showreelVideoConnection: { totalCount: number, pageInfo: { hasPreviousPage: boolean, hasNextPage: boolean, startCursor: string, endCursor: string }, edges: Array<{ cursor: string, node: { __typename: 'ShowreelVideo', id: string, title: string, caption: string | null, thumb: string | null, videoUrl: string | null, _sys: { filename: string, basename: string, hasReferences: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string } } | null } | null> | null } };
-
-export type FaqQueryVariables = Exact<{
-  relativePath: string;
-}>;
-
-
-export type FaqQuery = { faq: { __typename: 'Faq', id: string, question: string, answer: string | null, _sys: { filename: string, basename: string, hasReferences: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string } } };
-
-export type FaqConnectionQueryVariables = Exact<{
-  before?: string | null | undefined;
-  after?: string | null | undefined;
-  first?: number | null | undefined;
-  last?: number | null | undefined;
-  sort?: string | null | undefined;
-  filter?: FaqFilter | null | undefined;
-}>;
-
-
-export type FaqConnectionQuery = { faqConnection: { totalCount: number, pageInfo: { hasPreviousPage: boolean, hasNextPage: boolean, startCursor: string, endCursor: string }, edges: Array<{ cursor: string, node: { __typename: 'Faq', id: string, question: string, answer: string | null, _sys: { filename: string, basename: string, hasReferences: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string } } | null } | null> | null } };
-
-export const PersonalInfoPartsFragmentDoc = gql`
-    fragment PersonalInfoParts on PersonalInfo {
+export const HomepagePartsFragmentDoc = gql`
+    fragment HomepageParts on Homepage {
   __typename
-  name
-  title
-  subtitle
-  heroHeadline
-  tagline
-  portrait
-  showreelUrl
-  experienceYears
-  eventsCount
-  broadcastersCount
-  uptimePercentage
-  location
-  phone
-  email
-  whatsappUrl
-  workingHours
-  socials {
+  identity {
     __typename
-    label
-    url
+    name
+    title
+    subtitle
+    tagline
+    portrait
+    showreelUrl
+    experienceYears
+    uptimePercentage
+    location
+    phone
+    email
+    whatsappUrl
+    workingHours
+    socials {
+      __typename
+      label
+      url
+    }
+    degree
+    degreeHonors
+    statusText
+    statusTextShort
+    statusActive
   }
-  degree
-  degreeHonors
-  statusText
-  statusTextShort
-  statusActive
+  hero {
+    __typename
+    eyebrow
+    headline
+    headlineAccent
+    ctaPrimaryLabel
+    ctaPrimaryHref
+    ctaSecondaryLabel
+    ctaSecondaryHref
+    stats {
+      __typename
+      value
+      label
+    }
+  }
+  navigation {
+    __typename
+    items {
+      __typename
+      label
+      href
+      id
+      index
+    }
+  }
+  servicesSection {
+    __typename
+    eyebrow
+    heading
+    headingAccent
+    body
+    items {
+      __typename
+      title
+      description
+    }
+  }
+  eventsSection {
+    __typename
+    eyebrow
+    heading
+    headingAccent
+    body
+    categories
+    featuredEvents
+  }
+  showreelSection {
+    __typename
+    eyebrow
+    heading
+    headingAccent
+    openLabel
+    videos {
+      __typename
+      title
+      caption
+      thumb
+      videoUrl
+    }
+  }
+  testimonialSection {
+    __typename
+    testimonials {
+      __typename
+      quote
+      author
+      role
+      organization
+      event
+      avatarText
+    }
+    ctaHeading
+    ctaBody
+    ctaLabel
+    ctaHref
+  }
+  faqSection {
+    __typename
+    eyebrow
+    heading
+    headingAccent
+    body
+    items {
+      __typename
+      question
+      answer
+    }
+  }
+  footerSection {
+    __typename
+    eyebrow
+    heading
+    headingAccent
+    ctaLabel
+  }
 }
     `;
 export const EventPartsFragmentDoc = gql`
@@ -1431,13 +1589,6 @@ export const EventPartsFragmentDoc = gql`
   tags
 }
     `;
-export const ServicePartsFragmentDoc = gql`
-    fragment ServiceParts on Service {
-  __typename
-  title
-  description
-}
-    `;
 export const EquipmentPartsFragmentDoc = gql`
     fragment EquipmentParts on Equipment {
   __typename
@@ -1469,36 +1620,9 @@ export const TimelinePartsFragmentDoc = gql`
   technologies
 }
     `;
-export const TestimonialPartsFragmentDoc = gql`
-    fragment TestimonialParts on Testimonial {
-  __typename
-  quote
-  author
-  role
-  organization
-  event
-  avatarText
-}
-    `;
-export const ShowreelVideoPartsFragmentDoc = gql`
-    fragment ShowreelVideoParts on ShowreelVideo {
-  __typename
-  title
-  caption
-  thumb
-  videoUrl
-}
-    `;
-export const FaqPartsFragmentDoc = gql`
-    fragment FaqParts on Faq {
-  __typename
-  question
-  answer
-}
-    `;
-export const PersonalInfoDocument = gql`
-    query personalInfo($relativePath: String!) {
-  personalInfo(relativePath: $relativePath) {
+export const HomepageDocument = gql`
+    query homepage($relativePath: String!) {
+  homepage(relativePath: $relativePath) {
     ... on Document {
       _sys {
         filename
@@ -1511,13 +1635,13 @@ export const PersonalInfoDocument = gql`
       }
       id
     }
-    ...PersonalInfoParts
+    ...HomepageParts
   }
 }
-    ${PersonalInfoPartsFragmentDoc}`;
-export const PersonalInfoConnectionDocument = gql`
-    query personalInfoConnection($before: String, $after: String, $first: Float, $last: Float, $sort: String, $filter: PersonalInfoFilter) {
-  personalInfoConnection(
+    ${HomepagePartsFragmentDoc}`;
+export const HomepageConnectionDocument = gql`
+    query homepageConnection($before: String, $after: String, $first: Float, $last: Float, $sort: String, $filter: HomepageFilter) {
+  homepageConnection(
     before: $before
     after: $after
     first: $first
@@ -1547,12 +1671,12 @@ export const PersonalInfoConnectionDocument = gql`
           }
           id
         }
-        ...PersonalInfoParts
+        ...HomepageParts
       }
     }
   }
 }
-    ${PersonalInfoPartsFragmentDoc}`;
+    ${HomepagePartsFragmentDoc}`;
 export const EventDocument = gql`
     query event($relativePath: String!) {
   event(relativePath: $relativePath) {
@@ -1610,63 +1734,6 @@ export const EventConnectionDocument = gql`
   }
 }
     ${EventPartsFragmentDoc}`;
-export const ServiceDocument = gql`
-    query service($relativePath: String!) {
-  service(relativePath: $relativePath) {
-    ... on Document {
-      _sys {
-        filename
-        basename
-        hasReferences
-        breadcrumbs
-        path
-        relativePath
-        extension
-      }
-      id
-    }
-    ...ServiceParts
-  }
-}
-    ${ServicePartsFragmentDoc}`;
-export const ServiceConnectionDocument = gql`
-    query serviceConnection($before: String, $after: String, $first: Float, $last: Float, $sort: String, $filter: ServiceFilter) {
-  serviceConnection(
-    before: $before
-    after: $after
-    first: $first
-    last: $last
-    sort: $sort
-    filter: $filter
-  ) {
-    pageInfo {
-      hasPreviousPage
-      hasNextPage
-      startCursor
-      endCursor
-    }
-    totalCount
-    edges {
-      cursor
-      node {
-        ... on Document {
-          _sys {
-            filename
-            basename
-            hasReferences
-            breadcrumbs
-            path
-            relativePath
-            extension
-          }
-          id
-        }
-        ...ServiceParts
-      }
-    }
-  }
-}
-    ${ServicePartsFragmentDoc}`;
 export const EquipmentDocument = gql`
     query equipment($relativePath: String!) {
   equipment(relativePath: $relativePath) {
@@ -1781,197 +1848,20 @@ export const TimelineConnectionDocument = gql`
   }
 }
     ${TimelinePartsFragmentDoc}`;
-export const TestimonialDocument = gql`
-    query testimonial($relativePath: String!) {
-  testimonial(relativePath: $relativePath) {
-    ... on Document {
-      _sys {
-        filename
-        basename
-        hasReferences
-        breadcrumbs
-        path
-        relativePath
-        extension
-      }
-      id
-    }
-    ...TestimonialParts
-  }
-}
-    ${TestimonialPartsFragmentDoc}`;
-export const TestimonialConnectionDocument = gql`
-    query testimonialConnection($before: String, $after: String, $first: Float, $last: Float, $sort: String, $filter: TestimonialFilter) {
-  testimonialConnection(
-    before: $before
-    after: $after
-    first: $first
-    last: $last
-    sort: $sort
-    filter: $filter
-  ) {
-    pageInfo {
-      hasPreviousPage
-      hasNextPage
-      startCursor
-      endCursor
-    }
-    totalCount
-    edges {
-      cursor
-      node {
-        ... on Document {
-          _sys {
-            filename
-            basename
-            hasReferences
-            breadcrumbs
-            path
-            relativePath
-            extension
-          }
-          id
-        }
-        ...TestimonialParts
-      }
-    }
-  }
-}
-    ${TestimonialPartsFragmentDoc}`;
-export const ShowreelVideoDocument = gql`
-    query showreelVideo($relativePath: String!) {
-  showreelVideo(relativePath: $relativePath) {
-    ... on Document {
-      _sys {
-        filename
-        basename
-        hasReferences
-        breadcrumbs
-        path
-        relativePath
-        extension
-      }
-      id
-    }
-    ...ShowreelVideoParts
-  }
-}
-    ${ShowreelVideoPartsFragmentDoc}`;
-export const ShowreelVideoConnectionDocument = gql`
-    query showreelVideoConnection($before: String, $after: String, $first: Float, $last: Float, $sort: String, $filter: ShowreelVideoFilter) {
-  showreelVideoConnection(
-    before: $before
-    after: $after
-    first: $first
-    last: $last
-    sort: $sort
-    filter: $filter
-  ) {
-    pageInfo {
-      hasPreviousPage
-      hasNextPage
-      startCursor
-      endCursor
-    }
-    totalCount
-    edges {
-      cursor
-      node {
-        ... on Document {
-          _sys {
-            filename
-            basename
-            hasReferences
-            breadcrumbs
-            path
-            relativePath
-            extension
-          }
-          id
-        }
-        ...ShowreelVideoParts
-      }
-    }
-  }
-}
-    ${ShowreelVideoPartsFragmentDoc}`;
-export const FaqDocument = gql`
-    query faq($relativePath: String!) {
-  faq(relativePath: $relativePath) {
-    ... on Document {
-      _sys {
-        filename
-        basename
-        hasReferences
-        breadcrumbs
-        path
-        relativePath
-        extension
-      }
-      id
-    }
-    ...FaqParts
-  }
-}
-    ${FaqPartsFragmentDoc}`;
-export const FaqConnectionDocument = gql`
-    query faqConnection($before: String, $after: String, $first: Float, $last: Float, $sort: String, $filter: FaqFilter) {
-  faqConnection(
-    before: $before
-    after: $after
-    first: $first
-    last: $last
-    sort: $sort
-    filter: $filter
-  ) {
-    pageInfo {
-      hasPreviousPage
-      hasNextPage
-      startCursor
-      endCursor
-    }
-    totalCount
-    edges {
-      cursor
-      node {
-        ... on Document {
-          _sys {
-            filename
-            basename
-            hasReferences
-            breadcrumbs
-            path
-            relativePath
-            extension
-          }
-          id
-        }
-        ...FaqParts
-      }
-    }
-  }
-}
-    ${FaqPartsFragmentDoc}`;
 export type Requester<C= {}> = <R, V>(doc: DocumentNode, vars?: V, options?: C) => Promise<R>
   export function getSdk<C>(requester: Requester<C>) {
     return {
-      personalInfo(variables: PersonalInfoQueryVariables, options?: C): Promise<{data: PersonalInfoQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: PersonalInfoQueryVariables, query: string}> {
-        return requester<{data: PersonalInfoQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: PersonalInfoQueryVariables, query: string}, PersonalInfoQueryVariables>(PersonalInfoDocument, variables, options);
+      homepage(variables: HomepageQueryVariables, options?: C): Promise<{data: HomepageQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: HomepageQueryVariables, query: string}> {
+        return requester<{data: HomepageQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: HomepageQueryVariables, query: string}, HomepageQueryVariables>(HomepageDocument, variables, options);
       },
-    personalInfoConnection(variables?: PersonalInfoConnectionQueryVariables, options?: C): Promise<{data: PersonalInfoConnectionQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: PersonalInfoConnectionQueryVariables, query: string}> {
-        return requester<{data: PersonalInfoConnectionQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: PersonalInfoConnectionQueryVariables, query: string}, PersonalInfoConnectionQueryVariables>(PersonalInfoConnectionDocument, variables, options);
+    homepageConnection(variables?: HomepageConnectionQueryVariables, options?: C): Promise<{data: HomepageConnectionQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: HomepageConnectionQueryVariables, query: string}> {
+        return requester<{data: HomepageConnectionQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: HomepageConnectionQueryVariables, query: string}, HomepageConnectionQueryVariables>(HomepageConnectionDocument, variables, options);
       },
     event(variables: EventQueryVariables, options?: C): Promise<{data: EventQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: EventQueryVariables, query: string}> {
         return requester<{data: EventQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: EventQueryVariables, query: string}, EventQueryVariables>(EventDocument, variables, options);
       },
     eventConnection(variables?: EventConnectionQueryVariables, options?: C): Promise<{data: EventConnectionQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: EventConnectionQueryVariables, query: string}> {
         return requester<{data: EventConnectionQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: EventConnectionQueryVariables, query: string}, EventConnectionQueryVariables>(EventConnectionDocument, variables, options);
-      },
-    service(variables: ServiceQueryVariables, options?: C): Promise<{data: ServiceQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: ServiceQueryVariables, query: string}> {
-        return requester<{data: ServiceQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: ServiceQueryVariables, query: string}, ServiceQueryVariables>(ServiceDocument, variables, options);
-      },
-    serviceConnection(variables?: ServiceConnectionQueryVariables, options?: C): Promise<{data: ServiceConnectionQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: ServiceConnectionQueryVariables, query: string}> {
-        return requester<{data: ServiceConnectionQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: ServiceConnectionQueryVariables, query: string}, ServiceConnectionQueryVariables>(ServiceConnectionDocument, variables, options);
       },
     equipment(variables: EquipmentQueryVariables, options?: C): Promise<{data: EquipmentQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: EquipmentQueryVariables, query: string}> {
         return requester<{data: EquipmentQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: EquipmentQueryVariables, query: string}, EquipmentQueryVariables>(EquipmentDocument, variables, options);
@@ -1984,24 +1874,6 @@ export type Requester<C= {}> = <R, V>(doc: DocumentNode, vars?: V, options?: C) 
       },
     timelineConnection(variables?: TimelineConnectionQueryVariables, options?: C): Promise<{data: TimelineConnectionQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: TimelineConnectionQueryVariables, query: string}> {
         return requester<{data: TimelineConnectionQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: TimelineConnectionQueryVariables, query: string}, TimelineConnectionQueryVariables>(TimelineConnectionDocument, variables, options);
-      },
-    testimonial(variables: TestimonialQueryVariables, options?: C): Promise<{data: TestimonialQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: TestimonialQueryVariables, query: string}> {
-        return requester<{data: TestimonialQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: TestimonialQueryVariables, query: string}, TestimonialQueryVariables>(TestimonialDocument, variables, options);
-      },
-    testimonialConnection(variables?: TestimonialConnectionQueryVariables, options?: C): Promise<{data: TestimonialConnectionQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: TestimonialConnectionQueryVariables, query: string}> {
-        return requester<{data: TestimonialConnectionQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: TestimonialConnectionQueryVariables, query: string}, TestimonialConnectionQueryVariables>(TestimonialConnectionDocument, variables, options);
-      },
-    showreelVideo(variables: ShowreelVideoQueryVariables, options?: C): Promise<{data: ShowreelVideoQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: ShowreelVideoQueryVariables, query: string}> {
-        return requester<{data: ShowreelVideoQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: ShowreelVideoQueryVariables, query: string}, ShowreelVideoQueryVariables>(ShowreelVideoDocument, variables, options);
-      },
-    showreelVideoConnection(variables?: ShowreelVideoConnectionQueryVariables, options?: C): Promise<{data: ShowreelVideoConnectionQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: ShowreelVideoConnectionQueryVariables, query: string}> {
-        return requester<{data: ShowreelVideoConnectionQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: ShowreelVideoConnectionQueryVariables, query: string}, ShowreelVideoConnectionQueryVariables>(ShowreelVideoConnectionDocument, variables, options);
-      },
-    faq(variables: FaqQueryVariables, options?: C): Promise<{data: FaqQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: FaqQueryVariables, query: string}> {
-        return requester<{data: FaqQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: FaqQueryVariables, query: string}, FaqQueryVariables>(FaqDocument, variables, options);
-      },
-    faqConnection(variables?: FaqConnectionQueryVariables, options?: C): Promise<{data: FaqConnectionQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: FaqConnectionQueryVariables, query: string}> {
-        return requester<{data: FaqConnectionQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: FaqConnectionQueryVariables, query: string}, FaqConnectionQueryVariables>(FaqConnectionDocument, variables, options);
       }
     };
   }

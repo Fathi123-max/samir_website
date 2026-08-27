@@ -1,16 +1,17 @@
 "use client";
 
 import React from "react";
-import type { FaqItem } from "@/lib/types";
+import type { FaqSection } from "@/lib/types";
 import { Reveal } from "./Reveal";
 import { Plus, Minus } from "lucide-react";
 
 interface FaqProps {
-  items: FaqItem[];
+  faq: FaqSection;
 }
 
-export function Faq({ items }: FaqProps) {
-  const [openId, setOpenId] = React.useState<string | null>(items[0]?.id ?? null);
+export function Faq({ faq }: FaqProps) {
+  const items = faq.items;
+  const [openIndex, setOpenIndex] = React.useState<number | null>(0);
 
   return (
     <section
@@ -23,19 +24,17 @@ export function Faq({ items }: FaqProps) {
           {/* Section header */}
           <div className="lg:col-span-5">
             <Reveal direction="up">
-              <p className="eyebrow text-signal mb-4">04 · FAQ</p>
+              <p className="eyebrow text-signal mb-4">{faq.eyebrow}</p>
             </Reveal>
             <Reveal direction="up" delay={0.08}>
               <h2 className="fluid-h2 font-display font-semibold text-ink">
-                Frequently asked{" "}
-                <em className="italic text-signal">questions</em>.
+                {faq.heading}{" "}
+                <em className="italic text-signal">{faq.headingAccent}</em>.
               </h2>
             </Reveal>
             <Reveal direction="up" delay={0.16}>
               <p className="text-zinc-600 fluid-body mt-5 max-w-md">
-                Find helpful answers about the video production process,
-                project planning, timelines, and working with Samir Elgammal in
-                Dubai, United Arab Emirates.
+                {faq.body}
               </p>
             </Reveal>
           </div>
@@ -43,17 +42,17 @@ export function Faq({ items }: FaqProps) {
           {/* Accordion */}
           <Reveal direction="up" delay={0.2} className="lg:col-span-7">
             <div className="border-t border-hairline">
-              {items.map((item) => {
-                const isOpen = openId === item.id;
+              {items.map((item, index) => {
+                const isOpen = openIndex === index;
                 return (
-                  <div key={item.id} className="border-b border-hairline">
+                  <div key={index} className="border-b border-hairline">
                     <h3>
                       <button
                         type="button"
-                        onClick={() => setOpenId(isOpen ? null : item.id)}
+                        onClick={() => setOpenIndex(isOpen ? null : index)}
                         aria-expanded={isOpen}
-                        aria-controls={`faq-panel-${item.id}`}
-                        id={`faq-trigger-${item.id}`}
+                        aria-controls={`faq-panel-${index}`}
+                        id={`faq-trigger-${index}`}
                         className="group w-full flex items-center justify-between gap-4 text-left py-5 sm:py-6 min-h-[56px] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-signal rounded -mx-1 px-1"
                       >
                         <span
@@ -81,9 +80,9 @@ export function Faq({ items }: FaqProps) {
                       </button>
                     </h3>
                     <div
-                      id={`faq-panel-${item.id}`}
+                      id={`faq-panel-${index}`}
                       role="region"
-                      aria-labelledby={`faq-trigger-${item.id}`}
+                      aria-labelledby={`faq-trigger-${index}`}
                       className="faq-panel"
                       data-open={isOpen}
                     >
@@ -103,3 +102,4 @@ export function Faq({ items }: FaqProps) {
     </section>
   );
 }
+

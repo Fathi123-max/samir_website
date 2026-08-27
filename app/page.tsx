@@ -6,16 +6,17 @@ export const dynamic = "force-static";
 
 export default async function HomePage() {
   const cms = await getCmsData();
+  const identity = cms.homepageValue.identity;
 
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "Person",
-    name: cms.personalInfoValue.name,
-    jobTitle: cms.personalInfoValue.title,
-    description: cms.personalInfoValue.tagline,
+    name: identity.name,
+    jobTitle: identity.title,
+    description: identity.tagline,
     url: "https://samirelgammal.com",
-    telephone: cms.personalInfoValue.phone,
-    email: cms.personalInfoValue.email,
+    telephone: identity.phone,
+    email: identity.email,
     address: {
       "@type": "PostalAddress",
       addressLocality: "Dubai",

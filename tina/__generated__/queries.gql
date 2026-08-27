@@ -1,5 +1,5 @@
-query personalInfo($relativePath: String!) {
-  personalInfo(relativePath: $relativePath) {
+query homepage($relativePath: String!) {
+  homepage(relativePath: $relativePath) {
     ... on Document {
       _sys {
         filename
@@ -12,12 +12,12 @@ query personalInfo($relativePath: String!) {
       }
       id
     }
-    ...PersonalInfoParts
+    ...HomepageParts
   }
 }
 
-query personalInfoConnection($before: String, $after: String, $first: Float, $last: Float, $sort: String, $filter: PersonalInfoFilter) {
-  personalInfoConnection(
+query homepageConnection($before: String, $after: String, $first: Float, $last: Float, $sort: String, $filter: HomepageFilter) {
+  homepageConnection(
     before: $before
     after: $after
     first: $first
@@ -47,7 +47,7 @@ query personalInfoConnection($before: String, $after: String, $first: Float, $la
           }
           id
         }
-        ...PersonalInfoParts
+        ...HomepageParts
       }
     }
   }
@@ -103,61 +103,6 @@ query eventConnection($before: String, $after: String, $first: Float, $last: Flo
           id
         }
         ...EventParts
-      }
-    }
-  }
-}
-
-query service($relativePath: String!) {
-  service(relativePath: $relativePath) {
-    ... on Document {
-      _sys {
-        filename
-        basename
-        hasReferences
-        breadcrumbs
-        path
-        relativePath
-        extension
-      }
-      id
-    }
-    ...ServiceParts
-  }
-}
-
-query serviceConnection($before: String, $after: String, $first: Float, $last: Float, $sort: String, $filter: ServiceFilter) {
-  serviceConnection(
-    before: $before
-    after: $after
-    first: $first
-    last: $last
-    sort: $sort
-    filter: $filter
-  ) {
-    pageInfo {
-      hasPreviousPage
-      hasNextPage
-      startCursor
-      endCursor
-    }
-    totalCount
-    edges {
-      cursor
-      node {
-        ... on Document {
-          _sys {
-            filename
-            basename
-            hasReferences
-            breadcrumbs
-            path
-            relativePath
-            extension
-          }
-          id
-        }
-        ...ServiceParts
       }
     }
   }
@@ -268,171 +213,6 @@ query timelineConnection($before: String, $after: String, $first: Float, $last: 
           id
         }
         ...TimelineParts
-      }
-    }
-  }
-}
-
-query testimonial($relativePath: String!) {
-  testimonial(relativePath: $relativePath) {
-    ... on Document {
-      _sys {
-        filename
-        basename
-        hasReferences
-        breadcrumbs
-        path
-        relativePath
-        extension
-      }
-      id
-    }
-    ...TestimonialParts
-  }
-}
-
-query testimonialConnection($before: String, $after: String, $first: Float, $last: Float, $sort: String, $filter: TestimonialFilter) {
-  testimonialConnection(
-    before: $before
-    after: $after
-    first: $first
-    last: $last
-    sort: $sort
-    filter: $filter
-  ) {
-    pageInfo {
-      hasPreviousPage
-      hasNextPage
-      startCursor
-      endCursor
-    }
-    totalCount
-    edges {
-      cursor
-      node {
-        ... on Document {
-          _sys {
-            filename
-            basename
-            hasReferences
-            breadcrumbs
-            path
-            relativePath
-            extension
-          }
-          id
-        }
-        ...TestimonialParts
-      }
-    }
-  }
-}
-
-query showreelVideo($relativePath: String!) {
-  showreelVideo(relativePath: $relativePath) {
-    ... on Document {
-      _sys {
-        filename
-        basename
-        hasReferences
-        breadcrumbs
-        path
-        relativePath
-        extension
-      }
-      id
-    }
-    ...ShowreelVideoParts
-  }
-}
-
-query showreelVideoConnection($before: String, $after: String, $first: Float, $last: Float, $sort: String, $filter: ShowreelVideoFilter) {
-  showreelVideoConnection(
-    before: $before
-    after: $after
-    first: $first
-    last: $last
-    sort: $sort
-    filter: $filter
-  ) {
-    pageInfo {
-      hasPreviousPage
-      hasNextPage
-      startCursor
-      endCursor
-    }
-    totalCount
-    edges {
-      cursor
-      node {
-        ... on Document {
-          _sys {
-            filename
-            basename
-            hasReferences
-            breadcrumbs
-            path
-            relativePath
-            extension
-          }
-          id
-        }
-        ...ShowreelVideoParts
-      }
-    }
-  }
-}
-
-query faq($relativePath: String!) {
-  faq(relativePath: $relativePath) {
-    ... on Document {
-      _sys {
-        filename
-        basename
-        hasReferences
-        breadcrumbs
-        path
-        relativePath
-        extension
-      }
-      id
-    }
-    ...FaqParts
-  }
-}
-
-query faqConnection($before: String, $after: String, $first: Float, $last: Float, $sort: String, $filter: FaqFilter) {
-  faqConnection(
-    before: $before
-    after: $after
-    first: $first
-    last: $last
-    sort: $sort
-    filter: $filter
-  ) {
-    pageInfo {
-      hasPreviousPage
-      hasNextPage
-      startCursor
-      endCursor
-    }
-    totalCount
-    edges {
-      cursor
-      node {
-        ... on Document {
-          _sys {
-            filename
-            basename
-            hasReferences
-            breadcrumbs
-            path
-            relativePath
-            extension
-          }
-          id
-        }
-        ...FaqParts
       }
     }
   }

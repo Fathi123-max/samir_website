@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import type { ServiceTier } from "@/lib/types";
+import type { ServicesSection } from "@/lib/types";
 import { Reveal } from "./Reveal";
 import {
   Clapperboard,
@@ -14,7 +14,7 @@ import {
 const TIER_ICONS = [Clapperboard, Film, Briefcase, Building2];
 
 interface ServicesProps {
-  services: ServiceTier[];
+  services: ServicesSection;
 }
 
 export function Services({ services }: ServicesProps) {
@@ -28,29 +28,27 @@ export function Services({ services }: ServicesProps) {
         {/* Section header */}
         <div className="max-w-3xl mb-12 lg:mb-16">
           <Reveal direction="up">
-            <p className="eyebrow text-signal mb-4">01 · Services</p>
+            <p className="eyebrow text-signal mb-4">{services.eyebrow}</p>
           </Reveal>
           <Reveal direction="up" delay={0.08}>
             <h2 className="fluid-h2 font-display font-semibold text-ink">
-              Video production services{" "}
-              <em className="italic text-signal">for every vision</em>.
+              {services.heading}{" "}
+              <em className="italic text-signal">{services.headingAccent}</em>.
             </h2>
           </Reveal>
           <Reveal direction="up" delay={0.16}>
             <p className="text-zinc-600 fluid-body mt-5 max-w-2xl">
-              From focused personal projects to full-scale commercial
-              productions, choose a level of creative support that fits your
-              goals, timeline, and audience.
+              {services.body}
             </p>
           </Reveal>
         </div>
 
         {/* Tier cards */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 lg:gap-6">
-          {services.map((tier, index) => {
+          {services.items.map((tier, index) => {
             const Icon = TIER_ICONS[index % TIER_ICONS.length];
             return (
-              <Reveal key={tier.id} direction="up" delay={0.08 + index * 0.06} className="h-full">
+              <Reveal key={index} direction="up" delay={0.08 + index * 0.06} className="h-full">
                 <article className="card-lift group flex flex-col h-full rounded-lg bg-paper border border-hairline p-6 sm:p-7 focus-within:border-signal/50">
                   <span className="w-11 h-11 rounded bg-signal-tint text-signal flex items-center justify-center mb-5 transition-colors group-hover:bg-signal group-hover:text-white">
                     <Icon className="w-5 h-5" aria-hidden="true" />
