@@ -54,16 +54,21 @@ export default defineConfig({
               { type: "string", name: "email", label: "Email" },
               { type: "string", name: "whatsappUrl", label: "WhatsApp URL" },
               { type: "string", name: "workingHours", label: "Working Hours" },
-              {
-                type: "object",
-                name: "socials",
-                label: "Social Profiles",
-                list: true,
-                fields: [
-                  { type: "string", name: "label", label: "Platform" },
-                  { type: "string", name: "url", label: "URL" },
-                ],
-              },
+                  {
+                    type: "object",
+                    name: "socials",
+                    label: "Social Profiles",
+                    list: true,
+                    ui: {
+                      itemProps: (item) => ({
+                        label: (item?.label as string) || "Social Profile",
+                      }),
+                    },
+                    fields: [
+                      { type: "string", name: "label", label: "Platform" },
+                      { type: "string", name: "url", label: "URL" },
+                    ],
+                  },
               { type: "string", name: "degree", label: "Degree" },
               { type: "string", name: "degreeHonors", label: "Degree Honors" },
               { type: "string", name: "statusText", label: "Status Text" },
