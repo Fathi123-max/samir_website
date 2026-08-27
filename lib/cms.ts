@@ -1,3 +1,5 @@
+import fs from "node:fs";
+import path from "node:path";
 import client from "@/tina/__generated__/client";
 import type {
   Homepage,
@@ -58,6 +60,30 @@ function resolveFeatured(
   return mapReferencedEvent(ref);
 }
 
+function readLocalJson<T>(relativePath: string): T | null {
+  try {
+    const fullPath = path.join(process.cwd(), "content", relativePath);
+    if (!fs.existsSync(fullPath)) return null;
+    const content = fs.readFileSync(fullPath, "utf-8");
+    return JSON.parse(content) as T;
+  } catch {
+    return null;
+  }
+}
+
+function readAllEventsLocal(): CaseStudy[] {
+  try {
+    const eventsDir = path.join(process.cwd(), "content", "events");
+    if (!fs.existsSync(eventsDir)) return [];
+    const files = fs.readdirSync(eventsDir).filter((f) => f.endsWith(".json"));
+    return files
+      .map((file) => readLocalJson<CaseStudy>(`events/${file}`))
+      .filter((e): e is CaseStudy => !!e && !!e.slug);
+  } catch {
+    return [];
+  }
+}
+
 /** Flatten nested-list items that carry _sys metadata (index-based, no per-item id). */
 export interface CmsData {
   homepage: TinaTuple<{ homepage: Homepage }>;
@@ -65,17 +91,29 @@ export interface CmsData {
 }
 
 export async function getEventSlugs(): Promise<string[]> {
-  const ev = await client.queries.eventConnection();
-  const nodes = (ev.data?.eventConnection as { edges?: { node?: TinaNode }[] } | undefined)
-    ?.edges ?? [];
-  return nodes.map((e) => String(e.node?.slug ?? "")).filter(Boolean);
+  try {
+    const ev = await client.queries.eventConnection();
+    const nodes = (ev.data?.eventConnection as { edges?: { node?: TinaNode }[] } | undefined)
+      ?.edges ?? [];
+    const slugs = nodes.map((e) => String(e.node?.slug ?? "")).filter(Boolean);
+    if (slugs.length > 0) return slugs;
+  } catch (err) {
+    console.warn("Tina getEventSlugs falling back to local files:", err);
+  }
+  return readAllEventsLocal().map((e) => e.slug).filter(Boolean);
 }
 
 export async function getEvents(): Promise<CaseStudy[]> {
-  const ev = await client.queries.eventConnection();
-  const nodes = (ev.data?.eventConnection as { edges?: { node?: TinaNode }[] } | undefined)
-    ?.edges ?? [];
-  return nodes.map((e) => cleanEvent(e.node as TinaNode)).filter((e) => e.slug);
+  try {
+    const ev = await client.queries.eventConnection();
+    const nodes = (ev.data?.eventConnection as { edges?: { node?: TinaNode }[] } | undefined)
+      ?.edges ?? [];
+    const result = nodes.map((e) => cleanEvent(e.node as TinaNode)).filter((e) => e.slug);
+    if (result.length > 0) return result;
+  } catch (err) {
+    console.warn("Tina getEvents falling back to local files:", err);
+  }
+  return readAllEventsLocal();
 }
 
 export async function getEventBySlug(slug: string): Promise<{
@@ -83,27 +121,65 @@ export async function getEventBySlug(slug: string): Promise<{
   homepage: TinaTuple<{ homepage: Homepage }>;
   homepageValue: Homepage;
 } | null> {
-  const [ev, hp, allEventsRes] = await Promise.all([
-    client.queries.event({ relativePath: `${slug}.json` }),
-    client.queries.homepage({ relativePath: "home.json" }),
-    getEvents(),
-  ]);
-  const raw = ev.data?.event as TinaNode | undefined;
-  if (!raw) return null;
+  let evTuple: TinaTuple<{ event: CaseStudy }> | null = null;
+  let hpTuple: TinaTuple<{ homepage: Homepage }> | null = null;
+  let allEventsRes: CaseStudy[] = [];
 
-  const homepage = flattenHomepage(hp.data?.homepage, allEventsRes);
+  try {
+    const [ev, hp, events] = await Promise.all([
+      client.queries.event({ relativePath: `${slug}.json` }),
+      client.queries.homepage({ relativePath: "home.json" }),
+      getEvents(),
+    ]);
+    allEventsRes = events;
+    const raw = ev.data?.event as TinaNode | undefined;
+    if (raw) {
+      evTuple = {
+        query: ev.query,
+        variables: ev.variables ?? { relativePath: `${slug}.json` },
+        data: { event: raw as unknown as CaseStudy },
+      };
+    }
+    if (hp.data?.homepage) {
+      hpTuple = {
+        query: hp.query,
+        variables: hp.variables ?? { relativePath: "home.json" },
+        data: { homepage: hp.data.homepage as unknown as Homepage },
+      };
+    }
+  } catch (err) {
+    console.warn(`Tina getEventBySlug('${slug}') falling back to local files:`, err);
+  }
+
+  if (!allEventsRes || allEventsRes.length === 0) {
+    allEventsRes = readAllEventsLocal();
+  }
+
+  if (!evTuple) {
+    const localEvent = readLocalJson<CaseStudy>(`events/${slug}.json`);
+    if (!localEvent) return null;
+    evTuple = {
+      query: "",
+      variables: { relativePath: `${slug}.json` },
+      data: { event: localEvent },
+    };
+  }
+
+  if (!hpTuple) {
+    const localHp = readLocalJson<Homepage>("pages/home.json");
+    if (!localHp) return null;
+    hpTuple = {
+      query: "",
+      variables: { relativePath: "home.json" },
+      data: { homepage: localHp },
+    };
+  }
+
+  const homepage = flattenHomepage(hpTuple.data?.homepage, allEventsRes);
 
   return {
-    tuple: {
-      query: ev.query,
-      variables: ev.variables ?? { relativePath: `${slug}.json` },
-      data: { event: raw as unknown as CaseStudy },
-    },
-    homepage: {
-      query: hp.query,
-      variables: hp.variables ?? { relativePath: "home.json" },
-      data: { homepage: hp.data?.homepage as unknown as Homepage },
-    },
+    tuple: evTuple,
+    homepage: hpTuple,
     homepageValue: homepage,
   };
 }
@@ -243,17 +319,42 @@ export function flattenHomepage(
 }
 
 export async function getCmsData(): Promise<CmsData> {
-  const [hp, eventsRes] = await Promise.all([
-    client.queries.homepage({ relativePath: "home.json" }),
-    getEvents(),
-  ]);
-  const homepage = flattenHomepage(hp.data?.homepage, eventsRes);
+  let hpTuple: TinaTuple<{ homepage: Homepage }> | null = null;
+  let eventsRes: CaseStudy[] = [];
+
+  try {
+    const [hp, events] = await Promise.all([
+      client.queries.homepage({ relativePath: "home.json" }),
+      getEvents(),
+    ]);
+    eventsRes = events;
+    if (hp.data?.homepage) {
+      hpTuple = {
+        query: hp.query,
+        variables: hp.variables ?? { relativePath: "home.json" },
+        data: { homepage: hp.data.homepage as unknown as Homepage },
+      };
+    }
+  } catch (err) {
+    console.warn("Tina getCmsData falling back to local files:", err);
+  }
+
+  if (!eventsRes || eventsRes.length === 0) {
+    eventsRes = readAllEventsLocal();
+  }
+
+  if (!hpTuple) {
+    const localHp = readLocalJson<Homepage>("pages/home.json");
+    hpTuple = {
+      query: "",
+      variables: { relativePath: "home.json" },
+      data: { homepage: (localHp ?? {}) as Homepage },
+    };
+  }
+
+  const homepage = flattenHomepage(hpTuple.data?.homepage, eventsRes);
   return {
-    homepage: {
-      query: hp.query,
-      variables: hp.variables ?? { relativePath: "home.json" },
-      data: { homepage: hp.data?.homepage as unknown as Homepage },
-    },
+    homepage: hpTuple,
     homepageValue: homepage,
   };
 }

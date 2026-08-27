@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "TINA_DEV=true tinacms dev -c \"next dev --webpack\"",
     "build": "next build",
-    "build:cms": "tinacms build && next build",
+    "build:cms": "tinacms build --skip-cloud-checks && next build",
     "start": "next start",
     "lint": "eslint",
     "tinacms": "tinacms"
