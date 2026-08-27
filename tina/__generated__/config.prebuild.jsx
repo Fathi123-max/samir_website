@@ -9,7 +9,7 @@ var config_default = defineConfig({
     outputFolder: "admin"
   },
   ui: {
-    previewUrl: () => "http://localhost:3000"
+    previewUrl: () => "https://samirelgammal.com"
   },
   media: {
     tina: {

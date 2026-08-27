@@ -1,13 +1,14 @@
 import { MetadataRoute } from "next";
-import { FLAGSHIP_EVENTS } from "@/lib/data";
+import { getEventSlugs } from "@/lib/cms";
 
 export const dynamic = "force-static";
 
-export default function sitemap(): MetadataRoute.Sitemap {
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = "https://samirelgammal.com";
+  const slugs = await getEventSlugs();
 
-  const eventUrls = FLAGSHIP_EVENTS.map((event) => ({
-    url: `${baseUrl}/events/${event.slug}`,
+  const eventUrls = slugs.map((slug) => ({
+    url: `${baseUrl}/events/${slug}`,
     lastModified: new Date(),
     changeFrequency: "monthly" as const,
     priority: 0.8,

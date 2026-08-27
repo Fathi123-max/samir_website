@@ -1,32 +1,21 @@
 import React from "react";
 import { HomeClient } from "./home-client";
-import { PERSONAL_INFO } from "@/lib/data";
-import {
-  PERSONAL_INFO_QUERY,
-  SERVICES_QUERY,
-  EVENTS_QUERY,
-  SHOWREEL_VIDEOS_QUERY,
-  TESTIMONIALS_QUERY,
-  FAQ_QUERY,
-} from "@/lib/tina-queries";
-import {
-  SERVICE_TIERS,
-  FLAGSHIP_EVENTS,
-  SHOWREEL_VIDEOS,
-  TESTIMONIALS,
-  FAQ_ITEMS,
-} from "@/lib/data";
+import { getCmsData } from "@/lib/cms";
 
-export default function HomePage() {
+export const dynamic = "force-static";
+
+export default async function HomePage() {
+  const cms = await getCmsData();
+
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "Person",
-    name: PERSONAL_INFO.name,
-    jobTitle: PERSONAL_INFO.title,
-    description: PERSONAL_INFO.tagline,
+    name: cms.personalInfoValue.name,
+    jobTitle: cms.personalInfoValue.title,
+    description: cms.personalInfoValue.tagline,
     url: "https://samirelgammal.com",
-    telephone: PERSONAL_INFO.phone,
-    email: PERSONAL_INFO.email,
+    telephone: cms.personalInfoValue.phone,
+    email: cms.personalInfoValue.email,
     address: {
       "@type": "PostalAddress",
       addressLocality: "Dubai",
@@ -56,26 +45,7 @@ export default function HomePage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
 
-      <HomeClient
-        personalInfoQuery={PERSONAL_INFO_QUERY}
-        personalInfoVariables={{}}
-        personalInfoData={PERSONAL_INFO}
-        servicesQuery={SERVICES_QUERY}
-        servicesVariables={{}}
-        servicesData={SERVICE_TIERS}
-        eventsQuery={EVENTS_QUERY}
-        eventsVariables={{}}
-        eventsData={FLAGSHIP_EVENTS}
-        showreelQuery={SHOWREEL_VIDEOS_QUERY}
-        showreelVariables={{}}
-        showreelData={SHOWREEL_VIDEOS}
-        testimonialsQuery={TESTIMONIALS_QUERY}
-        testimonialsVariables={{}}
-        testimonialsData={TESTIMONIALS}
-        faqQuery={FAQ_QUERY}
-        faqVariables={{}}
-        faqData={FAQ_ITEMS}
-      />
+      <HomeClient {...cms} />
     </div>
   );
 }

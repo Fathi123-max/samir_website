@@ -11,7 +11,7 @@ export default defineConfig({
   },
 
   ui: {
-    previewUrl: () => "http://localhost:3000",
+    previewUrl: () => "https://samirelgammal.com",
   },
 
   media: {

@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useMemo } from "react";
+import React from "react";
 import { useTina } from "tinacms/dist/react";
 import { Header } from "@/components/Header";
 import { Hero } from "@/components/Hero";
@@ -19,137 +19,86 @@ import type {
   Testimonial,
   FaqItem,
 } from "@/lib/types";
+import type { TinaTuple } from "@/lib/cms";
+
+type TinaNode = {
+  _sys?: { filename?: string };
+  __typename?: string;
+  id?: string;
+} & Record<string, unknown>;
+
+const flatten = (root: unknown): TinaNode[] => {
+  const edges = (root as { edges?: { node?: TinaNode }[] })?.edges ?? [];
+  return edges.map((e) => e.node).filter((n): n is TinaNode => !!n);
+};
 
 export interface HomeClientProps {
-  personalInfoQuery: string;
-  personalInfoVariables: Record<string, unknown>;
-  personalInfoData: PersonalInfo;
-  servicesQuery: string;
-  servicesVariables: Record<string, unknown>;
-  servicesData: ServiceTier[];
-  eventsQuery: string;
-  eventsVariables: Record<string, unknown>;
-  eventsData: CaseStudy[];
-  showreelQuery: string;
-  showreelVariables: Record<string, unknown>;
-  showreelData: ShowcaseVideo[];
-  testimonialsQuery: string;
-  testimonialsVariables: Record<string, unknown>;
-  testimonialsData: Testimonial[];
-  faqQuery: string;
-  faqVariables: Record<string, unknown>;
-  faqData: FaqItem[];
+  personalInfo: TinaTuple<{ personalInfo: PersonalInfo }>;
+  services: TinaTuple<{ serviceConnection: unknown }>;
+  events: TinaTuple<{ eventConnection: unknown }>;
+  showreel: TinaTuple<{ showreelVideoConnection: unknown }>;
+  testimonials: TinaTuple<{ testimonialConnection: unknown }>;
+  faq: TinaTuple<{ faqConnection: unknown }>;
+  personalInfoValue: PersonalInfo;
+  servicesValue: ServiceTier[];
+  eventsValue: CaseStudy[];
+  showreelValue: ShowcaseVideo[];
+  testimonialsValue: Testimonial[];
+  faqValue: FaqItem[];
 }
 
-export function HomeClient({
-  personalInfoQuery,
-  personalInfoVariables,
-  personalInfoData,
-  servicesQuery,
-  servicesVariables,
-  servicesData,
-  eventsQuery,
-  eventsVariables,
-  eventsData,
-  showreelQuery,
-  showreelVariables,
-  showreelData,
-  testimonialsQuery,
-  testimonialsVariables,
-  testimonialsData,
-  faqQuery,
-  faqVariables,
-  faqData,
-}: HomeClientProps) {
-  // Memoize all Tina data objects to avoid infinite re-renders
-  const servicesTinaData = useMemo(
-    () => ({
-      serviceConnection: {
-        edges: servicesData.map((s) => ({ node: { data: s, id: `service-${s.id}` } })),
-      },
-    }),
-    [servicesData]
+export function HomeClient(props: HomeClientProps) {
+  const personalInfoTina = useTina(props.personalInfo);
+  const servicesTina = useTina(props.services);
+  const eventsTina = useTina(props.events);
+  const showreelTina = useTina(props.showreel);
+  const testimonialsTina = useTina(props.testimonials);
+  const faqTina = useTina(props.faq);
+
+  const personalInfo: PersonalInfo =
+    personalInfoTina.data?.personalInfo ?? props.personalInfoValue;
+
+  const services: ServiceTier[] = flatten(servicesTina.data?.serviceConnection).map((n) => ({
+    id: n._sys?.filename ?? "",
+    title: String(n.title ?? ""),
+    description: String(n.description ?? ""),
+  }));
+
+  const events: CaseStudy[] = flatten(eventsTina.data?.eventConnection).map((n) => {
+    const copy = { ...n };
+    delete copy._sys;
+    delete copy.__typename;
+    delete copy.id;
+    return copy as unknown as CaseStudy;
+  });
+
+  const showreelVideos: ShowcaseVideo[] = flatten(showreelTina.data?.showreelVideoConnection).map(
+    (n) => ({
+      id: n._sys?.filename ?? "",
+      title: String(n.title ?? ""),
+      caption: String(n.caption ?? ""),
+      thumb: (n.thumb as string | undefined) ?? "",
+      videoUrl: (n.videoUrl as string | undefined) ?? "",
+    })
   );
 
-  const eventsTinaData = useMemo(
-    () => ({
-      eventConnection: {
-        edges: eventsData.map((e) => ({ node: { data: e, id: `event-${e.slug}` } })),
-      },
-    }),
-    [eventsData]
-  );
+  const testimonials: Testimonial[] = flatten(
+    testimonialsTina.data?.testimonialConnection
+  ).map((n) => ({
+    id: n._sys?.filename ?? "",
+    quote: String(n.quote ?? ""),
+    author: String(n.author ?? ""),
+    role: String(n.role ?? ""),
+    organization: String(n.organization ?? ""),
+    event: String(n.event ?? ""),
+    avatarText: String(n.avatarText ?? ""),
+  }));
 
-  const showreelTinaData = useMemo(
-    () => ({
-      showreelVideoConnection: {
-        edges: showreelData.map((v) => ({ node: { data: v, id: `showreel-${v.id}` } })),
-      },
-    }),
-    [showreelData]
-  );
-
-  const testimonialsTinaData = useMemo(
-    () => ({
-      testimonialConnection: {
-        edges: testimonialsData.map((t) => ({ node: { data: t, id: `testimonial-${t.id}` } })),
-      },
-    }),
-    [testimonialsData]
-  );
-
-  const faqTinaData = useMemo(
-    () => ({
-      faqConnection: {
-        edges: faqData.map((f) => ({ node: { data: f, id: `faq-${f.id}` } })),
-      },
-    }),
-    [faqData]
-  );
-
-  const { data: pi } = useTina({
-    query: personalInfoQuery,
-    variables: personalInfoVariables,
-    data: personalInfoData,
-  });
-
-  const { data: svc } = useTina({
-    query: servicesQuery,
-    variables: servicesVariables,
-    data: servicesTinaData,
-  });
-
-  const { data: ev } = useTina({
-    query: eventsQuery,
-    variables: eventsVariables,
-    data: eventsTinaData,
-  });
-
-  const { data: sr } = useTina({
-    query: showreelQuery,
-    variables: showreelVariables,
-    data: showreelTinaData,
-  });
-
-  const { data: tm } = useTina({
-    query: testimonialsQuery,
-    variables: testimonialsVariables,
-    data: testimonialsTinaData,
-  });
-
-  const { data: fq } = useTina({
-    query: faqQuery,
-    variables: faqVariables,
-    data: faqTinaData,
-  });
-
-  // Extract live data from Tina responses
-  const personalInfo = pi as PersonalInfo;
-  const services: ServiceTier[] = svc?.serviceConnection?.edges?.map((e: { node: { data: ServiceTier } }) => e.node.data) ?? servicesData;
-  const events: CaseStudy[] = ev?.eventConnection?.edges?.map((e: { node: { data: CaseStudy } }) => e.node.data) ?? eventsData;
-  const showreelVideos: ShowcaseVideo[] = sr?.showreelVideoConnection?.edges?.map((e: { node: { data: ShowcaseVideo } }) => e.node.data) ?? showreelData;
-  const testimonials: Testimonial[] = tm?.testimonialConnection?.edges?.map((e: { node: { data: Testimonial } }) => e.node.data) ?? testimonialsData;
-  const faqItems: FaqItem[] = fq?.faqConnection?.edges?.map((e: { node: { data: FaqItem } }) => e.node.data) ?? faqData;
+  const faqItems: FaqItem[] = flatten(faqTina.data?.faqConnection).map((n) => ({
+    id: n._sys?.filename ?? "",
+    question: String(n.question ?? ""),
+    answer: String(n.answer ?? ""),
+  }));
 
   return (
     <>

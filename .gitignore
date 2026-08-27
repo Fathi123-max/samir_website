@@ -42,3 +42,6 @@ next-env.d.ts
 
 # codegen output (generated from content/*.json by scripts/codegen.ts)
 /lib/data.ts
+
+# tina generated client build cache (machine-specific absolute paths)
+/tina/__generated__/.cache/
