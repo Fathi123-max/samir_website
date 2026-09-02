@@ -7,7 +7,7 @@
     "portrait": "/images/samir-portrait.jpg",
     "showreelUrl": "https://www.youtube.com/watch?v=-UM3atf8iAI",
     "experienceYears": 18,
-    "uptimePercentage": "99.99%",
+    "uptimePercentage": "99.98%",
     "location": "Dubai, United Arab Emirates",
     "phone": "+971 50 563 9015",
     "email": "s.elgammal12@gmail.com",
@@ -113,7 +113,14 @@
     "heading": "Flagship productions,",
     "headingAccent": "documented",
     "body": "Behind-the-scenes deep dives into major sporting leagues, global summits, and primetime entertainment across the UAE and GCC.",
-    "categories": ["All", "Sports", "Summit", "Heritage", "Entertainment", "Combat Sports"],
+    "categories": [
+      "All",
+      "Sports",
+      "Summit",
+      "Heritage",
+      "Entertainment",
+      "Combat Sports"
+    ],
     "featuredEvents": [
       "content/events/cop28-expo-city-dubai.json",
       "content/events/uae-pro-league-adnoc.json",
