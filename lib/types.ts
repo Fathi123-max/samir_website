@@ -198,6 +198,57 @@ export interface FooterSection {
   heading: string;
   headingAccent: string;
   ctaLabel: string;
+  locationHeading: string;
+  hoursHeading: string;
+  callHeading: string;
+  socialHeading: string;
+  copyright: string;
+  tagline: string;
+}
+
+export interface HeaderSection {
+  logoText: string;
+  brandSubtitle: string;
+  ctaLabel: string;
+  mobileCtaLabel: string;
+  drawerSectionsLabel: string;
+  drawerContactLabel: string;
+  drawerContactIndex: string;
+  drawerCallLabel: string;
+  drawerWhatsappLabel: string;
+}
+
+export interface HeroExtras {
+  availableSuffix: string;
+  yearsLabel: string;
+}
+
+export interface EventDetailSection {
+  breadcrumbHome: string;
+  breadcrumbCaseStudies: string;
+  roleLabel: string;
+  specsHeading: string;
+  approachHeading: string;
+  signalFlowHeading: string;
+  challengesHeading: string;
+  videoHeading: string;
+  galleryHeading: string;
+  reflectionLabel: string;
+  bookingHeading: string;
+  bookingSubtitle: string;
+  bookingCtaLabel: string;
+  prevLabel: string;
+  nextLabel: string;
+}
+
+export interface SiteMeta {
+  siteTitle: string;
+  siteDescription: string;
+  ogTitle: string;
+  ogDescription: string;
+  twitterTitle: string;
+  twitterDescription: string;
+  keywords: string[];
 }
 
 /** The single homepage document — the runtime source of truth. */
@@ -213,6 +264,10 @@ export interface Homepage {
   testimonialSection: TestimonialSection;
   faqSection: FaqSection;
   footerSection: FooterSection;
+  headerSection: HeaderSection;
+  heroExtras: HeroExtras;
+  eventDetailSection: EventDetailSection;
+  meta: SiteMeta;
 }
 
 export interface BookingFormData {

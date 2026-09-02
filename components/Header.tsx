@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect, useRef } from "react";
 import Link from "next/link";
-import type { Identity, NavItem } from "@/lib/types";
+import type { Identity, NavItem, HeaderSection } from "@/lib/types";
 import { Menu, X, ArrowUpRight } from "lucide-react";
 
 const SPY_SECTIONS = ["hero", "services", "events", "showreel", "faq", "contact"];
@@ -10,9 +10,10 @@ const SPY_SECTIONS = ["hero", "services", "events", "showreel", "faq", "contact"
 interface HeaderProps {
   identity: Identity;
   navItems: NavItem[];
+  headerSection?: HeaderSection;
 }
 
-export function Header({ identity, navItems }: HeaderProps) {
+export function Header({ identity, navItems, headerSection }: HeaderProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [progress, setProgress] = useState(0);
@@ -122,14 +123,14 @@ export function Header({ identity, navItems }: HeaderProps) {
             className="flex items-center gap-3 group focus-visible:ring-2 focus-visible:ring-signal focus-visible:outline-none rounded p-1 -m-1"
           >
             <span className="w-9 h-9 rounded bg-signal text-white flex items-center justify-center font-mono font-bold text-sm tracking-tight shrink-0 group-hover:bg-signal-deep transition-colors">
-              SE
+              {headerSection?.logoText ?? "SE"}
             </span>
             <span className="hidden sm:flex flex-col leading-tight">
               <span className="font-display font-semibold text-[15px] text-ink tracking-tight whitespace-nowrap">
                 {identity.name}
               </span>
               <span className="eyebrow text-muted text-[10px] whitespace-nowrap">
-                Broadcast &amp; OB Engineer
+                {headerSection?.brandSubtitle ?? "Broadcast & OB Engineer"}
               </span>
             </span>
           </Link>
@@ -163,7 +164,7 @@ export function Header({ identity, navItems }: HeaderProps) {
               href="#contact"
               className="inline-flex items-center gap-1.5 px-4 py-2.5 rounded bg-signal hover:bg-signal-deep text-white text-sm font-semibold transition-colors min-h-[40px] focus-visible:ring-2 focus-visible:ring-signal focus-visible:ring-offset-2 focus-visible:outline-none"
             >
-              Start a project
+              {headerSection?.ctaLabel ?? "Start a project"}
               <ArrowUpRight className="w-4 h-4" aria-hidden="true" />
             </a>
           </div>
@@ -174,7 +175,7 @@ export function Header({ identity, navItems }: HeaderProps) {
               href="#contact"
               className="px-4 py-2.5 rounded bg-signal text-white text-xs font-semibold uppercase tracking-wide focus-visible:ring-2 focus-visible:ring-signal min-h-[44px] flex items-center justify-center"
             >
-              Book
+              {headerSection?.mobileCtaLabel ?? "Book"}
             </a>
             <button
               onClick={() => setIsOpen(!isOpen)}
@@ -215,7 +216,7 @@ export function Header({ identity, navItems }: HeaderProps) {
           className="lg:hidden absolute inset-x-0 top-full z-40 bg-white border-b border-hairline px-5 pt-4 pb-6 shadow-[0_24px_48px_-16px_rgba(24,24,27,0.18)] focus:outline-none drawer-enter overscroll-contain max-h-[calc(100dvh-4rem)] overflow-y-auto"
         >
           <nav aria-label="Mobile navigation" className="flex flex-col text-sm">
-            <p className="eyebrow text-muted pb-3">Sections</p>
+            <p className="eyebrow text-muted pb-3">{headerSection?.drawerSectionsLabel ?? "Sections"}</p>
             <ul className="divide-y divide-hairline">
               {navItems.map((item) => {
                 const isActive = activeSection === item.id;
@@ -249,8 +250,8 @@ export function Header({ identity, navItems }: HeaderProps) {
                   aria-current={activeSection === "contact" ? "page" : undefined}
                   className="flex items-center gap-4 py-3.5 min-h-[52px] font-medium text-ink hover:text-signal transition-colors focus-visible:ring-2 focus-visible:ring-signal rounded px-2"
                 >
-                  <span className="font-mono text-xs text-zinc-400 tabular-nums w-6">05</span>
-                  <span className="grow">Contact</span>
+                  <span className="font-mono text-xs text-zinc-400 tabular-nums w-6">{headerSection?.drawerContactIndex ?? "05"}</span>
+                  <span className="grow">{headerSection?.drawerContactLabel ?? "Contact"}</span>
                   <ArrowUpRight className="w-4 h-4 opacity-30" aria-hidden="true" />
                 </a>
               </li>
@@ -262,7 +263,7 @@ export function Header({ identity, navItems }: HeaderProps) {
                 onClick={closeDrawer}
                 className="flex items-center justify-center px-4 py-3.5 rounded border border-hairline bg-paper text-ink font-semibold text-sm min-h-[48px] hover:border-signal hover:text-signal transition-colors focus-visible:ring-2 focus-visible:ring-signal focus-visible:outline-none"
               >
-                Call
+                {headerSection?.drawerCallLabel ?? "Call"}
               </a>
               <a
                 href={identity.whatsappUrl}
@@ -271,7 +272,7 @@ export function Header({ identity, navItems }: HeaderProps) {
                 onClick={closeDrawer}
                 className="flex items-center justify-center px-4 py-3.5 rounded bg-ink text-white font-semibold text-sm min-h-[48px] hover:bg-signal transition-colors focus-visible:ring-2 focus-visible:ring-signal focus-visible:outline-none"
               >
-                WhatsApp
+                {headerSection?.drawerWhatsappLabel ?? "WhatsApp"}
               </a>
             </div>
           </nav>

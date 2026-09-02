@@ -21,8 +21,9 @@ export async function generateMetadata({
   if (!data) return { title: "Event Case Study | Samir Elgammal" };
 
   const event = (data.tuple.data.event as { title?: string; summary?: string }) ?? {};
+  const siteName = data.homepageValue.identity.name || "Samir Elgammal";
   return {
-    title: `${event.title ?? "Event"} — Engineering Case Study | Samir Elgammal`,
+    title: `${event.title ?? "Event"} — Engineering Case Study | ${siteName}`,
     description: event.summary ?? "",
   };
 }

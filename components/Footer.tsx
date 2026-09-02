@@ -62,7 +62,7 @@ export function Footer({ identity, footerSection }: FooterProps) {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 pt-10 border-t border-white/10">
           {/* Location */}
           <div>
-            <h3 className="eyebrow text-zinc-500 mb-4">Location</h3>
+            <h3 className="eyebrow text-zinc-500 mb-4">{footerSection.locationHeading ?? "Location"}</h3>
             <p className="flex items-start gap-2.5 text-sm leading-relaxed">
               <MapPin className="w-4 h-4 shrink-0 mt-0.5 text-signal" aria-hidden="true" />
               <span>{identity.location}</span>
@@ -71,7 +71,7 @@ export function Footer({ identity, footerSection }: FooterProps) {
 
           {/* Working hours */}
           <div>
-            <h3 className="eyebrow text-zinc-500 mb-4">Working hours</h3>
+            <h3 className="eyebrow text-zinc-500 mb-4">{footerSection.hoursHeading ?? "Working hours"}</h3>
             <p className="flex items-start gap-2.5 text-sm leading-relaxed">
               <Clock3 className="w-4 h-4 shrink-0 mt-0.5 text-signal" aria-hidden="true" />
               <span>{identity.workingHours}</span>
@@ -80,7 +80,7 @@ export function Footer({ identity, footerSection }: FooterProps) {
 
           {/* Call / email */}
           <div>
-            <h3 className="eyebrow text-zinc-500 mb-4">Call us</h3>
+            <h3 className="eyebrow text-zinc-500 mb-4">{footerSection.callHeading ?? "Call us"}</h3>
             <ul className="space-y-3 text-sm">
               <li>
                 <a
@@ -105,7 +105,7 @@ export function Footer({ identity, footerSection }: FooterProps) {
 
           {/* Social */}
           <div>
-            <h3 className="eyebrow text-zinc-500 mb-4">Follow Samir Elgammal</h3>
+            <h3 className="eyebrow text-zinc-500 mb-4">{footerSection.socialHeading ?? "Follow Samir Elgammal"}</h3>
             <ul className="flex flex-wrap items-center gap-3">
               {identity.socials.map((social) => {
                 const Icon = SOCIAL_ICONS[social.label] ?? null;
@@ -143,8 +143,8 @@ export function Footer({ identity, footerSection }: FooterProps) {
 
         {/* Bottom bar */}
         <div className="pt-8 mt-12 border-t border-white/10 flex flex-wrap items-center justify-between gap-4 text-xs text-zinc-400">
-          <p>© {new Date().getFullYear()} {identity.name}. All rights reserved.</p>
-          <p>Broadcast &amp; Video Production — {identity.location}</p>
+          <p>© {new Date().getFullYear()} {identity.name}. {footerSection.copyright ?? "All rights reserved."}</p>
+          <p>{footerSection.tagline ?? `Broadcast & Video Production — ${identity.location}`}</p>
         </div>
       </div>
     </footer>

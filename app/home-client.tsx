@@ -49,12 +49,14 @@ export function HomeClient(props: HomeClientProps) {
   const testimonials = homepage.testimonialSection;
   const faq = homepage.faqSection;
   const footerSection = homepage.footerSection;
+  const headerSection = homepage.headerSection;
+  const heroExtras = homepage.heroExtras;
 
   return (
     <>
-      <Header identity={identity} navItems={navItems} />
+      <Header identity={identity} navItems={navItems} headerSection={headerSection} />
       <main id="main" className="flex-1 w-full" tabIndex={-1}>
-        <Hero identity={identity} hero={hero} />
+        <Hero identity={identity} hero={hero} heroExtras={heroExtras} />
         <Services services={services} />
         <FlagshipEvents eventsSection={eventsSection} />
         <Showreel identity={identity} showreel={showreel} />

@@ -226,6 +226,64 @@
     "eyebrow": "05 · Contact",
     "heading": "Let's discuss your",
     "headingAccent": "next video project",
-    "ctaLabel": "Start a conversation"
+    "ctaLabel": "Start a conversation",
+    "locationHeading": "Location",
+    "hoursHeading": "Working hours",
+    "callHeading": "Call us",
+    "socialHeading": "Follow Samir Elgammal",
+    "copyright": "All rights reserved.",
+    "tagline": "Broadcast & Video Production — Dubai, United Arab Emirates"
+  },
+  "headerSection": {
+    "logoText": "SE",
+    "brandSubtitle": "Broadcast & OB Engineer",
+    "ctaLabel": "Start a project",
+    "mobileCtaLabel": "Book",
+    "drawerSectionsLabel": "Sections",
+    "drawerContactLabel": "Contact",
+    "drawerContactIndex": "05",
+    "drawerCallLabel": "Call",
+    "drawerWhatsappLabel": "WhatsApp"
+  },
+  "heroExtras": {
+    "availableSuffix": " — Available",
+    "yearsLabel": "years on-air"
+  },
+  "eventDetailSection": {
+    "breadcrumbHome": "Home",
+    "breadcrumbCaseStudies": "Case studies",
+    "roleLabel": "Role",
+    "specsHeading": "Hardware & signal architecture",
+    "approachHeading": "Technical approach",
+    "signalFlowHeading": "Signal flow",
+    "challengesHeading": "Live faults & engineering fixes",
+    "videoHeading": "On-air footage",
+    "galleryHeading": "Production gallery",
+    "reflectionLabel": "What I'd improve next time",
+    "bookingHeading": "Planning a similar production?",
+    "bookingSubtitle": "Available for OB truck, CCU, and EVS operations across the UAE and GCC.",
+    "bookingCtaLabel": "Inquire for dates & roles",
+    "prevLabel": "Previous",
+    "nextLabel": "Next"
+  },
+  "meta": {
+    "siteTitle": "Samir Elgammal | System Broadcast & OB Engineer — CCU & EVS Specialist",
+    "siteDescription": "Senior System Broadcast & OB Engineer with 18+ years keeping live sports, international summits (COP28), and primetime productions on-air across UAE, KSA, and GCC.",
+    "ogTitle": "Samir Elgammal | System Broadcast & OB Engineer",
+    "ogDescription": "18+ years keeping live broadcasts on-air — from high-pressure OB vans to master control rooms.",
+    "twitterTitle": "Samir Elgammal | System Broadcast & OB Engineer",
+    "twitterDescription": "CCU & EVS Specialist — 18+ Years Live Sports & High-Stakes Production Engineering.",
+    "keywords": [
+      "Samir Elgammal",
+      "Broadcast Engineer Dubai",
+      "OB Van Engineer UAE",
+      "CCU Operator",
+      "EVS Specialist",
+      "Sony MVS-8000X",
+      "COP28 Broadcast",
+      "UAE Pro League OB Truck",
+      "Pebble Beach Playout",
+      "Live Television Systems"
+    ]
   }
 }

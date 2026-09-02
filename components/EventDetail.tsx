@@ -17,7 +17,7 @@ import {
   CheckCircle2,
   Clapperboard,
 } from "lucide-react";
-import type { Homepage, CaseStudy } from "@/lib/types";
+import type { Homepage, CaseStudy, EventDetailSection } from "@/lib/types";
 import type { TinaTuple } from "@/lib/cms";
 
 function cleanEvent(node: Record<string, unknown>): CaseStudy {
@@ -42,6 +42,7 @@ export function EventDetail({
 }: EventDetailProps) {
   const identity = homepageValue.identity;
   const navItems = homepageValue.navigation.items;
+  const ed = homepageValue.eventDetailSection;
   const eventTina = useTina({
     ...eventTuple,
     experimental___selectFormByFormId: () => {
@@ -61,7 +62,7 @@ export function EventDetail({
   if (!event) {
     return (
       <div className="min-h-screen flex flex-col bg-canvas text-ink">
-        <Header identity={identity} navItems={navItems} />
+        <Header identity={identity} navItems={navItems} headerSection={homepageValue.headerSection} />
         <main className="flex-1 w-full flex items-center justify-center py-32">
           <p className="eyebrow text-muted">Event not found</p>
         </main>
@@ -76,7 +77,7 @@ export function EventDetail({
 
   return (
     <div className="min-h-screen flex flex-col bg-canvas text-ink">
-      <Header identity={identity} navItems={navItems} />
+      <Header identity={identity} navItems={navItems} headerSection={homepageValue.headerSection} />
 
       <main className="flex-1 w-full">
         <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-14 lg:py-20 space-y-12 sm:space-y-16">
@@ -88,7 +89,7 @@ export function EventDetail({
                   href="/"
                   className="text-zinc-500 hover:text-signal transition-colors focus-visible:ring-2 focus-visible:ring-signal rounded px-1 py-1 min-h-[36px] inline-flex items-center"
                 >
-                  Home
+                  {ed?.breadcrumbHome ?? "Home"}
                 </Link>
               </li>
               <li aria-hidden="true" className="text-zinc-300">/</li>
@@ -97,7 +98,7 @@ export function EventDetail({
                   href="/#events"
                   className="text-zinc-500 hover:text-signal transition-colors focus-visible:ring-2 focus-visible:ring-signal rounded px-1 py-1 min-h-[36px] inline-flex items-center"
                 >
-                  Case studies
+                  {ed?.breadcrumbCaseStudies ?? "Case studies"}
                 </Link>
               </li>
               <li aria-hidden="true" className="text-zinc-300">/</li>
@@ -159,7 +160,7 @@ export function EventDetail({
 
           {/* Role & summary */}
           <section className="border-t border-hairline pt-10 space-y-3">
-            <p className="eyebrow text-muted">Role</p>
+            <p className="eyebrow text-muted">{ed?.roleLabel ?? "Role"}</p>
             <h2 className="font-display italic font-semibold text-xl sm:text-2xl text-signal">
               {event.role}
             </h2>
@@ -186,7 +187,7 @@ export function EventDetail({
           {/* Hardware specs */}
           <section className="border-t border-hairline pt-10 space-y-6">
             <h2 className="font-display font-semibold text-ink fluid-h3">
-              Hardware &amp; signal architecture
+              {ed?.specsHeading ?? "Hardware & signal architecture"}
             </h2>
             <dl className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               {[
@@ -206,7 +207,7 @@ export function EventDetail({
           {/* Approach + signal flow */}
           <section className="border-t border-hairline pt-10 grid grid-cols-1 md:grid-cols-2 gap-10">
             <div className="space-y-5">
-              <h2 className="font-display font-semibold text-lg text-ink">Technical approach</h2>
+              <h2 className="font-display font-semibold text-lg text-ink">{ed?.approachHeading ?? "Technical approach"}</h2>
               <ul className="space-y-3.5">
                 {(event.technicalApproach ?? []).map((item, i) => (
                   <li key={i} className="flex items-start gap-3 text-sm text-zinc-700 leading-relaxed">
@@ -218,7 +219,7 @@ export function EventDetail({
             </div>
 
             <div className="space-y-5">
-              <h2 className="font-display font-semibold text-lg text-ink">Signal flow</h2>
+              <h2 className="font-display font-semibold text-lg text-ink">{ed?.signalFlowHeading ?? "Signal flow"}</h2>
               <ol className="relative space-y-4 before:absolute before:left-[9px] before:top-2 before:bottom-2 before:w-px before:bg-zinc-200">
                 {(event.signalFlow ?? []).map((step, i) => (
                   <li key={i} className="relative pl-8">
@@ -236,7 +237,7 @@ export function EventDetail({
           {/* Challenges */}
           <section className="border-t border-hairline pt-10 space-y-5">
             <h2 className="font-display font-semibold text-ink fluid-h3">
-              Live faults &amp; engineering fixes
+              {ed?.challengesHeading ?? "Live faults & engineering fixes"}
             </h2>
             {(event.challengesAndSolutions ?? []).map((item, i) => (
               <article key={i} className="rounded-2xl border border-hairline p-6 sm:p-7 space-y-4">
@@ -259,7 +260,7 @@ export function EventDetail({
 
           {/* Video section */}
           <section className="border-t border-hairline pt-10 space-y-5">
-            <h2 className="font-display font-semibold text-ink fluid-h3">On-air footage</h2>
+            <h2 className="font-display font-semibold text-ink fluid-h3">{ed?.videoHeading ?? "On-air footage"}</h2>
             {event.videoUrl ? (
               <div className="relative aspect-video rounded-2xl overflow-hidden bg-ink ring-1 ring-black/5">
                 <iframe
@@ -292,7 +293,7 @@ export function EventDetail({
 
             return (
               <section className="border-t border-hairline pt-10 space-y-5">
-                <h2 className="font-display font-semibold text-ink fluid-h3">Production gallery</h2>
+                <h2 className="font-display font-semibold text-ink fluid-h3">{ed?.galleryHeading ?? "Production gallery"}</h2>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   {photos.map((photo, i) => (
                     <MediaFrame
@@ -322,7 +323,7 @@ export function EventDetail({
 
           {/* Retrospective */}
           <section className="rounded-2xl bg-paper border border-hairline p-6 sm:p-8">
-            <p className="eyebrow text-signal mb-3">What I&apos;d improve next time</p>
+            <p className="eyebrow text-signal mb-3">{ed?.reflectionLabel ?? "What I'd improve next time"}</p>
             <blockquote className="font-display italic text-lg sm:text-xl text-zinc-700 leading-relaxed">
               “{event.improvementReflection}”
             </blockquote>
@@ -339,7 +340,7 @@ export function EventDetail({
             >
               <span className="eyebrow text-muted flex items-center gap-2 mb-2">
                 <ArrowLeft className="w-3.5 h-3.5 transition-transform group-hover:-translate-x-0.5" />
-                Previous
+                {ed?.prevLabel ?? "Previous"}
               </span>
               <span className="font-display font-semibold text-ink group-hover:text-signal transition-colors block truncate">
                 {prevEvent.title}
@@ -351,7 +352,7 @@ export function EventDetail({
               className="group rounded-2xl border border-hairline hover:border-signal/50 p-5 transition-colors text-right focus-visible:ring-2 focus-visible:ring-signal focus-visible:outline-none"
             >
               <span className="eyebrow text-muted inline-flex items-center gap-2 mb-2">
-                Next
+                {ed?.nextLabel ?? "Next"}
                 <ArrowRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-0.5" />
               </span>
               <span className="font-display font-semibold text-ink group-hover:text-signal transition-colors block truncate">
@@ -364,10 +365,10 @@ export function EventDetail({
           <section className="rounded-3xl bg-ink text-white p-8 sm:p-12 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-8">
             <div className="space-y-2 max-w-md">
               <h2 className="font-display italic font-semibold text-2xl sm:text-3xl leading-snug">
-                Planning a similar production?
+                {ed?.bookingHeading ?? "Planning a similar production?"}
               </h2>
               <p className="text-sm text-zinc-400 leading-relaxed">
-                Available for OB truck, CCU, and EVS operations across the UAE and GCC.
+                {ed?.bookingSubtitle ?? "Available for OB truck, CCU, and EVS operations across the UAE and GCC."}
               </p>
             </div>
 
@@ -375,7 +376,7 @@ export function EventDetail({
               href="/#contact"
               className="shrink-0 px-6 py-3.5 rounded bg-signal hover:bg-signal-deep text-white font-semibold text-sm transition-colors min-h-[50px] inline-flex items-center gap-2 focus-visible:ring-2 focus-visible:ring-signal focus-visible:ring-offset-2 focus-visible:ring-offset-ink focus-visible:outline-none"
             >
-              Inquire for dates &amp; roles
+              {ed?.bookingCtaLabel ?? "Inquire for dates & roles"}
               <ArrowRight className="w-4 h-4" aria-hidden="true" />
             </Link>
           </section>

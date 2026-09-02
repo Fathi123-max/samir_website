@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import type { Identity, Hero as HeroData } from "@/lib/types";
+import type { Identity, Hero as HeroData, HeroExtras } from "@/lib/types";
 import { Reveal } from "./Reveal";
 import { MediaFrame } from "./MediaFrame";
 import { ArrowRight, ArrowUpRight } from "lucide-react";
@@ -9,9 +9,10 @@ import { ArrowRight, ArrowUpRight } from "lucide-react";
 interface HeroProps {
   identity: Identity;
   hero: HeroData;
+  heroExtras?: HeroExtras;
 }
 
-export function Hero({ identity, hero }: HeroProps) {
+export function Hero({ identity, hero, heroExtras }: HeroProps) {
   return (
     <section
       id="hero"
@@ -40,7 +41,7 @@ export function Hero({ identity, hero }: HeroProps) {
                     <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-500 opacity-60" />
                     <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500" />
                   </span>
-                  {identity.statusTextShort} — Available
+                  {identity.statusTextShort}{heroExtras?.availableSuffix ?? " — Available"}
                 </span>
               </div>
             </Reveal>
@@ -98,7 +99,7 @@ export function Hero({ identity, hero }: HeroProps) {
                 <span className="font-display italic font-semibold text-2xl text-signal leading-none tabular-nums">
                   {identity.experienceYears}+
                 </span>
-                <span className="text-[11px] text-zinc-500 whitespace-nowrap">years on-air</span>
+                <span className="text-[11px] text-zinc-500 whitespace-nowrap">{heroExtras?.yearsLabel ?? "years on-air"}</span>
               </figcaption>
               {/* Corner accent */}
               <span

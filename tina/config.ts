@@ -253,6 +253,81 @@ export default defineConfig({
               { type: "string", name: "heading", label: "Heading" },
               { type: "string", name: "headingAccent", label: "Heading Accent (italic)" },
               { type: "string", name: "ctaLabel", label: "CTA Button Label" },
+              { type: "string", name: "locationHeading", label: "Location heading", description: "e.g. Location" },
+              { type: "string", name: "hoursHeading", label: "Working hours heading", description: "e.g. Working hours" },
+              { type: "string", name: "callHeading", label: "Call heading", description: "e.g. Call us" },
+              { type: "string", name: "socialHeading", label: "Social heading", description: "e.g. Follow Samir Elgammal" },
+              { type: "string", name: "copyright", label: "Copyright text", description: "e.g. All rights reserved." },
+              { type: "string", name: "tagline", label: "Footer tagline", description: "e.g. Broadcast & Video Production — Dubai" },
+            ],
+          },
+
+          // Header / branding
+          {
+            type: "object",
+            name: "headerSection",
+            label: "Header / Branding",
+            fields: [
+              { type: "string", name: "logoText", label: "Logo abbreviation", description: "Shown in the header brand mark, e.g. SE" },
+              { type: "string", name: "brandSubtitle", label: "Brand subtitle", description: "Shown below name in header, e.g. Broadcast & OB Engineer" },
+              { type: "string", name: "ctaLabel", label: "Desktop CTA label", description: "e.g. Start a project" },
+              { type: "string", name: "mobileCtaLabel", label: "Mobile CTA label", description: "e.g. Book" },
+              { type: "string", name: "drawerSectionsLabel", label: "Drawer sections label", description: "e.g. Sections" },
+              { type: "string", name: "drawerContactLabel", label: "Drawer contact label", description: "e.g. Contact" },
+              { type: "string", name: "drawerContactIndex", label: "Drawer contact index", description: "e.g. 05" },
+              { type: "string", name: "drawerCallLabel", label: "Drawer call button", description: "e.g. Call" },
+              { type: "string", name: "drawerWhatsappLabel", label: "Drawer WhatsApp button", description: "e.g. WhatsApp" },
+            ],
+          },
+
+          // Hero extras
+          {
+            type: "object",
+            name: "heroExtras",
+            label: "Hero Extras",
+            fields: [
+              { type: "string", name: "availableSuffix", label: "Availability suffix", description: "Appended after status text, e.g. — Available" },
+              { type: "string", name: "yearsLabel", label: "Years label", description: "e.g. years on-air" },
+            ],
+          },
+
+          // Event Detail labels
+          {
+            type: "object",
+            name: "eventDetailSection",
+            label: "Event Detail Page Labels",
+            fields: [
+              { type: "string", name: "breadcrumbHome", label: "Breadcrumb: Home", description: "e.g. Home" },
+              { type: "string", name: "breadcrumbCaseStudies", label: "Breadcrumb: Case Studies", description: "e.g. Case studies" },
+              { type: "string", name: "roleLabel", label: "Role section label", description: "e.g. Role" },
+              { type: "string", name: "specsHeading", label: "Hardware specs heading", description: "e.g. Hardware & signal architecture" },
+              { type: "string", name: "approachHeading", label: "Technical approach heading", description: "e.g. Technical approach" },
+              { type: "string", name: "signalFlowHeading", label: "Signal flow heading", description: "e.g. Signal flow" },
+              { type: "string", name: "challengesHeading", label: "Challenges heading", description: "e.g. Live faults & engineering fixes" },
+              { type: "string", name: "videoHeading", label: "Video section heading", description: "e.g. On-air footage" },
+              { type: "string", name: "galleryHeading", label: "Gallery heading", description: "e.g. Production gallery" },
+              { type: "string", name: "reflectionLabel", label: "Reflection label", description: "e.g. What I'd improve next time" },
+              { type: "string", name: "bookingHeading", label: "Booking banner heading", description: "e.g. Planning a similar production?" },
+              { type: "string", name: "bookingSubtitle", label: "Booking banner subtitle", description: "e.g. Available for OB truck..." },
+              { type: "string", name: "bookingCtaLabel", label: "Booking banner CTA", description: "e.g. Inquire for dates & roles" },
+              { type: "string", name: "prevLabel", label: "Previous nav label", description: "e.g. Previous" },
+              { type: "string", name: "nextLabel", label: "Next nav label", description: "e.g. Next" },
+            ],
+          },
+
+          // SEO / Metadata
+          {
+            type: "object",
+            name: "meta",
+            label: "SEO / Metadata",
+            fields: [
+              { type: "string", name: "siteTitle", label: "Site title", description: "Browser tab title" },
+              { type: "string", name: "siteDescription", label: "Meta description", description: "Shown in search results", ui: { component: "textarea" } },
+              { type: "string", name: "ogTitle", label: "OG title", description: "Social sharing title" },
+              { type: "string", name: "ogDescription", label: "OG description", description: "Social sharing description", ui: { component: "textarea" } },
+              { type: "string", name: "twitterTitle", label: "Twitter title" },
+              { type: "string", name: "twitterDescription", label: "Twitter description", ui: { component: "textarea" } },
+              { type: "string", name: "keywords", label: "Keywords", list: true, description: "SEO keywords" },
             ],
           },
         ],

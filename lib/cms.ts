@@ -8,6 +8,10 @@ import type {
   Testimonial,
   FaqItem,
   ServiceTier,
+  HeaderSection,
+  HeroExtras,
+  EventDetailSection,
+  SiteMeta,
 } from "@/lib/types";
 
 type TinaNode = {
@@ -275,7 +279,18 @@ export function flattenHomepage(
     heading: string;
     headingAccent: string;
     ctaLabel: string;
+    locationHeading: string;
+    hoursHeading: string;
+    callHeading: string;
+    socialHeading: string;
+    copyright: string;
+    tagline: string;
   }>(node.footerSection as TinaNode);
+
+  const headerSection = ownData<HeaderSection>(node.headerSection as TinaNode);
+  const heroExtras = ownData<HeroExtras>(node.heroExtras as TinaNode);
+  const eventDetailSection = ownData<EventDetailSection>(node.eventDetailSection as TinaNode);
+  const meta = ownData<SiteMeta>(node.meta as TinaNode);
 
   // Featured events arrive either via a `reference` field (node objects) or as plain string paths.
   const featured: CaseStudy[] = Array.isArray(eventsSection.featuredEvents)
@@ -315,6 +330,10 @@ export function flattenHomepage(
       items: faqSection.items ?? [],
     },
     footerSection: footerSection ?? {},
+    headerSection: headerSection ?? {},
+    heroExtras: heroExtras ?? {},
+    eventDetailSection: eventDetailSection ?? {},
+    meta: meta ?? {},
   } as Homepage;
 }
 

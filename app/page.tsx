@@ -1,8 +1,28 @@
 import React from "react";
+import type { Metadata } from "next";
 import { HomeClient } from "./home-client";
 import { getCmsData } from "@/lib/cms";
 
 export const dynamic = "force-static";
+
+export async function generateMetadata(): Promise<Metadata> {
+  const cms = await getCmsData();
+  const meta = cms.homepageValue.meta;
+  const identity = cms.homepageValue.identity;
+  return {
+    title: meta?.siteTitle || undefined,
+    description: meta?.siteDescription || undefined,
+    keywords: meta?.keywords?.length ? meta.keywords : undefined,
+    openGraph: {
+      title: meta?.ogTitle || undefined,
+      description: meta?.ogDescription || undefined,
+    },
+    twitter: {
+      title: meta?.twitterTitle || undefined,
+      description: meta?.twitterDescription || undefined,
+    },
+  };
+}
 
 export default async function HomePage() {
   const cms = await getCmsData();
