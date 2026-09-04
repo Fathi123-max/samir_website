@@ -76,7 +76,10 @@ export default function RootLayout({
       lang="en"
       className={`${fraunces.variable} ${inter.variable} ${jetbrainsMono.variable} scroll-smooth`}
     >
-      <body className="min-h-screen bg-canvas text-ink antialiased selection:bg-signal selection:text-white">
+      <body
+        suppressHydrationWarning
+        className="min-h-screen bg-canvas text-ink antialiased selection:bg-signal selection:text-white"
+      >
         <a
           href="#main"
           className="sr-only focus:not-sr-only focus:fixed focus:z-[100] focus:top-4 focus:left-4 focus:px-4 focus:py-3 focus:rounded-lg focus:bg-signal focus:text-white focus:font-bold focus:font-mono focus:text-xs focus:tracking-wider focus:uppercase focus:shadow-xl"
