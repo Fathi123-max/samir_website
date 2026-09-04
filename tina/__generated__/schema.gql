@@ -345,6 +345,13 @@ input StringFilter {
   in: [String]
 }
 
+input ImageFilter {
+  startsWith: String
+  eq: String
+  exists: Boolean
+  in: [String]
+}
+
 input NumberFilter {
   lt: Float
   lte: Float
@@ -370,7 +377,7 @@ input HomepageIdentityFilter {
   title: StringFilter
   subtitle: StringFilter
   tagline: StringFilter
-  portrait: StringFilter
+  portrait: ImageFilter
   showreelUrl: StringFilter
   experienceYears: NumberFilter
   uptimePercentage: StringFilter
@@ -439,7 +446,7 @@ input HomepageEventsSectionFilter {
 input HomepageShowreelSectionVideosFilter {
   title: StringFilter
   caption: StringFilter
-  thumb: StringFilter
+  thumb: ImageFilter
   videoUrl: StringFilter
 }
 
@@ -696,8 +703,8 @@ input EventFilter {
   broadcaster: StringFilter
   dates: StringFilter
   role: StringFilter
-  heroImage: StringFilter
-  gallery: StringFilter
+  heroImage: ImageFilter
+  gallery: ImageFilter
   videoUrl: StringFilter
   summary: StringFilter
   cameraCount: NumberFilter

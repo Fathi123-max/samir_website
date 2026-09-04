@@ -492,6 +492,13 @@ export type StringFilter = {
   in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
 };
 
+export type ImageFilter = {
+  startsWith?: InputMaybe<Scalars['String']['input']>;
+  eq?: InputMaybe<Scalars['String']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
 export type NumberFilter = {
   lt?: InputMaybe<Scalars['Float']['input']>;
   lte?: InputMaybe<Scalars['Float']['input']>;
@@ -517,7 +524,7 @@ export type HomepageIdentityFilter = {
   title?: InputMaybe<StringFilter>;
   subtitle?: InputMaybe<StringFilter>;
   tagline?: InputMaybe<StringFilter>;
-  portrait?: InputMaybe<StringFilter>;
+  portrait?: InputMaybe<ImageFilter>;
   showreelUrl?: InputMaybe<StringFilter>;
   experienceYears?: InputMaybe<NumberFilter>;
   uptimePercentage?: InputMaybe<StringFilter>;
@@ -586,7 +593,7 @@ export type HomepageEventsSectionFilter = {
 export type HomepageShowreelSectionVideosFilter = {
   title?: InputMaybe<StringFilter>;
   caption?: InputMaybe<StringFilter>;
-  thumb?: InputMaybe<StringFilter>;
+  thumb?: InputMaybe<ImageFilter>;
   videoUrl?: InputMaybe<StringFilter>;
 };
 
@@ -850,8 +857,8 @@ export type EventFilter = {
   broadcaster?: InputMaybe<StringFilter>;
   dates?: InputMaybe<StringFilter>;
   role?: InputMaybe<StringFilter>;
-  heroImage?: InputMaybe<StringFilter>;
-  gallery?: InputMaybe<StringFilter>;
+  heroImage?: InputMaybe<ImageFilter>;
+  gallery?: InputMaybe<ImageFilter>;
   videoUrl?: InputMaybe<StringFilter>;
   summary?: InputMaybe<StringFilter>;
   cameraCount?: InputMaybe<NumberFilter>;
@@ -1405,6 +1412,13 @@ export type StringFilter = {
   in?: Array<string | null | undefined> | null | undefined;
 };
 
+export type ImageFilter = {
+  startsWith?: string | null | undefined;
+  eq?: string | null | undefined;
+  exists?: boolean | null | undefined;
+  in?: Array<string | null | undefined> | null | undefined;
+};
+
 export type NumberFilter = {
   lt?: number | null | undefined;
   lte?: number | null | undefined;
@@ -1430,7 +1444,7 @@ export type HomepageIdentityFilter = {
   title?: StringFilter | null | undefined;
   subtitle?: StringFilter | null | undefined;
   tagline?: StringFilter | null | undefined;
-  portrait?: StringFilter | null | undefined;
+  portrait?: ImageFilter | null | undefined;
   showreelUrl?: StringFilter | null | undefined;
   experienceYears?: NumberFilter | null | undefined;
   uptimePercentage?: StringFilter | null | undefined;
@@ -1499,7 +1513,7 @@ export type HomepageEventsSectionFilter = {
 export type HomepageShowreelSectionVideosFilter = {
   title?: StringFilter | null | undefined;
   caption?: StringFilter | null | undefined;
-  thumb?: StringFilter | null | undefined;
+  thumb?: ImageFilter | null | undefined;
   videoUrl?: StringFilter | null | undefined;
 };
 
@@ -1693,8 +1707,8 @@ export type EventFilter = {
   broadcaster?: StringFilter | null | undefined;
   dates?: StringFilter | null | undefined;
   role?: StringFilter | null | undefined;
-  heroImage?: StringFilter | null | undefined;
-  gallery?: StringFilter | null | undefined;
+  heroImage?: ImageFilter | null | undefined;
+  gallery?: ImageFilter | null | undefined;
   videoUrl?: StringFilter | null | undefined;
   summary?: StringFilter | null | undefined;
   cameraCount?: NumberFilter | null | undefined;

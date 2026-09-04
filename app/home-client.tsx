@@ -51,9 +51,72 @@ export function HomeClient(props: HomeClientProps) {
   const footerSection = homepage.footerSection;
   const headerSection = homepage.headerSection;
   const heroExtras = homepage.heroExtras;
+  const design = homepage.design;
+
+  // Resolve font-display family based on fontPreset or explicit override
+  const fontDisplayMap: Record<string, string> = {
+    editorial: "var(--font-fraunces), Georgia, serif",
+    modern: "var(--font-outfit), system-ui, sans-serif",
+    elegant: "var(--font-playfair), Georgia, serif",
+    classic: "var(--font-space-grotesk), system-ui, sans-serif",
+    humanist: "var(--font-dm-sans), system-ui, sans-serif",
+    mono: "var(--font-jetbrains-mono), monospace",
+  };
+
+  const activeDisplayFont =
+    design?.headingFontFamily ||
+    fontDisplayMap[design?.fontPreset || "editorial"] ||
+    fontDisplayMap.editorial;
+
+  const dynamicStyles: Record<string, string> = {
+    "--font-display": activeDisplayFont,
+  };
+
+  if (design?.headingWeight) {
+    dynamicStyles["--heading-weight"] = design.headingWeight;
+  }
+  if (design?.bodyWeight) {
+    dynamicStyles["--body-weight"] = design.bodyWeight;
+  }
+  if (design?.colors?.canvas) {
+    dynamicStyles["--color-canvas"] = design.colors.canvas;
+    dynamicStyles["--bg-main"] = design.colors.canvas;
+  }
+  if (design?.colors?.paper) {
+    dynamicStyles["--color-paper"] = design.colors.paper;
+    dynamicStyles["--bg-paper"] = design.colors.paper;
+  }
+  if (design?.colors?.ink) {
+    dynamicStyles["--color-ink"] = design.colors.ink;
+    dynamicStyles["--ink"] = design.colors.ink;
+  }
+  if (design?.colors?.muted) {
+    dynamicStyles["--color-muted"] = design.colors.muted;
+    dynamicStyles["--muted"] = design.colors.muted;
+  }
+  if (design?.colors?.hairline) {
+    dynamicStyles["--color-hairline"] = design.colors.hairline;
+    dynamicStyles["--hairline"] = design.colors.hairline;
+  }
+  if (design?.colors?.signal) {
+    dynamicStyles["--color-signal"] = design.colors.signal;
+    dynamicStyles["--signal"] = design.colors.signal;
+  }
+  if (design?.colors?.signalBright) {
+    dynamicStyles["--color-signal-bright"] = design.colors.signalBright;
+  }
+  if (design?.colors?.signalDeep) {
+    dynamicStyles["--color-signal-deep"] = design.colors.signalDeep;
+  }
+  if (design?.colors?.signalTint) {
+    dynamicStyles["--color-signal-tint"] = design.colors.signalTint;
+  }
+  if (design?.spacing?.borderRadius) {
+    dynamicStyles["--card-radius"] = design.spacing.borderRadius;
+  }
 
   return (
-    <>
+    <div style={dynamicStyles as React.CSSProperties} className="contents">
       <Header identity={identity} navItems={navItems} headerSection={headerSection} />
       <main id="main" className="flex-1 w-full" tabIndex={-1}>
         <Hero identity={identity} hero={hero} heroExtras={heroExtras} />
@@ -65,6 +128,6 @@ export function HomeClient(props: HomeClientProps) {
       </main>
       <Footer identity={identity} footerSection={footerSection} />
       <BackToTop />
-    </>
+    </div>
   );
 }
