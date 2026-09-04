@@ -156,6 +156,7 @@ type HomepageServicesSectionItems {
 }
 
 type HomepageServicesSection {
+  visible: Boolean
   eyebrow: String
   heading: String
   headingAccent: String
@@ -164,6 +165,7 @@ type HomepageServicesSection {
 }
 
 type HomepageEventsSection {
+  visible: Boolean
   eyebrow: String
   heading: String
   headingAccent: String
@@ -180,6 +182,7 @@ type HomepageShowreelSectionVideos {
 }
 
 type HomepageShowreelSection {
+  visible: Boolean
   eyebrow: String
   heading: String
   headingAccent: String
@@ -197,6 +200,7 @@ type HomepageTestimonialSectionTestimonials {
 }
 
 type HomepageTestimonialSection {
+  visible: Boolean
   testimonials: [HomepageTestimonialSectionTestimonials]
   ctaHeading: String
   ctaBody: String
@@ -210,6 +214,7 @@ type HomepageFaqSectionItems {
 }
 
 type HomepageFaqSection {
+  visible: Boolean
   eyebrow: String
   heading: String
   headingAccent: String
@@ -308,11 +313,15 @@ type HomepageDesignSpacing {
 }
 
 type HomepageDesign {
+  themePreset: String
   fontPreset: String
   headingFontFamily: String
   bodyFontFamily: String
   headingWeight: String
   bodyWeight: String
+  buttonShape: String
+  cardStyle: String
+  showBackdropMesh: Boolean
   typographyScale: HomepageDesignTypographyScale
   colors: HomepageDesignColors
   spacing: HomepageDesignSpacing
@@ -427,6 +436,7 @@ input HomepageServicesSectionItemsFilter {
 }
 
 input HomepageServicesSectionFilter {
+  visible: BooleanFilter
   eyebrow: StringFilter
   heading: StringFilter
   headingAccent: StringFilter
@@ -435,6 +445,7 @@ input HomepageServicesSectionFilter {
 }
 
 input HomepageEventsSectionFilter {
+  visible: BooleanFilter
   eyebrow: StringFilter
   heading: StringFilter
   headingAccent: StringFilter
@@ -451,6 +462,7 @@ input HomepageShowreelSectionVideosFilter {
 }
 
 input HomepageShowreelSectionFilter {
+  visible: BooleanFilter
   eyebrow: StringFilter
   heading: StringFilter
   headingAccent: StringFilter
@@ -468,6 +480,7 @@ input HomepageTestimonialSectionTestimonialsFilter {
 }
 
 input HomepageTestimonialSectionFilter {
+  visible: BooleanFilter
   testimonials: HomepageTestimonialSectionTestimonialsFilter
   ctaHeading: StringFilter
   ctaBody: StringFilter
@@ -481,6 +494,7 @@ input HomepageFaqSectionItemsFilter {
 }
 
 input HomepageFaqSectionFilter {
+  visible: BooleanFilter
   eyebrow: StringFilter
   heading: StringFilter
   headingAccent: StringFilter
@@ -579,11 +593,15 @@ input HomepageDesignSpacingFilter {
 }
 
 input HomepageDesignFilter {
+  themePreset: StringFilter
   fontPreset: StringFilter
   headingFontFamily: StringFilter
   bodyFontFamily: StringFilter
   headingWeight: StringFilter
   bodyWeight: StringFilter
+  buttonShape: StringFilter
+  cardStyle: StringFilter
+  showBackdropMesh: BooleanFilter
   typographyScale: HomepageDesignTypographyScaleFilter
   colors: HomepageDesignColorsFilter
   spacing: HomepageDesignSpacingFilter
@@ -904,6 +922,7 @@ input HomepageServicesSectionItemsMutation {
 }
 
 input HomepageServicesSectionMutation {
+  visible: Boolean
   eyebrow: String
   heading: String
   headingAccent: String
@@ -912,6 +931,7 @@ input HomepageServicesSectionMutation {
 }
 
 input HomepageEventsSectionMutation {
+  visible: Boolean
   eyebrow: String
   heading: String
   headingAccent: String
@@ -928,6 +948,7 @@ input HomepageShowreelSectionVideosMutation {
 }
 
 input HomepageShowreelSectionMutation {
+  visible: Boolean
   eyebrow: String
   heading: String
   headingAccent: String
@@ -945,6 +966,7 @@ input HomepageTestimonialSectionTestimonialsMutation {
 }
 
 input HomepageTestimonialSectionMutation {
+  visible: Boolean
   testimonials: [HomepageTestimonialSectionTestimonialsMutation]
   ctaHeading: String
   ctaBody: String
@@ -958,6 +980,7 @@ input HomepageFaqSectionItemsMutation {
 }
 
 input HomepageFaqSectionMutation {
+  visible: Boolean
   eyebrow: String
   heading: String
   headingAccent: String
@@ -1056,11 +1079,15 @@ input HomepageDesignSpacingMutation {
 }
 
 input HomepageDesignMutation {
+  themePreset: String
   fontPreset: String
   headingFontFamily: String
   bodyFontFamily: String
   headingWeight: String
   bodyWeight: String
+  buttonShape: String
+  cardStyle: String
+  showBackdropMesh: Boolean
   typographyScale: HomepageDesignTypographyScaleMutation
   colors: HomepageDesignColorsMutation
   spacing: HomepageDesignSpacingMutation

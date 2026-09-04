@@ -61,6 +61,7 @@ export const HomepagePartsFragmentDoc = gql`
   }
   servicesSection {
     __typename
+    visible
     eyebrow
     heading
     headingAccent
@@ -73,6 +74,7 @@ export const HomepagePartsFragmentDoc = gql`
   }
   eventsSection {
     __typename
+    visible
     eyebrow
     heading
     headingAccent
@@ -82,6 +84,7 @@ export const HomepagePartsFragmentDoc = gql`
   }
   showreelSection {
     __typename
+    visible
     eyebrow
     heading
     headingAccent
@@ -96,6 +99,7 @@ export const HomepagePartsFragmentDoc = gql`
   }
   testimonialSection {
     __typename
+    visible
     testimonials {
       __typename
       quote
@@ -112,6 +116,7 @@ export const HomepagePartsFragmentDoc = gql`
   }
   faqSection {
     __typename
+    visible
     eyebrow
     heading
     headingAccent
@@ -182,11 +187,15 @@ export const HomepagePartsFragmentDoc = gql`
   }
   design {
     __typename
+    themePreset
     fontPreset
     headingFontFamily
     bodyFontFamily
     headingWeight
     bodyWeight
+    buttonShape
+    cardStyle
+    showBackdropMesh
     typographyScale {
       __typename
       h1Min
