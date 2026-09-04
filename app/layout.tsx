@@ -107,7 +107,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${fraunces.variable} ${inter.variable} ${jetbrainsMono.variable} scroll-smooth`}
+      className={`${fraunces.variable} ${inter.variable} ${jetbrainsMono.variable} ${outfit.variable} ${playfair.variable} ${spaceGrotesk.variable} ${dmSans.variable} scroll-smooth`}
     >
       <body
         suppressHydrationWarning
