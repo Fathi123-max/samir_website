@@ -3,10 +3,10 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "TINA_DEV=true tinacms dev -c \"next dev --webpack\"",
-    "build": "next build",
-    "build:cms": "tinacms build --skip-cloud-checks && next build",
-    "start": "next start",
+    "dev": "node init && TINA_DEV=true tinacms dev -c \"next dev --webpack\"",
+    "build": "node init && next build",
+    "build:cms": "node init && tinacms build --skip-cloud-checks && next build",
+    "start": "node init && next start",
     "lint": "eslint",
     "tinacms": "tinacms"
   },

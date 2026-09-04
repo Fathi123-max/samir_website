@@ -53,6 +53,7 @@ fragment HomepageParts on Homepage {
   }
   servicesSection {
     __typename
+    visible
     eyebrow
     heading
     headingAccent
@@ -65,6 +66,7 @@ fragment HomepageParts on Homepage {
   }
   eventsSection {
     __typename
+    visible
     eyebrow
     heading
     headingAccent
@@ -74,6 +76,7 @@ fragment HomepageParts on Homepage {
   }
   showreelSection {
     __typename
+    visible
     eyebrow
     heading
     headingAccent
@@ -88,6 +91,7 @@ fragment HomepageParts on Homepage {
   }
   testimonialSection {
     __typename
+    visible
     testimonials {
       __typename
       quote
@@ -104,6 +108,7 @@ fragment HomepageParts on Homepage {
   }
   faqSection {
     __typename
+    visible
     eyebrow
     heading
     headingAccent
@@ -174,11 +179,15 @@ fragment HomepageParts on Homepage {
   }
   design {
     __typename
+    themePreset
     fontPreset
     headingFontFamily
     bodyFontFamily
     headingWeight
     bodyWeight
+    buttonShape
+    cardStyle
+    showBackdropMesh
     typographyScale {
       __typename
       h1Min

@@ -153,6 +153,7 @@ export interface ShowcaseVideo {
 }
 
 export interface ServicesSection {
+  visible?: boolean;
   eyebrow: string;
   heading: string;
   headingAccent: string;
@@ -161,6 +162,7 @@ export interface ServicesSection {
 }
 
 export interface EventsSection {
+  visible?: boolean;
   eyebrow: string;
   heading: string;
   headingAccent: string;
@@ -170,6 +172,7 @@ export interface EventsSection {
 }
 
 export interface ShowreelSection {
+  visible?: boolean;
   eyebrow: string;
   heading: string;
   headingAccent: string;
@@ -178,6 +181,7 @@ export interface ShowreelSection {
 }
 
 export interface TestimonialSection {
+  visible?: boolean;
   testimonials: Testimonial[];
   ctaHeading: string;
   ctaBody: string;
@@ -186,6 +190,7 @@ export interface TestimonialSection {
 }
 
 export interface FaqSection {
+  visible?: boolean;
   eyebrow: string;
   heading: string;
   headingAccent: string;
@@ -252,11 +257,15 @@ export interface SiteMeta {
 }
 
 export interface DesignTokens {
+  themePreset?: "mint" | "amber" | "cyber" | "emerald" | "monochrome" | string;
   fontPreset?: string;
   headingFontFamily?: string;
   bodyFontFamily?: string;
   headingWeight?: string;
   bodyWeight?: string;
+  buttonShape?: "pill" | "rounded" | "sharp" | string;
+  cardStyle?: "lift" | "border-glow" | "minimal" | string;
+  showBackdropMesh?: boolean;
   typographyScale?: {
     h1Min?: string;
     h1Max?: string;
