@@ -145,6 +145,16 @@ export default defineConfig({
             name: "servicesSection",
             label: "Services & Capabilities Section",
             fields: [
+              {
+                type: "boolean",
+                name: "visible",
+                label: "Section Visibility",
+                description: "Toggle on to display this section, or off to hide it",
+                ui: {
+                  component: "toggle",
+                  toggleLabels: { true: "Visible", false: "Hidden" },
+                },
+              },
               { type: "string", name: "eyebrow", label: "Section Eyebrow (e.g. 01 · Services)" },
               { type: "string", name: "heading", label: "Section Heading" },
               { type: "string", name: "headingAccent", label: "Heading Accent Word" },
@@ -173,6 +183,16 @@ export default defineConfig({
             name: "eventsSection",
             label: "Flagship Portfolio / Case Studies Section",
             fields: [
+              {
+                type: "boolean",
+                name: "visible",
+                label: "Section Visibility",
+                description: "Toggle on to display this section, or off to hide it",
+                ui: {
+                  component: "toggle",
+                  toggleLabels: { true: "Visible", false: "Hidden" },
+                },
+              },
               { type: "string", name: "eyebrow", label: "Section Eyebrow (e.g. 02 · Flagship Productions)" },
               { type: "string", name: "heading", label: "Section Heading" },
               { type: "string", name: "headingAccent", label: "Heading Accent Word" },
@@ -200,6 +220,16 @@ export default defineConfig({
             name: "showreelSection",
             label: "Showreel & Video Gallery Section",
             fields: [
+              {
+                type: "boolean",
+                name: "visible",
+                label: "Section Visibility",
+                description: "Toggle on to display this section, or off to hide it",
+                ui: {
+                  component: "toggle",
+                  toggleLabels: { true: "Visible", false: "Hidden" },
+                },
+              },
               { type: "string", name: "eyebrow", label: "Section Eyebrow (e.g. 03 · Showreel)" },
               { type: "string", name: "heading", label: "Section Heading" },
               { type: "string", name: "headingAccent", label: "Heading Accent Word" },
@@ -230,6 +260,16 @@ export default defineConfig({
             name: "testimonialSection",
             label: "Testimonials & Client Endorsements",
             fields: [
+              {
+                type: "boolean",
+                name: "visible",
+                label: "Section Visibility",
+                description: "Toggle on to display this section, or off to hide it",
+                ui: {
+                  component: "toggle",
+                  toggleLabels: { true: "Visible", false: "Hidden" },
+                },
+              },
               {
                 type: "object",
                 name: "testimonials",
@@ -262,6 +302,16 @@ export default defineConfig({
             name: "faqSection",
             label: "Frequently Asked Questions (FAQ)",
             fields: [
+              {
+                type: "boolean",
+                name: "visible",
+                label: "Section Visibility",
+                description: "Toggle on to display this section, or off to hide it",
+                ui: {
+                  component: "toggle",
+                  toggleLabels: { true: "Visible", false: "Hidden" },
+                },
+              },
               { type: "string", name: "eyebrow", label: "Section Eyebrow (e.g. 04 · FAQ)" },
               { type: "string", name: "heading", label: "Section Heading" },
               { type: "string", name: "headingAccent", label: "Heading Accent Word" },
@@ -380,6 +430,22 @@ export default defineConfig({
             fields: [
               {
                 type: "string",
+                name: "themePreset",
+                label: "Atmosphere & Color Theme Preset",
+                description: "Instantly switch the color personality of the entire website",
+                options: [
+                  { label: "Signature Mint & Slate (#239ba7 / #f3f7f6)", value: "mint" },
+                  { label: "Warm Editorial & Signal Orange (#ea580c / #faf9f7)", value: "amber" },
+                  { label: "Cyber Tech & Electric Cyan (#06b6d4 / #0f172a)", value: "cyber" },
+                  { label: "Broadcast Master Emerald (#059669 / #f0fdf4)", value: "emerald" },
+                  { label: "Monochrome & Ink (#18181b / #ffffff)", value: "monochrome" },
+                ],
+                ui: {
+                  component: "select",
+                },
+              },
+              {
+                type: "string",
                 name: "fontPreset",
                 label: "Typography & Font Preset",
                 options: [
@@ -418,6 +484,44 @@ export default defineConfig({
                 ],
               },
               {
+                type: "string",
+                name: "buttonShape",
+                label: "Button & Badge Curvature",
+                description: "Choose the curvature of buttons and interactive badges",
+                options: [
+                  { label: "Full Pill", value: "pill" },
+                  { label: "Modern Clean (0.5rem)", value: "rounded" },
+                  { label: "Sharp Technical (0.125rem)", value: "sharp" },
+                ],
+                ui: {
+                  component: "radio-group",
+                  direction: "horizontal",
+                },
+              },
+              {
+                type: "string",
+                name: "cardStyle",
+                label: "Card Elevation & Hover",
+                description: "Visual response when hovering cards",
+                options: [
+                  { label: "Lift & Elevation Shadow", value: "lift" },
+                  { label: "Accent Border Glow", value: "border-glow" },
+                  { label: "Minimal Hairline", value: "minimal" },
+                ],
+                ui: {
+                  component: "select",
+                },
+              },
+              {
+                type: "boolean",
+                name: "showBackdropMesh",
+                label: "Ambient Background Mesh & Dots",
+                ui: {
+                  component: "toggle",
+                  toggleLabels: { true: "Active", false: "Off" },
+                },
+              },
+              {
                 type: "object",
                 name: "typographyScale",
                 label: "Typography Scaling (Fluid Rem)",
@@ -437,17 +541,17 @@ export default defineConfig({
               {
                 type: "object",
                 name: "colors",
-                label: "Theme Color Palette",
+                label: "Theme Color Palette (Visual Color Picker)",
                 fields: [
-                  { type: "string", name: "canvas", label: "Canvas Background Color (Hex, e.g. #f3f7f6)" },
-                  { type: "string", name: "paper", label: "Paper / Card Background Color (Hex, e.g. #ffffff)" },
-                  { type: "string", name: "ink", label: "Ink / Body Text Color (Hex, e.g. #1a2b32)" },
-                  { type: "string", name: "muted", label: "Muted Text Color (Hex, e.g. #55696f)" },
-                  { type: "string", name: "hairline", label: "Hairline Border Color (Hex, e.g. #dbe6e3)" },
-                  { type: "string", name: "signal", label: "Primary Accent / Signal Color (Hex, e.g. #239ba7)" },
-                  { type: "string", name: "signalBright", label: "Signal Bright / Hover Color (Hex, e.g. #1ca2b8)" },
-                  { type: "string", name: "signalDeep", label: "Signal Deep / Active Color (Hex, e.g. #17828e)" },
-                  { type: "string", name: "signalTint", label: "Signal Tint / Wash Color (Hex, e.g. #dff0f2)" },
+                  { type: "string", name: "canvas", label: "Canvas Background Color", ui: { component: "color", colorFormat: "hex" } },
+                  { type: "string", name: "paper", label: "Paper / Card Background Color", ui: { component: "color", colorFormat: "hex" } },
+                  { type: "string", name: "ink", label: "Ink / Body Text Color", ui: { component: "color", colorFormat: "hex" } },
+                  { type: "string", name: "muted", label: "Muted Text Color", ui: { component: "color", colorFormat: "hex" } },
+                  { type: "string", name: "hairline", label: "Hairline Border Color", ui: { component: "color", colorFormat: "hex" } },
+                  { type: "string", name: "signal", label: "Primary Accent / Signal Color", ui: { component: "color", colorFormat: "hex" } },
+                  { type: "string", name: "signalBright", label: "Signal Bright / Hover Color", ui: { component: "color", colorFormat: "hex" } },
+                  { type: "string", name: "signalDeep", label: "Signal Deep / Active Color", ui: { component: "color", colorFormat: "hex" } },
+                  { type: "string", name: "signalTint", label: "Signal Tint / Wash Color", ui: { component: "color", colorFormat: "hex" } },
                 ],
               },
               {

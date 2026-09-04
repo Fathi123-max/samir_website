@@ -59,16 +59,16 @@
   "navigation": {
     "items": [
       {
-        "label": "Services",
-        "href": "#services",
-        "id": "services",
-        "index": "01"
-      },
-      {
         "label": "Portfolio",
         "href": "#events",
         "id": "events",
         "index": "02"
+      },
+      {
+        "label": "Services",
+        "href": "#services",
+        "id": "services",
+        "index": "01"
       },
       {
         "label": "Showreel",
@@ -85,6 +85,7 @@
     ]
   },
   "servicesSection": {
+    "visible": true,
     "eyebrow": "01 · Services",
     "heading": "Video production services",
     "headingAccent": "for every vision",
@@ -109,6 +110,7 @@
     ]
   },
   "eventsSection": {
+    "visible": true,
     "eyebrow": "02 · Portfolio",
     "heading": "Flagship productions,",
     "headingAccent": "documented",
@@ -131,6 +133,7 @@
     ]
   },
   "showreelSection": {
+    "visible": true,
     "eyebrow": "03 · Showreel",
     "heading": "The control room,",
     "headingAccent": "on the record",
@@ -163,6 +166,7 @@
     ]
   },
   "testimonialSection": {
+    "visible": true,
     "testimonials": [
       {
         "quote": "Samir is the definition of calm under extreme live television pressure. When our main fiber trunk was damaged 30 minutes before the presidential world address at COP28, Samir re-routed 6 CCU channels and our entire intercom matrix in under 8 minutes without a single frame dropped.",
@@ -195,6 +199,7 @@
     "ctaHref": "#events"
   },
   "faqSection": {
+    "visible": true,
     "eyebrow": "04 · FAQ",
     "heading": "Frequently asked",
     "headingAccent": "questions",
@@ -287,8 +292,12 @@
     ]
   },
   "design": {
-    "fontPreset": "mono",
-    "headingWeight": "400",
-    "bodyWeight": "300"
+    "themePreset": "mint",
+    "fontPreset": "editorial",
+    "headingWeight": "600",
+    "bodyWeight": "400",
+    "buttonShape": "rounded",
+    "cardStyle": "lift",
+    "showBackdropMesh": true
   }
 }
