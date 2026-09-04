@@ -235,6 +235,7 @@ export function flattenHomepage(
   }>(node.navigation as TinaNode);
 
   const servicesSection = ownData<{
+    visible?: boolean;
     eyebrow: string;
     heading: string;
     headingAccent: string;
@@ -243,6 +244,7 @@ export function flattenHomepage(
   }>(node.servicesSection as TinaNode);
 
   const eventsSection = ownData<{
+    visible?: boolean;
     eyebrow: string;
     heading: string;
     headingAccent: string;
@@ -252,6 +254,7 @@ export function flattenHomepage(
   }>(node.eventsSection as TinaNode);
 
   const showreelSection = ownData<{
+    visible?: boolean;
     eyebrow: string;
     heading: string;
     headingAccent: string;
@@ -260,6 +263,7 @@ export function flattenHomepage(
   }>(node.showreelSection as TinaNode);
 
   const testimonialSection = ownData<{
+    visible?: boolean;
     testimonials: Testimonial[];
     ctaHeading: string;
     ctaBody: string;
@@ -268,6 +272,7 @@ export function flattenHomepage(
   }>(node.testimonialSection as TinaNode);
 
   const faqSection = ownData<{
+    visible?: boolean;
     eyebrow: string;
     heading: string;
     headingAccent: string;
