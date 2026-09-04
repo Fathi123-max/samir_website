@@ -12,6 +12,7 @@ import type {
   HeroExtras,
   EventDetailSection,
   SiteMeta,
+  DesignTokens,
 } from "@/lib/types";
 
 type TinaNode = {
@@ -291,6 +292,7 @@ export function flattenHomepage(
   const heroExtras = ownData<HeroExtras>(node.heroExtras as TinaNode);
   const eventDetailSection = ownData<EventDetailSection>(node.eventDetailSection as TinaNode);
   const meta = ownData<SiteMeta>(node.meta as TinaNode);
+  const design = ownData<DesignTokens>(node.design as TinaNode);
 
   // Featured events arrive either via a `reference` field (node objects) or as plain string paths.
   const featured: CaseStudy[] = Array.isArray(eventsSection.featuredEvents)
@@ -334,6 +336,7 @@ export function flattenHomepage(
     heroExtras: heroExtras ?? {},
     eventDetailSection: eventDetailSection ?? {},
     meta: meta ?? {},
+    design: design ?? {},
   } as Homepage;
 }
 

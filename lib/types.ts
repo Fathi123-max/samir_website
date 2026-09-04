@@ -251,6 +251,43 @@ export interface SiteMeta {
   keywords: string[];
 }
 
+export interface DesignTokens {
+  fontPreset?: string;
+  headingFontFamily?: string;
+  bodyFontFamily?: string;
+  headingWeight?: string;
+  bodyWeight?: string;
+  typographyScale?: {
+    h1Min?: string;
+    h1Max?: string;
+    h2Min?: string;
+    h2Max?: string;
+    h3Min?: string;
+    h3Max?: string;
+    bodyMin?: string;
+    bodyMax?: string;
+    bodyLineHeight?: string;
+    headingLineHeight?: string;
+  };
+  colors?: {
+    canvas?: string;
+    paper?: string;
+    ink?: string;
+    muted?: string;
+    hairline?: string;
+    signal?: string;
+    signalBright?: string;
+    signalDeep?: string;
+    signalTint?: string;
+  };
+  spacing?: {
+    sectionPaddingY?: string;
+    sectionMaxWidth?: string;
+    borderRadius?: string;
+    cardGap?: string;
+  };
+}
+
 /** The single homepage document — the runtime source of truth. */
 export interface Homepage {
   identity: Identity;
@@ -268,6 +305,7 @@ export interface Homepage {
   heroExtras: HeroExtras;
   eventDetailSection: EventDetailSection;
   meta: SiteMeta;
+  design: DesignTokens;
 }
 
 export interface BookingFormData {

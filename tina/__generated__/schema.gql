@@ -222,6 +222,100 @@ type HomepageFooterSection {
   heading: String
   headingAccent: String
   ctaLabel: String
+  locationHeading: String
+  hoursHeading: String
+  callHeading: String
+  socialHeading: String
+  copyright: String
+  tagline: String
+}
+
+type HomepageHeaderSection {
+  logoText: String
+  brandSubtitle: String
+  ctaLabel: String
+  mobileCtaLabel: String
+  drawerSectionsLabel: String
+  drawerContactLabel: String
+  drawerContactIndex: String
+  drawerCallLabel: String
+  drawerWhatsappLabel: String
+}
+
+type HomepageHeroExtras {
+  availableSuffix: String
+  yearsLabel: String
+}
+
+type HomepageEventDetailSection {
+  breadcrumbHome: String
+  breadcrumbCaseStudies: String
+  roleLabel: String
+  specsHeading: String
+  approachHeading: String
+  signalFlowHeading: String
+  challengesHeading: String
+  videoHeading: String
+  galleryHeading: String
+  reflectionLabel: String
+  bookingHeading: String
+  bookingSubtitle: String
+  bookingCtaLabel: String
+  prevLabel: String
+  nextLabel: String
+}
+
+type HomepageMeta {
+  siteTitle: String
+  siteDescription: String
+  ogTitle: String
+  ogDescription: String
+  twitterTitle: String
+  twitterDescription: String
+  keywords: [String]
+}
+
+type HomepageDesignTypographyScale {
+  h1Min: String
+  h1Max: String
+  h2Min: String
+  h2Max: String
+  h3Min: String
+  h3Max: String
+  bodyMin: String
+  bodyMax: String
+  bodyLineHeight: String
+  headingLineHeight: String
+}
+
+type HomepageDesignColors {
+  canvas: String
+  paper: String
+  ink: String
+  muted: String
+  hairline: String
+  signal: String
+  signalBright: String
+  signalDeep: String
+  signalTint: String
+}
+
+type HomepageDesignSpacing {
+  sectionPaddingY: String
+  sectionMaxWidth: String
+  borderRadius: String
+  cardGap: String
+}
+
+type HomepageDesign {
+  fontPreset: String
+  headingFontFamily: String
+  bodyFontFamily: String
+  headingWeight: String
+  bodyWeight: String
+  typographyScale: HomepageDesignTypographyScale
+  colors: HomepageDesignColors
+  spacing: HomepageDesignSpacing
 }
 
 type Homepage implements Node & Document {
@@ -234,6 +328,11 @@ type Homepage implements Node & Document {
   testimonialSection: HomepageTestimonialSection
   faqSection: HomepageFaqSection
   footerSection: HomepageFooterSection
+  headerSection: HomepageHeaderSection
+  heroExtras: HomepageHeroExtras
+  eventDetailSection: HomepageEventDetailSection
+  meta: HomepageMeta
+  design: HomepageDesign
   id: ID!
   _sys: SystemInfo!
   _values: JSON!
@@ -387,6 +486,100 @@ input HomepageFooterSectionFilter {
   heading: StringFilter
   headingAccent: StringFilter
   ctaLabel: StringFilter
+  locationHeading: StringFilter
+  hoursHeading: StringFilter
+  callHeading: StringFilter
+  socialHeading: StringFilter
+  copyright: StringFilter
+  tagline: StringFilter
+}
+
+input HomepageHeaderSectionFilter {
+  logoText: StringFilter
+  brandSubtitle: StringFilter
+  ctaLabel: StringFilter
+  mobileCtaLabel: StringFilter
+  drawerSectionsLabel: StringFilter
+  drawerContactLabel: StringFilter
+  drawerContactIndex: StringFilter
+  drawerCallLabel: StringFilter
+  drawerWhatsappLabel: StringFilter
+}
+
+input HomepageHeroExtrasFilter {
+  availableSuffix: StringFilter
+  yearsLabel: StringFilter
+}
+
+input HomepageEventDetailSectionFilter {
+  breadcrumbHome: StringFilter
+  breadcrumbCaseStudies: StringFilter
+  roleLabel: StringFilter
+  specsHeading: StringFilter
+  approachHeading: StringFilter
+  signalFlowHeading: StringFilter
+  challengesHeading: StringFilter
+  videoHeading: StringFilter
+  galleryHeading: StringFilter
+  reflectionLabel: StringFilter
+  bookingHeading: StringFilter
+  bookingSubtitle: StringFilter
+  bookingCtaLabel: StringFilter
+  prevLabel: StringFilter
+  nextLabel: StringFilter
+}
+
+input HomepageMetaFilter {
+  siteTitle: StringFilter
+  siteDescription: StringFilter
+  ogTitle: StringFilter
+  ogDescription: StringFilter
+  twitterTitle: StringFilter
+  twitterDescription: StringFilter
+  keywords: StringFilter
+}
+
+input HomepageDesignTypographyScaleFilter {
+  h1Min: StringFilter
+  h1Max: StringFilter
+  h2Min: StringFilter
+  h2Max: StringFilter
+  h3Min: StringFilter
+  h3Max: StringFilter
+  bodyMin: StringFilter
+  bodyMax: StringFilter
+  bodyLineHeight: StringFilter
+  headingLineHeight: StringFilter
+}
+
+input HomepageDesignColorsFilter {
+  canvas: StringFilter
+  paper: StringFilter
+  ink: StringFilter
+  muted: StringFilter
+  hairline: StringFilter
+  signal: StringFilter
+  signalBright: StringFilter
+  signalDeep: StringFilter
+  signalTint: StringFilter
+}
+
+input HomepageDesignSpacingFilter {
+  sectionPaddingY: StringFilter
+  sectionMaxWidth: StringFilter
+  borderRadius: StringFilter
+  cardGap: StringFilter
+}
+
+input HomepageDesignFilter {
+  fontPreset: StringFilter
+  headingFontFamily: StringFilter
+  bodyFontFamily: StringFilter
+  headingWeight: StringFilter
+  bodyWeight: StringFilter
+  typographyScale: HomepageDesignTypographyScaleFilter
+  colors: HomepageDesignColorsFilter
+  spacing: HomepageDesignSpacingFilter
 }
 
 input HomepageFilter {
@@ -399,6 +592,11 @@ input HomepageFilter {
   testimonialSection: HomepageTestimonialSectionFilter
   faqSection: HomepageFaqSectionFilter
   footerSection: HomepageFooterSectionFilter
+  headerSection: HomepageHeaderSectionFilter
+  heroExtras: HomepageHeroExtrasFilter
+  eventDetailSection: HomepageEventDetailSectionFilter
+  meta: HomepageMetaFilter
+  design: HomepageDesignFilter
 }
 
 type HomepageConnectionEdges {
@@ -765,6 +963,100 @@ input HomepageFooterSectionMutation {
   heading: String
   headingAccent: String
   ctaLabel: String
+  locationHeading: String
+  hoursHeading: String
+  callHeading: String
+  socialHeading: String
+  copyright: String
+  tagline: String
+}
+
+input HomepageHeaderSectionMutation {
+  logoText: String
+  brandSubtitle: String
+  ctaLabel: String
+  mobileCtaLabel: String
+  drawerSectionsLabel: String
+  drawerContactLabel: String
+  drawerContactIndex: String
+  drawerCallLabel: String
+  drawerWhatsappLabel: String
+}
+
+input HomepageHeroExtrasMutation {
+  availableSuffix: String
+  yearsLabel: String
+}
+
+input HomepageEventDetailSectionMutation {
+  breadcrumbHome: String
+  breadcrumbCaseStudies: String
+  roleLabel: String
+  specsHeading: String
+  approachHeading: String
+  signalFlowHeading: String
+  challengesHeading: String
+  videoHeading: String
+  galleryHeading: String
+  reflectionLabel: String
+  bookingHeading: String
+  bookingSubtitle: String
+  bookingCtaLabel: String
+  prevLabel: String
+  nextLabel: String
+}
+
+input HomepageMetaMutation {
+  siteTitle: String
+  siteDescription: String
+  ogTitle: String
+  ogDescription: String
+  twitterTitle: String
+  twitterDescription: String
+  keywords: [String]
+}
+
+input HomepageDesignTypographyScaleMutation {
+  h1Min: String
+  h1Max: String
+  h2Min: String
+  h2Max: String
+  h3Min: String
+  h3Max: String
+  bodyMin: String
+  bodyMax: String
+  bodyLineHeight: String
+  headingLineHeight: String
+}
+
+input HomepageDesignColorsMutation {
+  canvas: String
+  paper: String
+  ink: String
+  muted: String
+  hairline: String
+  signal: String
+  signalBright: String
+  signalDeep: String
+  signalTint: String
+}
+
+input HomepageDesignSpacingMutation {
+  sectionPaddingY: String
+  sectionMaxWidth: String
+  borderRadius: String
+  cardGap: String
+}
+
+input HomepageDesignMutation {
+  fontPreset: String
+  headingFontFamily: String
+  bodyFontFamily: String
+  headingWeight: String
+  bodyWeight: String
+  typographyScale: HomepageDesignTypographyScaleMutation
+  colors: HomepageDesignColorsMutation
+  spacing: HomepageDesignSpacingMutation
 }
 
 input HomepageMutation {
@@ -777,6 +1069,11 @@ input HomepageMutation {
   testimonialSection: HomepageTestimonialSectionMutation
   faqSection: HomepageFaqSectionMutation
   footerSection: HomepageFooterSectionMutation
+  headerSection: HomepageHeaderSectionMutation
+  heroExtras: HomepageHeroExtrasMutation
+  eventDetailSection: HomepageEventDetailSectionMutation
+  meta: HomepageMetaMutation
+  design: HomepageDesignMutation
 }
 
 input EventSpecsMutation {

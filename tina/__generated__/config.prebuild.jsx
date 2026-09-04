@@ -240,7 +240,147 @@ var config_default = defineConfig({
               { type: "string", name: "eyebrow", label: "Eyebrow" },
               { type: "string", name: "heading", label: "Heading" },
               { type: "string", name: "headingAccent", label: "Heading Accent (italic)" },
-              { type: "string", name: "ctaLabel", label: "CTA Button Label" }
+              { type: "string", name: "ctaLabel", label: "CTA Button Label" },
+              { type: "string", name: "locationHeading", label: "Location heading", description: "e.g. Location" },
+              { type: "string", name: "hoursHeading", label: "Working hours heading", description: "e.g. Working hours" },
+              { type: "string", name: "callHeading", label: "Call heading", description: "e.g. Call us" },
+              { type: "string", name: "socialHeading", label: "Social heading", description: "e.g. Follow Samir Elgammal" },
+              { type: "string", name: "copyright", label: "Copyright text", description: "e.g. All rights reserved." },
+              { type: "string", name: "tagline", label: "Footer tagline", description: "e.g. Broadcast & Video Production \u2014 Dubai" }
+            ]
+          },
+          // Header / branding
+          {
+            type: "object",
+            name: "headerSection",
+            label: "Header / Branding",
+            fields: [
+              { type: "string", name: "logoText", label: "Logo abbreviation", description: "Shown in the header brand mark, e.g. SE" },
+              { type: "string", name: "brandSubtitle", label: "Brand subtitle", description: "Shown below name in header, e.g. Broadcast & OB Engineer" },
+              { type: "string", name: "ctaLabel", label: "Desktop CTA label", description: "e.g. Start a project" },
+              { type: "string", name: "mobileCtaLabel", label: "Mobile CTA label", description: "e.g. Book" },
+              { type: "string", name: "drawerSectionsLabel", label: "Drawer sections label", description: "e.g. Sections" },
+              { type: "string", name: "drawerContactLabel", label: "Drawer contact label", description: "e.g. Contact" },
+              { type: "string", name: "drawerContactIndex", label: "Drawer contact index", description: "e.g. 05" },
+              { type: "string", name: "drawerCallLabel", label: "Drawer call button", description: "e.g. Call" },
+              { type: "string", name: "drawerWhatsappLabel", label: "Drawer WhatsApp button", description: "e.g. WhatsApp" }
+            ]
+          },
+          // Hero extras
+          {
+            type: "object",
+            name: "heroExtras",
+            label: "Hero Extras",
+            fields: [
+              { type: "string", name: "availableSuffix", label: "Availability suffix", description: "Appended after status text, e.g. \u2014 Available" },
+              { type: "string", name: "yearsLabel", label: "Years label", description: "e.g. years on-air" }
+            ]
+          },
+          // Event Detail labels
+          {
+            type: "object",
+            name: "eventDetailSection",
+            label: "Event Detail Page Labels",
+            fields: [
+              { type: "string", name: "breadcrumbHome", label: "Breadcrumb: Home", description: "e.g. Home" },
+              { type: "string", name: "breadcrumbCaseStudies", label: "Breadcrumb: Case Studies", description: "e.g. Case studies" },
+              { type: "string", name: "roleLabel", label: "Role section label", description: "e.g. Role" },
+              { type: "string", name: "specsHeading", label: "Hardware specs heading", description: "e.g. Hardware & signal architecture" },
+              { type: "string", name: "approachHeading", label: "Technical approach heading", description: "e.g. Technical approach" },
+              { type: "string", name: "signalFlowHeading", label: "Signal flow heading", description: "e.g. Signal flow" },
+              { type: "string", name: "challengesHeading", label: "Challenges heading", description: "e.g. Live faults & engineering fixes" },
+              { type: "string", name: "videoHeading", label: "Video section heading", description: "e.g. On-air footage" },
+              { type: "string", name: "galleryHeading", label: "Gallery heading", description: "e.g. Production gallery" },
+              { type: "string", name: "reflectionLabel", label: "Reflection label", description: "e.g. What I'd improve next time" },
+              { type: "string", name: "bookingHeading", label: "Booking banner heading", description: "e.g. Planning a similar production?" },
+              { type: "string", name: "bookingSubtitle", label: "Booking banner subtitle", description: "e.g. Available for OB truck..." },
+              { type: "string", name: "bookingCtaLabel", label: "Booking banner CTA", description: "e.g. Inquire for dates & roles" },
+              { type: "string", name: "prevLabel", label: "Previous nav label", description: "e.g. Previous" },
+              { type: "string", name: "nextLabel", label: "Next nav label", description: "e.g. Next" }
+            ]
+          },
+          // SEO / Metadata
+          {
+            type: "object",
+            name: "meta",
+            label: "SEO / Metadata",
+            fields: [
+              { type: "string", name: "siteTitle", label: "Site title", description: "Browser tab title" },
+              { type: "string", name: "siteDescription", label: "Meta description", description: "Shown in search results", ui: { component: "textarea" } },
+              { type: "string", name: "ogTitle", label: "OG title", description: "Social sharing title" },
+              { type: "string", name: "ogDescription", label: "OG description", description: "Social sharing description", ui: { component: "textarea" } },
+              { type: "string", name: "twitterTitle", label: "Twitter title" },
+              { type: "string", name: "twitterDescription", label: "Twitter description", ui: { component: "textarea" } },
+              { type: "string", name: "keywords", label: "Keywords", list: true, description: "SEO keywords" }
+            ]
+          },
+          // Design / Typography / Layout
+          {
+            type: "object",
+            name: "design",
+            label: "Design & Typography",
+            fields: [
+              {
+                type: "string",
+                name: "fontPreset",
+                label: "Font Preset",
+                options: [
+                  "editorial",
+                  "elegant",
+                  "modern",
+                  "classic",
+                  "mono"
+                ],
+                description: "Switches display + body font pairing"
+              },
+              { type: "string", name: "headingFontFamily", label: "Heading font override", description: "CSS font-family for headings (leave empty for preset default)" },
+              { type: "string", name: "bodyFontFamily", label: "Body font override", description: "CSS font-family for body (leave empty for preset default)" },
+              { type: "string", name: "headingWeight", label: "Heading font weight", description: "e.g. 600, 700", options: ["400", "500", "600", "700", "800"] },
+              { type: "string", name: "bodyWeight", label: "Body font weight", options: ["300", "400", "500", "600"] },
+              {
+                type: "object",
+                name: "typographyScale",
+                label: "Typography Scale",
+                fields: [
+                  { type: "string", name: "h1Min", label: "H1 min size", description: "e.g. 2.5rem" },
+                  { type: "string", name: "h1Max", label: "H1 max size", description: "e.g. 5rem" },
+                  { type: "string", name: "h2Min", label: "H2 min size" },
+                  { type: "string", name: "h2Max", label: "H2 max size" },
+                  { type: "string", name: "h3Min", label: "H3 min size" },
+                  { type: "string", name: "h3Max", label: "H3 max size" },
+                  { type: "string", name: "bodyMin", label: "Body min size" },
+                  { type: "string", name: "bodyMax", label: "Body max size" },
+                  { type: "string", name: "bodyLineHeight", label: "Body line height", description: "e.g. 1.7" },
+                  { type: "string", name: "headingLineHeight", label: "Heading line height", description: "e.g. 1.1" }
+                ]
+              },
+              {
+                type: "object",
+                name: "colors",
+                label: "Color Palette",
+                fields: [
+                  { type: "string", name: "canvas", label: "Canvas background", description: "e.g. #f3f7f6" },
+                  { type: "string", name: "paper", label: "Paper / card background" },
+                  { type: "string", name: "ink", label: "Ink / text color" },
+                  { type: "string", name: "muted", label: "Muted text color" },
+                  { type: "string", name: "hairline", label: "Border / hairline color" },
+                  { type: "string", name: "signal", label: "Signal / accent color" },
+                  { type: "string", name: "signalBright", label: "Signal bright (hover)" },
+                  { type: "string", name: "signalDeep", label: "Signal deep (pressed)" },
+                  { type: "string", name: "signalTint", label: "Signal tint (backgrounds)" }
+                ]
+              },
+              {
+                type: "object",
+                name: "spacing",
+                label: "Spacing & Layout",
+                fields: [
+                  { type: "string", name: "sectionPaddingY", label: "Section vertical padding", description: "e.g. 5rem" },
+                  { type: "string", name: "sectionMaxWidth", label: "Content max width", description: "e.g. 1200px" },
+                  { type: "string", name: "borderRadius", label: "Card border radius", description: "e.g. 0.5rem" },
+                  { type: "string", name: "cardGap", label: "Card grid gap", description: "e.g. 1.5rem" }
+                ]
+              }
             ]
           }
         ]

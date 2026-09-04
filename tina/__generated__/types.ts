@@ -360,6 +360,108 @@ export type HomepageFooterSection = {
   heading?: Maybe<Scalars['String']['output']>;
   headingAccent?: Maybe<Scalars['String']['output']>;
   ctaLabel?: Maybe<Scalars['String']['output']>;
+  locationHeading?: Maybe<Scalars['String']['output']>;
+  hoursHeading?: Maybe<Scalars['String']['output']>;
+  callHeading?: Maybe<Scalars['String']['output']>;
+  socialHeading?: Maybe<Scalars['String']['output']>;
+  copyright?: Maybe<Scalars['String']['output']>;
+  tagline?: Maybe<Scalars['String']['output']>;
+};
+
+export type HomepageHeaderSection = {
+  __typename?: 'HomepageHeaderSection';
+  logoText?: Maybe<Scalars['String']['output']>;
+  brandSubtitle?: Maybe<Scalars['String']['output']>;
+  ctaLabel?: Maybe<Scalars['String']['output']>;
+  mobileCtaLabel?: Maybe<Scalars['String']['output']>;
+  drawerSectionsLabel?: Maybe<Scalars['String']['output']>;
+  drawerContactLabel?: Maybe<Scalars['String']['output']>;
+  drawerContactIndex?: Maybe<Scalars['String']['output']>;
+  drawerCallLabel?: Maybe<Scalars['String']['output']>;
+  drawerWhatsappLabel?: Maybe<Scalars['String']['output']>;
+};
+
+export type HomepageHeroExtras = {
+  __typename?: 'HomepageHeroExtras';
+  availableSuffix?: Maybe<Scalars['String']['output']>;
+  yearsLabel?: Maybe<Scalars['String']['output']>;
+};
+
+export type HomepageEventDetailSection = {
+  __typename?: 'HomepageEventDetailSection';
+  breadcrumbHome?: Maybe<Scalars['String']['output']>;
+  breadcrumbCaseStudies?: Maybe<Scalars['String']['output']>;
+  roleLabel?: Maybe<Scalars['String']['output']>;
+  specsHeading?: Maybe<Scalars['String']['output']>;
+  approachHeading?: Maybe<Scalars['String']['output']>;
+  signalFlowHeading?: Maybe<Scalars['String']['output']>;
+  challengesHeading?: Maybe<Scalars['String']['output']>;
+  videoHeading?: Maybe<Scalars['String']['output']>;
+  galleryHeading?: Maybe<Scalars['String']['output']>;
+  reflectionLabel?: Maybe<Scalars['String']['output']>;
+  bookingHeading?: Maybe<Scalars['String']['output']>;
+  bookingSubtitle?: Maybe<Scalars['String']['output']>;
+  bookingCtaLabel?: Maybe<Scalars['String']['output']>;
+  prevLabel?: Maybe<Scalars['String']['output']>;
+  nextLabel?: Maybe<Scalars['String']['output']>;
+};
+
+export type HomepageMeta = {
+  __typename?: 'HomepageMeta';
+  siteTitle?: Maybe<Scalars['String']['output']>;
+  siteDescription?: Maybe<Scalars['String']['output']>;
+  ogTitle?: Maybe<Scalars['String']['output']>;
+  ogDescription?: Maybe<Scalars['String']['output']>;
+  twitterTitle?: Maybe<Scalars['String']['output']>;
+  twitterDescription?: Maybe<Scalars['String']['output']>;
+  keywords?: Maybe<Array<Maybe<Scalars['String']['output']>>>;
+};
+
+export type HomepageDesignTypographyScale = {
+  __typename?: 'HomepageDesignTypographyScale';
+  h1Min?: Maybe<Scalars['String']['output']>;
+  h1Max?: Maybe<Scalars['String']['output']>;
+  h2Min?: Maybe<Scalars['String']['output']>;
+  h2Max?: Maybe<Scalars['String']['output']>;
+  h3Min?: Maybe<Scalars['String']['output']>;
+  h3Max?: Maybe<Scalars['String']['output']>;
+  bodyMin?: Maybe<Scalars['String']['output']>;
+  bodyMax?: Maybe<Scalars['String']['output']>;
+  bodyLineHeight?: Maybe<Scalars['String']['output']>;
+  headingLineHeight?: Maybe<Scalars['String']['output']>;
+};
+
+export type HomepageDesignColors = {
+  __typename?: 'HomepageDesignColors';
+  canvas?: Maybe<Scalars['String']['output']>;
+  paper?: Maybe<Scalars['String']['output']>;
+  ink?: Maybe<Scalars['String']['output']>;
+  muted?: Maybe<Scalars['String']['output']>;
+  hairline?: Maybe<Scalars['String']['output']>;
+  signal?: Maybe<Scalars['String']['output']>;
+  signalBright?: Maybe<Scalars['String']['output']>;
+  signalDeep?: Maybe<Scalars['String']['output']>;
+  signalTint?: Maybe<Scalars['String']['output']>;
+};
+
+export type HomepageDesignSpacing = {
+  __typename?: 'HomepageDesignSpacing';
+  sectionPaddingY?: Maybe<Scalars['String']['output']>;
+  sectionMaxWidth?: Maybe<Scalars['String']['output']>;
+  borderRadius?: Maybe<Scalars['String']['output']>;
+  cardGap?: Maybe<Scalars['String']['output']>;
+};
+
+export type HomepageDesign = {
+  __typename?: 'HomepageDesign';
+  fontPreset?: Maybe<Scalars['String']['output']>;
+  headingFontFamily?: Maybe<Scalars['String']['output']>;
+  bodyFontFamily?: Maybe<Scalars['String']['output']>;
+  headingWeight?: Maybe<Scalars['String']['output']>;
+  bodyWeight?: Maybe<Scalars['String']['output']>;
+  typographyScale?: Maybe<HomepageDesignTypographyScale>;
+  colors?: Maybe<HomepageDesignColors>;
+  spacing?: Maybe<HomepageDesignSpacing>;
 };
 
 export type Homepage = Node & Document & {
@@ -373,6 +475,11 @@ export type Homepage = Node & Document & {
   testimonialSection?: Maybe<HomepageTestimonialSection>;
   faqSection?: Maybe<HomepageFaqSection>;
   footerSection?: Maybe<HomepageFooterSection>;
+  headerSection?: Maybe<HomepageHeaderSection>;
+  heroExtras?: Maybe<HomepageHeroExtras>;
+  eventDetailSection?: Maybe<HomepageEventDetailSection>;
+  meta?: Maybe<HomepageMeta>;
+  design?: Maybe<HomepageDesign>;
   id: Scalars['ID']['output'];
   _sys: SystemInfo;
   _values: Scalars['JSON']['output'];
@@ -526,6 +633,100 @@ export type HomepageFooterSectionFilter = {
   heading?: InputMaybe<StringFilter>;
   headingAccent?: InputMaybe<StringFilter>;
   ctaLabel?: InputMaybe<StringFilter>;
+  locationHeading?: InputMaybe<StringFilter>;
+  hoursHeading?: InputMaybe<StringFilter>;
+  callHeading?: InputMaybe<StringFilter>;
+  socialHeading?: InputMaybe<StringFilter>;
+  copyright?: InputMaybe<StringFilter>;
+  tagline?: InputMaybe<StringFilter>;
+};
+
+export type HomepageHeaderSectionFilter = {
+  logoText?: InputMaybe<StringFilter>;
+  brandSubtitle?: InputMaybe<StringFilter>;
+  ctaLabel?: InputMaybe<StringFilter>;
+  mobileCtaLabel?: InputMaybe<StringFilter>;
+  drawerSectionsLabel?: InputMaybe<StringFilter>;
+  drawerContactLabel?: InputMaybe<StringFilter>;
+  drawerContactIndex?: InputMaybe<StringFilter>;
+  drawerCallLabel?: InputMaybe<StringFilter>;
+  drawerWhatsappLabel?: InputMaybe<StringFilter>;
+};
+
+export type HomepageHeroExtrasFilter = {
+  availableSuffix?: InputMaybe<StringFilter>;
+  yearsLabel?: InputMaybe<StringFilter>;
+};
+
+export type HomepageEventDetailSectionFilter = {
+  breadcrumbHome?: InputMaybe<StringFilter>;
+  breadcrumbCaseStudies?: InputMaybe<StringFilter>;
+  roleLabel?: InputMaybe<StringFilter>;
+  specsHeading?: InputMaybe<StringFilter>;
+  approachHeading?: InputMaybe<StringFilter>;
+  signalFlowHeading?: InputMaybe<StringFilter>;
+  challengesHeading?: InputMaybe<StringFilter>;
+  videoHeading?: InputMaybe<StringFilter>;
+  galleryHeading?: InputMaybe<StringFilter>;
+  reflectionLabel?: InputMaybe<StringFilter>;
+  bookingHeading?: InputMaybe<StringFilter>;
+  bookingSubtitle?: InputMaybe<StringFilter>;
+  bookingCtaLabel?: InputMaybe<StringFilter>;
+  prevLabel?: InputMaybe<StringFilter>;
+  nextLabel?: InputMaybe<StringFilter>;
+};
+
+export type HomepageMetaFilter = {
+  siteTitle?: InputMaybe<StringFilter>;
+  siteDescription?: InputMaybe<StringFilter>;
+  ogTitle?: InputMaybe<StringFilter>;
+  ogDescription?: InputMaybe<StringFilter>;
+  twitterTitle?: InputMaybe<StringFilter>;
+  twitterDescription?: InputMaybe<StringFilter>;
+  keywords?: InputMaybe<StringFilter>;
+};
+
+export type HomepageDesignTypographyScaleFilter = {
+  h1Min?: InputMaybe<StringFilter>;
+  h1Max?: InputMaybe<StringFilter>;
+  h2Min?: InputMaybe<StringFilter>;
+  h2Max?: InputMaybe<StringFilter>;
+  h3Min?: InputMaybe<StringFilter>;
+  h3Max?: InputMaybe<StringFilter>;
+  bodyMin?: InputMaybe<StringFilter>;
+  bodyMax?: InputMaybe<StringFilter>;
+  bodyLineHeight?: InputMaybe<StringFilter>;
+  headingLineHeight?: InputMaybe<StringFilter>;
+};
+
+export type HomepageDesignColorsFilter = {
+  canvas?: InputMaybe<StringFilter>;
+  paper?: InputMaybe<StringFilter>;
+  ink?: InputMaybe<StringFilter>;
+  muted?: InputMaybe<StringFilter>;
+  hairline?: InputMaybe<StringFilter>;
+  signal?: InputMaybe<StringFilter>;
+  signalBright?: InputMaybe<StringFilter>;
+  signalDeep?: InputMaybe<StringFilter>;
+  signalTint?: InputMaybe<StringFilter>;
+};
+
+export type HomepageDesignSpacingFilter = {
+  sectionPaddingY?: InputMaybe<StringFilter>;
+  sectionMaxWidth?: InputMaybe<StringFilter>;
+  borderRadius?: InputMaybe<StringFilter>;
+  cardGap?: InputMaybe<StringFilter>;
+};
+
+export type HomepageDesignFilter = {
+  fontPreset?: InputMaybe<StringFilter>;
+  headingFontFamily?: InputMaybe<StringFilter>;
+  bodyFontFamily?: InputMaybe<StringFilter>;
+  headingWeight?: InputMaybe<StringFilter>;
+  bodyWeight?: InputMaybe<StringFilter>;
+  typographyScale?: InputMaybe<HomepageDesignTypographyScaleFilter>;
+  colors?: InputMaybe<HomepageDesignColorsFilter>;
+  spacing?: InputMaybe<HomepageDesignSpacingFilter>;
 };
 
 export type HomepageFilter = {
@@ -538,6 +739,11 @@ export type HomepageFilter = {
   testimonialSection?: InputMaybe<HomepageTestimonialSectionFilter>;
   faqSection?: InputMaybe<HomepageFaqSectionFilter>;
   footerSection?: InputMaybe<HomepageFooterSectionFilter>;
+  headerSection?: InputMaybe<HomepageHeaderSectionFilter>;
+  heroExtras?: InputMaybe<HomepageHeroExtrasFilter>;
+  eventDetailSection?: InputMaybe<HomepageEventDetailSectionFilter>;
+  meta?: InputMaybe<HomepageMetaFilter>;
+  design?: InputMaybe<HomepageDesignFilter>;
 };
 
 export type HomepageConnectionEdges = {
@@ -1002,6 +1208,100 @@ export type HomepageFooterSectionMutation = {
   heading?: InputMaybe<Scalars['String']['input']>;
   headingAccent?: InputMaybe<Scalars['String']['input']>;
   ctaLabel?: InputMaybe<Scalars['String']['input']>;
+  locationHeading?: InputMaybe<Scalars['String']['input']>;
+  hoursHeading?: InputMaybe<Scalars['String']['input']>;
+  callHeading?: InputMaybe<Scalars['String']['input']>;
+  socialHeading?: InputMaybe<Scalars['String']['input']>;
+  copyright?: InputMaybe<Scalars['String']['input']>;
+  tagline?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type HomepageHeaderSectionMutation = {
+  logoText?: InputMaybe<Scalars['String']['input']>;
+  brandSubtitle?: InputMaybe<Scalars['String']['input']>;
+  ctaLabel?: InputMaybe<Scalars['String']['input']>;
+  mobileCtaLabel?: InputMaybe<Scalars['String']['input']>;
+  drawerSectionsLabel?: InputMaybe<Scalars['String']['input']>;
+  drawerContactLabel?: InputMaybe<Scalars['String']['input']>;
+  drawerContactIndex?: InputMaybe<Scalars['String']['input']>;
+  drawerCallLabel?: InputMaybe<Scalars['String']['input']>;
+  drawerWhatsappLabel?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type HomepageHeroExtrasMutation = {
+  availableSuffix?: InputMaybe<Scalars['String']['input']>;
+  yearsLabel?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type HomepageEventDetailSectionMutation = {
+  breadcrumbHome?: InputMaybe<Scalars['String']['input']>;
+  breadcrumbCaseStudies?: InputMaybe<Scalars['String']['input']>;
+  roleLabel?: InputMaybe<Scalars['String']['input']>;
+  specsHeading?: InputMaybe<Scalars['String']['input']>;
+  approachHeading?: InputMaybe<Scalars['String']['input']>;
+  signalFlowHeading?: InputMaybe<Scalars['String']['input']>;
+  challengesHeading?: InputMaybe<Scalars['String']['input']>;
+  videoHeading?: InputMaybe<Scalars['String']['input']>;
+  galleryHeading?: InputMaybe<Scalars['String']['input']>;
+  reflectionLabel?: InputMaybe<Scalars['String']['input']>;
+  bookingHeading?: InputMaybe<Scalars['String']['input']>;
+  bookingSubtitle?: InputMaybe<Scalars['String']['input']>;
+  bookingCtaLabel?: InputMaybe<Scalars['String']['input']>;
+  prevLabel?: InputMaybe<Scalars['String']['input']>;
+  nextLabel?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type HomepageMetaMutation = {
+  siteTitle?: InputMaybe<Scalars['String']['input']>;
+  siteDescription?: InputMaybe<Scalars['String']['input']>;
+  ogTitle?: InputMaybe<Scalars['String']['input']>;
+  ogDescription?: InputMaybe<Scalars['String']['input']>;
+  twitterTitle?: InputMaybe<Scalars['String']['input']>;
+  twitterDescription?: InputMaybe<Scalars['String']['input']>;
+  keywords?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
+export type HomepageDesignTypographyScaleMutation = {
+  h1Min?: InputMaybe<Scalars['String']['input']>;
+  h1Max?: InputMaybe<Scalars['String']['input']>;
+  h2Min?: InputMaybe<Scalars['String']['input']>;
+  h2Max?: InputMaybe<Scalars['String']['input']>;
+  h3Min?: InputMaybe<Scalars['String']['input']>;
+  h3Max?: InputMaybe<Scalars['String']['input']>;
+  bodyMin?: InputMaybe<Scalars['String']['input']>;
+  bodyMax?: InputMaybe<Scalars['String']['input']>;
+  bodyLineHeight?: InputMaybe<Scalars['String']['input']>;
+  headingLineHeight?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type HomepageDesignColorsMutation = {
+  canvas?: InputMaybe<Scalars['String']['input']>;
+  paper?: InputMaybe<Scalars['String']['input']>;
+  ink?: InputMaybe<Scalars['String']['input']>;
+  muted?: InputMaybe<Scalars['String']['input']>;
+  hairline?: InputMaybe<Scalars['String']['input']>;
+  signal?: InputMaybe<Scalars['String']['input']>;
+  signalBright?: InputMaybe<Scalars['String']['input']>;
+  signalDeep?: InputMaybe<Scalars['String']['input']>;
+  signalTint?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type HomepageDesignSpacingMutation = {
+  sectionPaddingY?: InputMaybe<Scalars['String']['input']>;
+  sectionMaxWidth?: InputMaybe<Scalars['String']['input']>;
+  borderRadius?: InputMaybe<Scalars['String']['input']>;
+  cardGap?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type HomepageDesignMutation = {
+  fontPreset?: InputMaybe<Scalars['String']['input']>;
+  headingFontFamily?: InputMaybe<Scalars['String']['input']>;
+  bodyFontFamily?: InputMaybe<Scalars['String']['input']>;
+  headingWeight?: InputMaybe<Scalars['String']['input']>;
+  bodyWeight?: InputMaybe<Scalars['String']['input']>;
+  typographyScale?: InputMaybe<HomepageDesignTypographyScaleMutation>;
+  colors?: InputMaybe<HomepageDesignColorsMutation>;
+  spacing?: InputMaybe<HomepageDesignSpacingMutation>;
 };
 
 export type HomepageMutation = {
@@ -1014,6 +1314,11 @@ export type HomepageMutation = {
   testimonialSection?: InputMaybe<HomepageTestimonialSectionMutation>;
   faqSection?: InputMaybe<HomepageFaqSectionMutation>;
   footerSection?: InputMaybe<HomepageFooterSectionMutation>;
+  headerSection?: InputMaybe<HomepageHeaderSectionMutation>;
+  heroExtras?: InputMaybe<HomepageHeroExtrasMutation>;
+  eventDetailSection?: InputMaybe<HomepageEventDetailSectionMutation>;
+  meta?: InputMaybe<HomepageMetaMutation>;
+  design?: InputMaybe<HomepageDesignMutation>;
 };
 
 export type EventSpecsMutation = {
@@ -1241,6 +1546,100 @@ export type HomepageFooterSectionFilter = {
   heading?: StringFilter | null | undefined;
   headingAccent?: StringFilter | null | undefined;
   ctaLabel?: StringFilter | null | undefined;
+  locationHeading?: StringFilter | null | undefined;
+  hoursHeading?: StringFilter | null | undefined;
+  callHeading?: StringFilter | null | undefined;
+  socialHeading?: StringFilter | null | undefined;
+  copyright?: StringFilter | null | undefined;
+  tagline?: StringFilter | null | undefined;
+};
+
+export type HomepageHeaderSectionFilter = {
+  logoText?: StringFilter | null | undefined;
+  brandSubtitle?: StringFilter | null | undefined;
+  ctaLabel?: StringFilter | null | undefined;
+  mobileCtaLabel?: StringFilter | null | undefined;
+  drawerSectionsLabel?: StringFilter | null | undefined;
+  drawerContactLabel?: StringFilter | null | undefined;
+  drawerContactIndex?: StringFilter | null | undefined;
+  drawerCallLabel?: StringFilter | null | undefined;
+  drawerWhatsappLabel?: StringFilter | null | undefined;
+};
+
+export type HomepageHeroExtrasFilter = {
+  availableSuffix?: StringFilter | null | undefined;
+  yearsLabel?: StringFilter | null | undefined;
+};
+
+export type HomepageEventDetailSectionFilter = {
+  breadcrumbHome?: StringFilter | null | undefined;
+  breadcrumbCaseStudies?: StringFilter | null | undefined;
+  roleLabel?: StringFilter | null | undefined;
+  specsHeading?: StringFilter | null | undefined;
+  approachHeading?: StringFilter | null | undefined;
+  signalFlowHeading?: StringFilter | null | undefined;
+  challengesHeading?: StringFilter | null | undefined;
+  videoHeading?: StringFilter | null | undefined;
+  galleryHeading?: StringFilter | null | undefined;
+  reflectionLabel?: StringFilter | null | undefined;
+  bookingHeading?: StringFilter | null | undefined;
+  bookingSubtitle?: StringFilter | null | undefined;
+  bookingCtaLabel?: StringFilter | null | undefined;
+  prevLabel?: StringFilter | null | undefined;
+  nextLabel?: StringFilter | null | undefined;
+};
+
+export type HomepageMetaFilter = {
+  siteTitle?: StringFilter | null | undefined;
+  siteDescription?: StringFilter | null | undefined;
+  ogTitle?: StringFilter | null | undefined;
+  ogDescription?: StringFilter | null | undefined;
+  twitterTitle?: StringFilter | null | undefined;
+  twitterDescription?: StringFilter | null | undefined;
+  keywords?: StringFilter | null | undefined;
+};
+
+export type HomepageDesignTypographyScaleFilter = {
+  h1Min?: StringFilter | null | undefined;
+  h1Max?: StringFilter | null | undefined;
+  h2Min?: StringFilter | null | undefined;
+  h2Max?: StringFilter | null | undefined;
+  h3Min?: StringFilter | null | undefined;
+  h3Max?: StringFilter | null | undefined;
+  bodyMin?: StringFilter | null | undefined;
+  bodyMax?: StringFilter | null | undefined;
+  bodyLineHeight?: StringFilter | null | undefined;
+  headingLineHeight?: StringFilter | null | undefined;
+};
+
+export type HomepageDesignColorsFilter = {
+  canvas?: StringFilter | null | undefined;
+  paper?: StringFilter | null | undefined;
+  ink?: StringFilter | null | undefined;
+  muted?: StringFilter | null | undefined;
+  hairline?: StringFilter | null | undefined;
+  signal?: StringFilter | null | undefined;
+  signalBright?: StringFilter | null | undefined;
+  signalDeep?: StringFilter | null | undefined;
+  signalTint?: StringFilter | null | undefined;
+};
+
+export type HomepageDesignSpacingFilter = {
+  sectionPaddingY?: StringFilter | null | undefined;
+  sectionMaxWidth?: StringFilter | null | undefined;
+  borderRadius?: StringFilter | null | undefined;
+  cardGap?: StringFilter | null | undefined;
+};
+
+export type HomepageDesignFilter = {
+  fontPreset?: StringFilter | null | undefined;
+  headingFontFamily?: StringFilter | null | undefined;
+  bodyFontFamily?: StringFilter | null | undefined;
+  headingWeight?: StringFilter | null | undefined;
+  bodyWeight?: StringFilter | null | undefined;
+  typographyScale?: HomepageDesignTypographyScaleFilter | null | undefined;
+  colors?: HomepageDesignColorsFilter | null | undefined;
+  spacing?: HomepageDesignSpacingFilter | null | undefined;
 };
 
 export type HomepageFilter = {
@@ -1253,6 +1652,11 @@ export type HomepageFilter = {
   testimonialSection?: HomepageTestimonialSectionFilter | null | undefined;
   faqSection?: HomepageFaqSectionFilter | null | undefined;
   footerSection?: HomepageFooterSectionFilter | null | undefined;
+  headerSection?: HomepageHeaderSectionFilter | null | undefined;
+  heroExtras?: HomepageHeroExtrasFilter | null | undefined;
+  eventDetailSection?: HomepageEventDetailSectionFilter | null | undefined;
+  meta?: HomepageMetaFilter | null | undefined;
+  design?: HomepageDesignFilter | null | undefined;
 };
 
 export type EventSpecsFilter = {
@@ -1332,7 +1736,7 @@ export type TimelineFilter = {
   technologies?: StringFilter | null | undefined;
 };
 
-export type HomepagePartsFragment = { __typename: 'Homepage', identity: { __typename: 'HomepageIdentity', name: string, title: string | null, subtitle: string | null, tagline: string | null, portrait: string | null, showreelUrl: string | null, experienceYears: number | null, uptimePercentage: string | null, location: string | null, phone: string | null, email: string | null, whatsappUrl: string | null, workingHours: string | null, degree: string | null, degreeHonors: string | null, statusText: string | null, statusTextShort: string | null, statusActive: boolean | null, socials: Array<{ __typename: 'HomepageIdentitySocials', label: string | null, url: string | null } | null> | null } | null, hero: { __typename: 'HomepageHero', eyebrow: string | null, headline: string | null, headlineAccent: string | null, ctaPrimaryLabel: string | null, ctaPrimaryHref: string | null, ctaSecondaryLabel: string | null, ctaSecondaryHref: string | null, stats: Array<{ __typename: 'HomepageHeroStats', value: string | null, label: string | null } | null> | null } | null, navigation: { __typename: 'HomepageNavigation', items: Array<{ __typename: 'HomepageNavigationItems', label: string | null, href: string | null, id: string | null, index: string | null } | null> | null } | null, servicesSection: { __typename: 'HomepageServicesSection', eyebrow: string | null, heading: string | null, headingAccent: string | null, body: string | null, items: Array<{ __typename: 'HomepageServicesSectionItems', title: string | null, description: string | null } | null> | null } | null, eventsSection: { __typename: 'HomepageEventsSection', eyebrow: string | null, heading: string | null, headingAccent: string | null, body: string | null, categories: Array<string | null> | null, featuredEvents: Array<string | null> | null } | null, showreelSection: { __typename: 'HomepageShowreelSection', eyebrow: string | null, heading: string | null, headingAccent: string | null, openLabel: string | null, videos: Array<{ __typename: 'HomepageShowreelSectionVideos', title: string, caption: string | null, thumb: string | null, videoUrl: string | null } | null> | null } | null, testimonialSection: { __typename: 'HomepageTestimonialSection', ctaHeading: string | null, ctaBody: string | null, ctaLabel: string | null, ctaHref: string | null, testimonials: Array<{ __typename: 'HomepageTestimonialSectionTestimonials', quote: string | null, author: string | null, role: string | null, organization: string | null, event: string | null, avatarText: string | null } | null> | null } | null, faqSection: { __typename: 'HomepageFaqSection', eyebrow: string | null, heading: string | null, headingAccent: string | null, body: string | null, items: Array<{ __typename: 'HomepageFaqSectionItems', question: string, answer: string | null } | null> | null } | null, footerSection: { __typename: 'HomepageFooterSection', eyebrow: string | null, heading: string | null, headingAccent: string | null, ctaLabel: string | null } | null };
+export type HomepagePartsFragment = { __typename: 'Homepage', identity: { __typename: 'HomepageIdentity', name: string, title: string | null, subtitle: string | null, tagline: string | null, portrait: string | null, showreelUrl: string | null, experienceYears: number | null, uptimePercentage: string | null, location: string | null, phone: string | null, email: string | null, whatsappUrl: string | null, workingHours: string | null, degree: string | null, degreeHonors: string | null, statusText: string | null, statusTextShort: string | null, statusActive: boolean | null, socials: Array<{ __typename: 'HomepageIdentitySocials', label: string | null, url: string | null } | null> | null } | null, hero: { __typename: 'HomepageHero', eyebrow: string | null, headline: string | null, headlineAccent: string | null, ctaPrimaryLabel: string | null, ctaPrimaryHref: string | null, ctaSecondaryLabel: string | null, ctaSecondaryHref: string | null, stats: Array<{ __typename: 'HomepageHeroStats', value: string | null, label: string | null } | null> | null } | null, navigation: { __typename: 'HomepageNavigation', items: Array<{ __typename: 'HomepageNavigationItems', label: string | null, href: string | null, id: string | null, index: string | null } | null> | null } | null, servicesSection: { __typename: 'HomepageServicesSection', eyebrow: string | null, heading: string | null, headingAccent: string | null, body: string | null, items: Array<{ __typename: 'HomepageServicesSectionItems', title: string | null, description: string | null } | null> | null } | null, eventsSection: { __typename: 'HomepageEventsSection', eyebrow: string | null, heading: string | null, headingAccent: string | null, body: string | null, categories: Array<string | null> | null, featuredEvents: Array<string | null> | null } | null, showreelSection: { __typename: 'HomepageShowreelSection', eyebrow: string | null, heading: string | null, headingAccent: string | null, openLabel: string | null, videos: Array<{ __typename: 'HomepageShowreelSectionVideos', title: string, caption: string | null, thumb: string | null, videoUrl: string | null } | null> | null } | null, testimonialSection: { __typename: 'HomepageTestimonialSection', ctaHeading: string | null, ctaBody: string | null, ctaLabel: string | null, ctaHref: string | null, testimonials: Array<{ __typename: 'HomepageTestimonialSectionTestimonials', quote: string | null, author: string | null, role: string | null, organization: string | null, event: string | null, avatarText: string | null } | null> | null } | null, faqSection: { __typename: 'HomepageFaqSection', eyebrow: string | null, heading: string | null, headingAccent: string | null, body: string | null, items: Array<{ __typename: 'HomepageFaqSectionItems', question: string, answer: string | null } | null> | null } | null, footerSection: { __typename: 'HomepageFooterSection', eyebrow: string | null, heading: string | null, headingAccent: string | null, ctaLabel: string | null, locationHeading: string | null, hoursHeading: string | null, callHeading: string | null, socialHeading: string | null, copyright: string | null, tagline: string | null } | null, headerSection: { __typename: 'HomepageHeaderSection', logoText: string | null, brandSubtitle: string | null, ctaLabel: string | null, mobileCtaLabel: string | null, drawerSectionsLabel: string | null, drawerContactLabel: string | null, drawerContactIndex: string | null, drawerCallLabel: string | null, drawerWhatsappLabel: string | null } | null, heroExtras: { __typename: 'HomepageHeroExtras', availableSuffix: string | null, yearsLabel: string | null } | null, eventDetailSection: { __typename: 'HomepageEventDetailSection', breadcrumbHome: string | null, breadcrumbCaseStudies: string | null, roleLabel: string | null, specsHeading: string | null, approachHeading: string | null, signalFlowHeading: string | null, challengesHeading: string | null, videoHeading: string | null, galleryHeading: string | null, reflectionLabel: string | null, bookingHeading: string | null, bookingSubtitle: string | null, bookingCtaLabel: string | null, prevLabel: string | null, nextLabel: string | null } | null, meta: { __typename: 'HomepageMeta', siteTitle: string | null, siteDescription: string | null, ogTitle: string | null, ogDescription: string | null, twitterTitle: string | null, twitterDescription: string | null, keywords: Array<string | null> | null } | null, design: { __typename: 'HomepageDesign', fontPreset: string | null, headingFontFamily: string | null, bodyFontFamily: string | null, headingWeight: string | null, bodyWeight: string | null, typographyScale: { __typename: 'HomepageDesignTypographyScale', h1Min: string | null, h1Max: string | null, h2Min: string | null, h2Max: string | null, h3Min: string | null, h3Max: string | null, bodyMin: string | null, bodyMax: string | null, bodyLineHeight: string | null, headingLineHeight: string | null } | null, colors: { __typename: 'HomepageDesignColors', canvas: string | null, paper: string | null, ink: string | null, muted: string | null, hairline: string | null, signal: string | null, signalBright: string | null, signalDeep: string | null, signalTint: string | null } | null, spacing: { __typename: 'HomepageDesignSpacing', sectionPaddingY: string | null, sectionMaxWidth: string | null, borderRadius: string | null, cardGap: string | null } | null } | null };
 
 export type EventPartsFragment = { __typename: 'Event', slug: string, title: string | null, subtitle: string | null, category: string | null, venue: string | null, broadcaster: string | null, dates: string | null, role: string | null, heroImage: string | null, gallery: Array<string | null> | null, videoUrl: string | null, summary: string | null, cameraCount: number | null, technicalApproach: Array<string | null> | null, outcomes: Array<string | null> | null, improvementReflection: string | null, tags: Array<string | null> | null, specs: { __typename: 'EventSpecs', format: string | null, visionMixer: string | null, replay: string | null, cameras: string | null, syncRouter: string | null, audioIntercom: string | null } | null, keyStats: Array<{ __typename: 'EventKeyStats', label: string | null, value: string | null } | null> | null, signalFlow: Array<{ __typename: 'EventSignalFlow', step: string | null, description: string | null } | null> | null, challengesAndSolutions: Array<{ __typename: 'EventChallengesAndSolutions', challenge: string | null, solution: string | null, impact: string | null } | null> | null };
 
@@ -1345,7 +1749,7 @@ export type HomepageQueryVariables = Exact<{
 }>;
 
 
-export type HomepageQuery = { homepage: { __typename: 'Homepage', id: string, _sys: { filename: string, basename: string, hasReferences: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, identity: { __typename: 'HomepageIdentity', name: string, title: string | null, subtitle: string | null, tagline: string | null, portrait: string | null, showreelUrl: string | null, experienceYears: number | null, uptimePercentage: string | null, location: string | null, phone: string | null, email: string | null, whatsappUrl: string | null, workingHours: string | null, degree: string | null, degreeHonors: string | null, statusText: string | null, statusTextShort: string | null, statusActive: boolean | null, socials: Array<{ __typename: 'HomepageIdentitySocials', label: string | null, url: string | null } | null> | null } | null, hero: { __typename: 'HomepageHero', eyebrow: string | null, headline: string | null, headlineAccent: string | null, ctaPrimaryLabel: string | null, ctaPrimaryHref: string | null, ctaSecondaryLabel: string | null, ctaSecondaryHref: string | null, stats: Array<{ __typename: 'HomepageHeroStats', value: string | null, label: string | null } | null> | null } | null, navigation: { __typename: 'HomepageNavigation', items: Array<{ __typename: 'HomepageNavigationItems', label: string | null, href: string | null, id: string | null, index: string | null } | null> | null } | null, servicesSection: { __typename: 'HomepageServicesSection', eyebrow: string | null, heading: string | null, headingAccent: string | null, body: string | null, items: Array<{ __typename: 'HomepageServicesSectionItems', title: string | null, description: string | null } | null> | null } | null, eventsSection: { __typename: 'HomepageEventsSection', eyebrow: string | null, heading: string | null, headingAccent: string | null, body: string | null, categories: Array<string | null> | null, featuredEvents: Array<string | null> | null } | null, showreelSection: { __typename: 'HomepageShowreelSection', eyebrow: string | null, heading: string | null, headingAccent: string | null, openLabel: string | null, videos: Array<{ __typename: 'HomepageShowreelSectionVideos', title: string, caption: string | null, thumb: string | null, videoUrl: string | null } | null> | null } | null, testimonialSection: { __typename: 'HomepageTestimonialSection', ctaHeading: string | null, ctaBody: string | null, ctaLabel: string | null, ctaHref: string | null, testimonials: Array<{ __typename: 'HomepageTestimonialSectionTestimonials', quote: string | null, author: string | null, role: string | null, organization: string | null, event: string | null, avatarText: string | null } | null> | null } | null, faqSection: { __typename: 'HomepageFaqSection', eyebrow: string | null, heading: string | null, headingAccent: string | null, body: string | null, items: Array<{ __typename: 'HomepageFaqSectionItems', question: string, answer: string | null } | null> | null } | null, footerSection: { __typename: 'HomepageFooterSection', eyebrow: string | null, heading: string | null, headingAccent: string | null, ctaLabel: string | null } | null } };
+export type HomepageQuery = { homepage: { __typename: 'Homepage', id: string, _sys: { filename: string, basename: string, hasReferences: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, identity: { __typename: 'HomepageIdentity', name: string, title: string | null, subtitle: string | null, tagline: string | null, portrait: string | null, showreelUrl: string | null, experienceYears: number | null, uptimePercentage: string | null, location: string | null, phone: string | null, email: string | null, whatsappUrl: string | null, workingHours: string | null, degree: string | null, degreeHonors: string | null, statusText: string | null, statusTextShort: string | null, statusActive: boolean | null, socials: Array<{ __typename: 'HomepageIdentitySocials', label: string | null, url: string | null } | null> | null } | null, hero: { __typename: 'HomepageHero', eyebrow: string | null, headline: string | null, headlineAccent: string | null, ctaPrimaryLabel: string | null, ctaPrimaryHref: string | null, ctaSecondaryLabel: string | null, ctaSecondaryHref: string | null, stats: Array<{ __typename: 'HomepageHeroStats', value: string | null, label: string | null } | null> | null } | null, navigation: { __typename: 'HomepageNavigation', items: Array<{ __typename: 'HomepageNavigationItems', label: string | null, href: string | null, id: string | null, index: string | null } | null> | null } | null, servicesSection: { __typename: 'HomepageServicesSection', eyebrow: string | null, heading: string | null, headingAccent: string | null, body: string | null, items: Array<{ __typename: 'HomepageServicesSectionItems', title: string | null, description: string | null } | null> | null } | null, eventsSection: { __typename: 'HomepageEventsSection', eyebrow: string | null, heading: string | null, headingAccent: string | null, body: string | null, categories: Array<string | null> | null, featuredEvents: Array<string | null> | null } | null, showreelSection: { __typename: 'HomepageShowreelSection', eyebrow: string | null, heading: string | null, headingAccent: string | null, openLabel: string | null, videos: Array<{ __typename: 'HomepageShowreelSectionVideos', title: string, caption: string | null, thumb: string | null, videoUrl: string | null } | null> | null } | null, testimonialSection: { __typename: 'HomepageTestimonialSection', ctaHeading: string | null, ctaBody: string | null, ctaLabel: string | null, ctaHref: string | null, testimonials: Array<{ __typename: 'HomepageTestimonialSectionTestimonials', quote: string | null, author: string | null, role: string | null, organization: string | null, event: string | null, avatarText: string | null } | null> | null } | null, faqSection: { __typename: 'HomepageFaqSection', eyebrow: string | null, heading: string | null, headingAccent: string | null, body: string | null, items: Array<{ __typename: 'HomepageFaqSectionItems', question: string, answer: string | null } | null> | null } | null, footerSection: { __typename: 'HomepageFooterSection', eyebrow: string | null, heading: string | null, headingAccent: string | null, ctaLabel: string | null, locationHeading: string | null, hoursHeading: string | null, callHeading: string | null, socialHeading: string | null, copyright: string | null, tagline: string | null } | null, headerSection: { __typename: 'HomepageHeaderSection', logoText: string | null, brandSubtitle: string | null, ctaLabel: string | null, mobileCtaLabel: string | null, drawerSectionsLabel: string | null, drawerContactLabel: string | null, drawerContactIndex: string | null, drawerCallLabel: string | null, drawerWhatsappLabel: string | null } | null, heroExtras: { __typename: 'HomepageHeroExtras', availableSuffix: string | null, yearsLabel: string | null } | null, eventDetailSection: { __typename: 'HomepageEventDetailSection', breadcrumbHome: string | null, breadcrumbCaseStudies: string | null, roleLabel: string | null, specsHeading: string | null, approachHeading: string | null, signalFlowHeading: string | null, challengesHeading: string | null, videoHeading: string | null, galleryHeading: string | null, reflectionLabel: string | null, bookingHeading: string | null, bookingSubtitle: string | null, bookingCtaLabel: string | null, prevLabel: string | null, nextLabel: string | null } | null, meta: { __typename: 'HomepageMeta', siteTitle: string | null, siteDescription: string | null, ogTitle: string | null, ogDescription: string | null, twitterTitle: string | null, twitterDescription: string | null, keywords: Array<string | null> | null } | null, design: { __typename: 'HomepageDesign', fontPreset: string | null, headingFontFamily: string | null, bodyFontFamily: string | null, headingWeight: string | null, bodyWeight: string | null, typographyScale: { __typename: 'HomepageDesignTypographyScale', h1Min: string | null, h1Max: string | null, h2Min: string | null, h2Max: string | null, h3Min: string | null, h3Max: string | null, bodyMin: string | null, bodyMax: string | null, bodyLineHeight: string | null, headingLineHeight: string | null } | null, colors: { __typename: 'HomepageDesignColors', canvas: string | null, paper: string | null, ink: string | null, muted: string | null, hairline: string | null, signal: string | null, signalBright: string | null, signalDeep: string | null, signalTint: string | null } | null, spacing: { __typename: 'HomepageDesignSpacing', sectionPaddingY: string | null, sectionMaxWidth: string | null, borderRadius: string | null, cardGap: string | null } | null } | null } };
 
 export type HomepageConnectionQueryVariables = Exact<{
   before?: string | null | undefined;
@@ -1357,7 +1761,7 @@ export type HomepageConnectionQueryVariables = Exact<{
 }>;
 
 
-export type HomepageConnectionQuery = { homepageConnection: { totalCount: number, pageInfo: { hasPreviousPage: boolean, hasNextPage: boolean, startCursor: string, endCursor: string }, edges: Array<{ cursor: string, node: { __typename: 'Homepage', id: string, _sys: { filename: string, basename: string, hasReferences: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, identity: { __typename: 'HomepageIdentity', name: string, title: string | null, subtitle: string | null, tagline: string | null, portrait: string | null, showreelUrl: string | null, experienceYears: number | null, uptimePercentage: string | null, location: string | null, phone: string | null, email: string | null, whatsappUrl: string | null, workingHours: string | null, degree: string | null, degreeHonors: string | null, statusText: string | null, statusTextShort: string | null, statusActive: boolean | null, socials: Array<{ __typename: 'HomepageIdentitySocials', label: string | null, url: string | null } | null> | null } | null, hero: { __typename: 'HomepageHero', eyebrow: string | null, headline: string | null, headlineAccent: string | null, ctaPrimaryLabel: string | null, ctaPrimaryHref: string | null, ctaSecondaryLabel: string | null, ctaSecondaryHref: string | null, stats: Array<{ __typename: 'HomepageHeroStats', value: string | null, label: string | null } | null> | null } | null, navigation: { __typename: 'HomepageNavigation', items: Array<{ __typename: 'HomepageNavigationItems', label: string | null, href: string | null, id: string | null, index: string | null } | null> | null } | null, servicesSection: { __typename: 'HomepageServicesSection', eyebrow: string | null, heading: string | null, headingAccent: string | null, body: string | null, items: Array<{ __typename: 'HomepageServicesSectionItems', title: string | null, description: string | null } | null> | null } | null, eventsSection: { __typename: 'HomepageEventsSection', eyebrow: string | null, heading: string | null, headingAccent: string | null, body: string | null, categories: Array<string | null> | null, featuredEvents: Array<string | null> | null } | null, showreelSection: { __typename: 'HomepageShowreelSection', eyebrow: string | null, heading: string | null, headingAccent: string | null, openLabel: string | null, videos: Array<{ __typename: 'HomepageShowreelSectionVideos', title: string, caption: string | null, thumb: string | null, videoUrl: string | null } | null> | null } | null, testimonialSection: { __typename: 'HomepageTestimonialSection', ctaHeading: string | null, ctaBody: string | null, ctaLabel: string | null, ctaHref: string | null, testimonials: Array<{ __typename: 'HomepageTestimonialSectionTestimonials', quote: string | null, author: string | null, role: string | null, organization: string | null, event: string | null, avatarText: string | null } | null> | null } | null, faqSection: { __typename: 'HomepageFaqSection', eyebrow: string | null, heading: string | null, headingAccent: string | null, body: string | null, items: Array<{ __typename: 'HomepageFaqSectionItems', question: string, answer: string | null } | null> | null } | null, footerSection: { __typename: 'HomepageFooterSection', eyebrow: string | null, heading: string | null, headingAccent: string | null, ctaLabel: string | null } | null } | null } | null> | null } };
+export type HomepageConnectionQuery = { homepageConnection: { totalCount: number, pageInfo: { hasPreviousPage: boolean, hasNextPage: boolean, startCursor: string, endCursor: string }, edges: Array<{ cursor: string, node: { __typename: 'Homepage', id: string, _sys: { filename: string, basename: string, hasReferences: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, identity: { __typename: 'HomepageIdentity', name: string, title: string | null, subtitle: string | null, tagline: string | null, portrait: string | null, showreelUrl: string | null, experienceYears: number | null, uptimePercentage: string | null, location: string | null, phone: string | null, email: string | null, whatsappUrl: string | null, workingHours: string | null, degree: string | null, degreeHonors: string | null, statusText: string | null, statusTextShort: string | null, statusActive: boolean | null, socials: Array<{ __typename: 'HomepageIdentitySocials', label: string | null, url: string | null } | null> | null } | null, hero: { __typename: 'HomepageHero', eyebrow: string | null, headline: string | null, headlineAccent: string | null, ctaPrimaryLabel: string | null, ctaPrimaryHref: string | null, ctaSecondaryLabel: string | null, ctaSecondaryHref: string | null, stats: Array<{ __typename: 'HomepageHeroStats', value: string | null, label: string | null } | null> | null } | null, navigation: { __typename: 'HomepageNavigation', items: Array<{ __typename: 'HomepageNavigationItems', label: string | null, href: string | null, id: string | null, index: string | null } | null> | null } | null, servicesSection: { __typename: 'HomepageServicesSection', eyebrow: string | null, heading: string | null, headingAccent: string | null, body: string | null, items: Array<{ __typename: 'HomepageServicesSectionItems', title: string | null, description: string | null } | null> | null } | null, eventsSection: { __typename: 'HomepageEventsSection', eyebrow: string | null, heading: string | null, headingAccent: string | null, body: string | null, categories: Array<string | null> | null, featuredEvents: Array<string | null> | null } | null, showreelSection: { __typename: 'HomepageShowreelSection', eyebrow: string | null, heading: string | null, headingAccent: string | null, openLabel: string | null, videos: Array<{ __typename: 'HomepageShowreelSectionVideos', title: string, caption: string | null, thumb: string | null, videoUrl: string | null } | null> | null } | null, testimonialSection: { __typename: 'HomepageTestimonialSection', ctaHeading: string | null, ctaBody: string | null, ctaLabel: string | null, ctaHref: string | null, testimonials: Array<{ __typename: 'HomepageTestimonialSectionTestimonials', quote: string | null, author: string | null, role: string | null, organization: string | null, event: string | null, avatarText: string | null } | null> | null } | null, faqSection: { __typename: 'HomepageFaqSection', eyebrow: string | null, heading: string | null, headingAccent: string | null, body: string | null, items: Array<{ __typename: 'HomepageFaqSectionItems', question: string, answer: string | null } | null> | null } | null, footerSection: { __typename: 'HomepageFooterSection', eyebrow: string | null, heading: string | null, headingAccent: string | null, ctaLabel: string | null, locationHeading: string | null, hoursHeading: string | null, callHeading: string | null, socialHeading: string | null, copyright: string | null, tagline: string | null } | null, headerSection: { __typename: 'HomepageHeaderSection', logoText: string | null, brandSubtitle: string | null, ctaLabel: string | null, mobileCtaLabel: string | null, drawerSectionsLabel: string | null, drawerContactLabel: string | null, drawerContactIndex: string | null, drawerCallLabel: string | null, drawerWhatsappLabel: string | null } | null, heroExtras: { __typename: 'HomepageHeroExtras', availableSuffix: string | null, yearsLabel: string | null } | null, eventDetailSection: { __typename: 'HomepageEventDetailSection', breadcrumbHome: string | null, breadcrumbCaseStudies: string | null, roleLabel: string | null, specsHeading: string | null, approachHeading: string | null, signalFlowHeading: string | null, challengesHeading: string | null, videoHeading: string | null, galleryHeading: string | null, reflectionLabel: string | null, bookingHeading: string | null, bookingSubtitle: string | null, bookingCtaLabel: string | null, prevLabel: string | null, nextLabel: string | null } | null, meta: { __typename: 'HomepageMeta', siteTitle: string | null, siteDescription: string | null, ogTitle: string | null, ogDescription: string | null, twitterTitle: string | null, twitterDescription: string | null, keywords: Array<string | null> | null } | null, design: { __typename: 'HomepageDesign', fontPreset: string | null, headingFontFamily: string | null, bodyFontFamily: string | null, headingWeight: string | null, bodyWeight: string | null, typographyScale: { __typename: 'HomepageDesignTypographyScale', h1Min: string | null, h1Max: string | null, h2Min: string | null, h2Max: string | null, h3Min: string | null, h3Max: string | null, bodyMin: string | null, bodyMax: string | null, bodyLineHeight: string | null, headingLineHeight: string | null } | null, colors: { __typename: 'HomepageDesignColors', canvas: string | null, paper: string | null, ink: string | null, muted: string | null, hairline: string | null, signal: string | null, signalBright: string | null, signalDeep: string | null, signalTint: string | null } | null, spacing: { __typename: 'HomepageDesignSpacing', sectionPaddingY: string | null, sectionMaxWidth: string | null, borderRadius: string | null, cardGap: string | null } | null } | null } | null } | null> | null } };
 
 export type EventQueryVariables = Exact<{
   relativePath: string;
@@ -1539,6 +1943,97 @@ export const HomepagePartsFragmentDoc = gql`
     heading
     headingAccent
     ctaLabel
+    locationHeading
+    hoursHeading
+    callHeading
+    socialHeading
+    copyright
+    tagline
+  }
+  headerSection {
+    __typename
+    logoText
+    brandSubtitle
+    ctaLabel
+    mobileCtaLabel
+    drawerSectionsLabel
+    drawerContactLabel
+    drawerContactIndex
+    drawerCallLabel
+    drawerWhatsappLabel
+  }
+  heroExtras {
+    __typename
+    availableSuffix
+    yearsLabel
+  }
+  eventDetailSection {
+    __typename
+    breadcrumbHome
+    breadcrumbCaseStudies
+    roleLabel
+    specsHeading
+    approachHeading
+    signalFlowHeading
+    challengesHeading
+    videoHeading
+    galleryHeading
+    reflectionLabel
+    bookingHeading
+    bookingSubtitle
+    bookingCtaLabel
+    prevLabel
+    nextLabel
+  }
+  meta {
+    __typename
+    siteTitle
+    siteDescription
+    ogTitle
+    ogDescription
+    twitterTitle
+    twitterDescription
+    keywords
+  }
+  design {
+    __typename
+    fontPreset
+    headingFontFamily
+    bodyFontFamily
+    headingWeight
+    bodyWeight
+    typographyScale {
+      __typename
+      h1Min
+      h1Max
+      h2Min
+      h2Max
+      h3Min
+      h3Max
+      bodyMin
+      bodyMax
+      bodyLineHeight
+      headingLineHeight
+    }
+    colors {
+      __typename
+      canvas
+      paper
+      ink
+      muted
+      hairline
+      signal
+      signalBright
+      signalDeep
+      signalTint
+    }
+    spacing {
+      __typename
+      sectionPaddingY
+      sectionMaxWidth
+      borderRadius
+      cardGap
+    }
   }
 }
     `;
@@ -1922,7 +2417,7 @@ export const ExperimentalGetTinaClient = () =>
   getSdk(
     generateRequester(
       createClient({
-        url: "http://localhost:4001/graphql",
+        url: "https://content.tinajs.io/2.4/content/b4832c73-1d3e-4aad-9f22-17177ecc3782/github/main",
         queries,
       })
     )

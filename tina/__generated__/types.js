@@ -128,6 +128,97 @@ export const HomepagePartsFragmentDoc = gql`
     heading
     headingAccent
     ctaLabel
+    locationHeading
+    hoursHeading
+    callHeading
+    socialHeading
+    copyright
+    tagline
+  }
+  headerSection {
+    __typename
+    logoText
+    brandSubtitle
+    ctaLabel
+    mobileCtaLabel
+    drawerSectionsLabel
+    drawerContactLabel
+    drawerContactIndex
+    drawerCallLabel
+    drawerWhatsappLabel
+  }
+  heroExtras {
+    __typename
+    availableSuffix
+    yearsLabel
+  }
+  eventDetailSection {
+    __typename
+    breadcrumbHome
+    breadcrumbCaseStudies
+    roleLabel
+    specsHeading
+    approachHeading
+    signalFlowHeading
+    challengesHeading
+    videoHeading
+    galleryHeading
+    reflectionLabel
+    bookingHeading
+    bookingSubtitle
+    bookingCtaLabel
+    prevLabel
+    nextLabel
+  }
+  meta {
+    __typename
+    siteTitle
+    siteDescription
+    ogTitle
+    ogDescription
+    twitterTitle
+    twitterDescription
+    keywords
+  }
+  design {
+    __typename
+    fontPreset
+    headingFontFamily
+    bodyFontFamily
+    headingWeight
+    bodyWeight
+    typographyScale {
+      __typename
+      h1Min
+      h1Max
+      h2Min
+      h2Max
+      h3Min
+      h3Max
+      bodyMin
+      bodyMax
+      bodyLineHeight
+      headingLineHeight
+    }
+    colors {
+      __typename
+      canvas
+      paper
+      ink
+      muted
+      hairline
+      signal
+      signalBright
+      signalDeep
+      signalTint
+    }
+    spacing {
+      __typename
+      sectionPaddingY
+      sectionMaxWidth
+      borderRadius
+      cardGap
+    }
   }
 }
     `;
@@ -485,7 +576,7 @@ const generateRequester = (client) => {
 export const ExperimentalGetTinaClient = () => getSdk(
   generateRequester(
     createClient({
-      url: "http://localhost:4001/graphql",
+      url: "https://content.tinajs.io/2.4/content/b4832c73-1d3e-4aad-9f22-17177ecc3782/github/main",
       queries
     })
   )
